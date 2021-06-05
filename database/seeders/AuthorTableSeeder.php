@@ -18,9 +18,10 @@ class AuthorTableSeeder extends Seeder
         //Dr. Enson
         $author= new Author([
             "avatar"      => "images/enson_lwesya.jpg",
-            "name"        =>  "Rev. Dr. Enson Lwesya",
+            "name"        =>  "Enson Lwesya",
+            "suffix"      =>  "Rev. Dr. ",
             "title"       =>  "Senior Pastor",
-            "slug"        => Str::slug("Rev. Dr. Enson Lwesya"),
+            "slug"        => Str::slug("Enson Lwesya").date("-Y-m-d"),
             "ica_pastor"  => 1,
             "biography"   => "This is a biography"
         ]);
@@ -29,9 +30,10 @@ class AuthorTableSeeder extends Seeder
         //Dr. Mkwaila
         $author= new Author([
             "avatar"      => "images/andrew_mkwaila.jpg",
-            "name"        =>  "Dr. Andrew Mkwaila",
+            "name"        =>  "Andrew Mkwaila",
+            "suffix"      =>  "Dr.",
             "title"       =>  "Executive Pastor",
-            "slug"        => Str::slug("Dr. Andrew Mkwaila"),
+            "slug"        => Str::slug("Andrew Mkwaila").date("-Y-m-d"),
             "ica_pastor"  => 1,
             "biography"   => "This is a biography"
         ]);
@@ -39,10 +41,11 @@ class AuthorTableSeeder extends Seeder
 
         //Ps. Seira
         $author= new Author([
-            "avatar"    => "images/avatar.png",
-            "name"          =>  "Ps. Seira",
-            "title"         =>  "Children's Pastor",
-            "slug"        => Str::slug("Ps. Seira"),
+            "avatar"      => "images/avatar.png",
+            "name"        =>  "Seira Mitha",
+            "suffix"      =>  "Ps.",
+            "title"       =>  "Children's Pastor",
+            "slug"        => Str::slug("Seira Mitha").date("-Y-m-d"),
             "ica_pastor"  => 0,
             "biography"   => "This is a biography"
         ]);
@@ -50,10 +53,11 @@ class AuthorTableSeeder extends Seeder
 
         //Ps. Jerry Zimba
         $author= new Author([
-            "avatar"    => "images/jerry_zimba.jpg",
-            "name"          =>  "Ps. Jerry Zimba",
-            "title"         =>  "Youth Pastor",
-            "slug"        => Str::slug("Ps. Jerry Zimba"),
+            "avatar"      => "images/jerry_zimba.jpg",
+            "name"        =>  "Jerry Zimba",
+            "suffix"      =>  "Ps. ",
+            "title"       =>  "Youth Pastor",
+            "slug"        => Str::slug("Jerry Zimba").date("-Y-m-d"),
             "ica_pastor"  => 0,
             "biography"   => "This is a biography"
         ]);

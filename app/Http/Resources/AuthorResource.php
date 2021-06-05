@@ -18,6 +18,7 @@ class AuthorResource extends JsonResource
             "id"                =>  $this->id,
             "avatar"            =>  $this->avatar,
             "name"              =>  $this->name,
+            "suffix"            =>  $this->suffix,
             "title"             =>  $this->title,
             "slug"              =>  $this->slug,
             "ica_pastor"        =>  $this->ica_pastor,
