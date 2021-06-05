@@ -1,7 +1,7 @@
 <template>
     <v-app-bar app color="white" absolute flat>
         <v-toolbar-title>
-            <router-link  :to="{ name: 'home' }">
+            <router-link  :to="{ name: 'dashboard' }">
                 <img id="logo" :src="computeImageUrl('images/logo-main.png')" alt="ICA Logo"/>
             </router-link>
         </v-toolbar-title>
