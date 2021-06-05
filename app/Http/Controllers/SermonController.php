@@ -100,13 +100,14 @@ class SermonController extends Controller
         ]);
 
         $sermon->save();
+        if($sermon->series !==null) {
+            $series = Series::find($sermon->series->id);
 
-        $series=Series::find($sermon->series->id);
-
-        if (is_object($series) && $series->first_sermon_date==null){
-            $series->update([
-                "first_sermon_date"=>$sermon->published_at
-            ]);
+            if (is_object($series) && $series->first_sermon_date == null) {
+                $series->update([
+                    "first_sermon_date" => $sermon->published_at
+                ]);
+            }
         }
 
         return response()->json(["sermon"=>new Resources\SermonResource($sermon)],200);
@@ -124,14 +125,14 @@ class SermonController extends Controller
         if (!is_object($sermon))
             return response()->json(["response"=>false],204);
         else {
-            if ($sermon->series_id!=null)
-                $sermonSeries=Sermon::where("series_id","=",$sermon->series_id)->where("id","!=",$sermon->id)->orderBy("published_at","desc")->get();
-            else
-                $sermonSeries=[];
+//            if ($sermon->series_id!=null)
+//                $sermonSeries=Sermon::where("series_id","=",$sermon->series_id)->where("id","!=",$sermon->id)->orderBy("published_at","desc")->get();
+//            else
+//                $sermonSeries=[];
 
             return response()->json([
                 "sermon" => new Resources\SermonResource($sermon),
-                "sermonSeries"=> Resources\SermonResource::collection($sermonSeries)
+//                "sermonSeries"=> Resources\SermonResource::collection($sermonSeries)
             ], 200);
         }
     }
@@ -162,12 +163,14 @@ class SermonController extends Controller
                 "published_at"  =>  $request->published_at
             ]);
 
-            $series=Series::find($sermon->series->id);
+            if($sermon->series !==null) {
+                $series = Series::find($sermon->series->id);
 
-            if (is_object($series) && $series->first_sermon_date==null){
-                $series->update([
-                    "first_sermon_date"=>$sermon->published_at
-                ]);
+                if (is_object($series) && $series->first_sermon_date == null) {
+                    $series->update([
+                        "first_sermon_date" => $sermon->published_at
+                    ]);
+                }
             }
 
             return response()->json(["sermon"=>new Resources\SermonResource($sermon)],200);
