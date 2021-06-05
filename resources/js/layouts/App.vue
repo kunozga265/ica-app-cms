@@ -67,11 +67,22 @@ h1.header-title {
         margin-left: 10px;
     }
 }
+//
+//.content-card, .pastor-card{
+//    &:hover{
+//        cursor: pointer;
+//    }
+//}
 
-.content-card, .pastor-card{
-    &:hover{
-        cursor: pointer;
-    }
+.v-application ul.more-details-dropdown{
+  list-style:none;
+  padding: 0 12px;
+  display: inline-flex;
+}
+
+.v-list, .v-dialog{
+  font-family: 'Raleway', sans-serif;
+
 }
 
 .content{
@@ -79,29 +90,47 @@ h1.header-title {
     font-family: 'Raleway', sans-serif;
     color: $app-color;
 
-    .col-sm-6{
-        padding:0 12px 16px 12px;
+    .v-divider{
+      margin-bottom: 12px;
     }
+
+    .col-12{
+        padding:0 12px 12px 12px;
+    }
+
+  .content-card{
+    position: relative;
+
+    .content-wrapper{
+      padding:0 24px 0 0;
+    }
+    .more-details{
+      position: absolute;
+      right: 0;
+    }
+  }
+
 
 
     p.content-heading{
         font-size: 14pt;
-        padding-bottom: 16px;
+        //padding-bottom: 16px;
     }
 
     p.content-caption{
         font-size: 10pt;
-        margin:16px 0 0 0;
+        margin:0;
     }
 
     p.content-title{
-        font-size: 14pt;
+        font-size: 13pt;
         font-weight: 700;
         margin:0;
     }
 
     p.content-subtitle{
         font-weight: 600;
+        font-size: 11pt;
         margin:0;
     }
 
@@ -207,82 +236,82 @@ a:hover{
         }
     }
 
-    .content{
-        padding: 36px 24px;
-
-        .v-divider{
-            display: none;
-        }
-
-        .col-sm-6{
-            padding:0 12px 16px 12px;
-        }
-
-        .content-card{
-            border: thin solid rgba(0,0,0,.12);
-            border-radius: 5px;
-            padding:24px 16px 60px 16px;
-            height: 100%;
-            position: relative;
-        }
-
-
-        p.content-heading{
-            font-size: 14pt;
-            padding-bottom: 16px;
-        }
-
-        p.content-caption{
-            font-size: 11pt;
-            margin:0;
-        }
-
-        p.content-title{
-            font-size: 14pt;
-            margin:0;
-        }
-
-        p.content-subtitle{
-            margin:0;
-        }
-
-        div.content-avatar, p.sermon-count{
-            padding-bottom:16px;
-            position: absolute;
-            bottom: 0;
-        }
-
-        div.content-avatar-img{
-            height: 27px;
-            width: 27px;
-        }
-
-        div.content-avatar-name span{
-            font-size: 11pt;
-            margin-left: 12px;
-        }
-
-        div.content-button{
-            width: 160px;
-            margin:44px auto 12px auto;
-
-            button{
-                padding: 8px;
-                font-size: 11pt;
-            }
-        }
-
-        .content-description{
-            font-size: 11pt;
-            margin: 0;
-        }
-    }
-
-    .content-card, .pastor-card{
-        &:hover{
-            box-shadow: 0 0 8px 0 #e7e7e7;
-        }
-    }
+    //.content{
+    //    padding: 36px 24px;
+    //
+    //    .v-divider{
+    //        display: none;
+    //    }
+    //
+    //    .col-sm-6{
+    //        padding:0 12px 16px 12px;
+    //    }
+    //
+    //    .content-card{
+    //        border: thin solid rgba(0,0,0,.12);
+    //        border-radius: 5px;
+    //        padding:24px 16px 60px 16px;
+    //        height: 100%;
+    //        position: relative;
+    //    }
+    //
+    //
+    //    p.content-heading{
+    //        font-size: 14pt;
+    //        padding-bottom: 16px;
+    //    }
+    //
+    //    p.content-caption{
+    //        font-size: 11pt;
+    //        margin:0;
+    //    }
+    //
+    //    p.content-title{
+    //        font-size: 14pt;
+    //        margin:0;
+    //    }
+    //
+    //    p.content-subtitle{
+    //        margin:0;
+    //    }
+    //
+    //    div.content-avatar, p.sermon-count{
+    //        padding-bottom:16px;
+    //        position: absolute;
+    //        bottom: 0;
+    //    }
+    //
+    //    div.content-avatar-img{
+    //        height: 27px;
+    //        width: 27px;
+    //    }
+    //
+    //    div.content-avatar-name span{
+    //        font-size: 11pt;
+    //        margin-left: 12px;
+    //    }
+    //
+    //    div.content-button{
+    //        width: 160px;
+    //        margin:44px auto 12px auto;
+    //
+    //        button{
+    //            padding: 8px;
+    //            font-size: 11pt;
+    //        }
+    //    }
+    //
+    //    .content-description{
+    //        font-size: 11pt;
+    //        margin: 0;
+    //    }
+    //}
+    //
+    //.content-card, .pastor-card{
+    //    &:hover{
+    //        box-shadow: 0 0 8px 0 #e7e7e7;
+    //    }
+    //}
 
 }
 @media (min-width: 768px) {
@@ -315,72 +344,72 @@ a:hover{
         }
     }
 
-    .content{
-        padding: 42px 30px;
-
-        .v-divider{
-            display: none;
-        }
-
-        .col-sm-6{
-            padding:0 12px 16px 12px;
-        }
-
-        .content-card{
-            padding:30px 24px 66px 24px;
-        }
-
-
-        p.content-heading{
-            font-size: 14pt;
-            padding-bottom: 24px;
-        }
-
-        p.content-caption{
-            font-size: 11pt;
-            margin:0 0 5px 0;
-        }
-
-        p.content-title{
-            font-size: 14pt;
-            margin:0;
-        }
-
-        p.content-subtitle{
-            margin:0;
-        }
-
-        div.content-avatar, p.sermon-count{
-            padding-bottom:24px;
-            position: absolute;
-            bottom: 0;
-        }
-
-        div.content-avatar-img{
-            height: 25px;
-            width: 25px;
-        }
-
-        div.content-avatar-name span{
-            font-size: 11pt;
-            margin-left: 12px;
-        }
-
-        div.content-button{
-            //width: 150px;
-            margin:50px auto 12px auto;
-
-            button{
-                //padding: 7px;
-                //font-size: 10pt;
-            }
-        }
-
-        .content-description{
-            font-size: 11pt;
-            margin: 0;
-        }
-    }
+    //.content{
+    //    padding: 42px 30px;
+    //
+    //    .v-divider{
+    //        display: none;
+    //    }
+    //
+    //    .col-sm-6{
+    //        padding:0 12px 16px 12px;
+    //    }
+    //
+    //    .content-card{
+    //        padding:30px 24px 66px 24px;
+    //    }
+    //
+    //
+    //    p.content-heading{
+    //        font-size: 14pt;
+    //        padding-bottom: 24px;
+    //    }
+    //
+    //    p.content-caption{
+    //        font-size: 11pt;
+    //        margin:0 0 5px 0;
+    //    }
+    //
+    //    p.content-title{
+    //        font-size: 14pt;
+    //        margin:0;
+    //    }
+    //
+    //    p.content-subtitle{
+    //        margin:0;
+    //    }
+    //
+    //    div.content-avatar, p.sermon-count{
+    //        padding-bottom:24px;
+    //        position: absolute;
+    //        bottom: 0;
+    //    }
+    //
+    //    div.content-avatar-img{
+    //        height: 25px;
+    //        width: 25px;
+    //    }
+    //
+    //    div.content-avatar-name span{
+    //        font-size: 11pt;
+    //        margin-left: 12px;
+    //    }
+    //
+    //    div.content-button{
+    //        //width: 150px;
+    //        margin:50px auto 12px auto;
+    //
+    //        button{
+    //            //padding: 7px;
+    //            //font-size: 10pt;
+    //        }
+    //    }
+    //
+    //    .content-description{
+    //        font-size: 11pt;
+    //        margin: 0;
+    //    }
+    //}
 
 }
 @media (min-width: 960px) {
@@ -415,66 +444,66 @@ a:hover{
         }
     }
 
-    .content{
-        padding: 52px 30px;
-
-        .v-divider{
-            display: none;
-        }
-
-        .col-sm-6{
-            padding:0 12px 24px 12px;
-        }
-
-        .content-card{
-
-        }
-
-
-        p.content-heading{
-            font-size: 15pt;
-            //padding-bottom: 24px;
-        }
-
-        p.content-caption{
-            font-size: 11pt;
-            margin:0 0 5px 0;
-        }
-
-        p.content-title{
-            font-size: 15pt;
-            margin:0;
-        }
-
-        p.content-subtitle{
-            font-size: 13pt;
-            margin:0;
-        }
-
-        div.content-avatar-img{
-            height: 25px;
-            width: 25px;
-        }
-
-        div.content-avatar-name span{
-            font-size: 11pt;
-            margin-left: 12px;
-        }
-
-        div.content-button{
-            //width: 150px;
-            margin:56px auto 12px auto;
-
-            button{
-                //padding: 7px;
-                //font-size: 10pt;
-            }
-        }
-
-        .content-description, .sermon-count{
-            font-size: 12pt;
-        }
-    }
+    //.content{
+    //    padding: 52px 30px;
+    //
+    //    .v-divider{
+    //        display: none;
+    //    }
+    //
+    //    .col-sm-6{
+    //        padding:0 12px 24px 12px;
+    //    }
+    //
+    //    .content-card{
+    //
+    //    }
+    //
+    //
+    //    p.content-heading{
+    //        font-size: 15pt;
+    //        //padding-bottom: 24px;
+    //    }
+    //
+    //    p.content-caption{
+    //        font-size: 11pt;
+    //        margin:0 0 5px 0;
+    //    }
+    //
+    //    p.content-title{
+    //        font-size: 15pt;
+    //        margin:0;
+    //    }
+    //
+    //    p.content-subtitle{
+    //        font-size: 13pt;
+    //        margin:0;
+    //    }
+    //
+    //    div.content-avatar-img{
+    //        height: 25px;
+    //        width: 25px;
+    //    }
+    //
+    //    div.content-avatar-name span{
+    //        font-size: 11pt;
+    //        margin-left: 12px;
+    //    }
+    //
+    //    div.content-button{
+    //        //width: 150px;
+    //        margin:56px auto 12px auto;
+    //
+    //        button{
+    //            //padding: 7px;
+    //            //font-size: 10pt;
+    //        }
+    //    }
+    //
+    //    .content-description, .sermon-count{
+    //        font-size: 12pt;
+    //    }
+    //}
 }
 @media (min-width: 1200px) {
     h1.header-title {
@@ -507,70 +536,70 @@ a:hover{
         }
     }
 
-    .content{
-        padding: 64px 30px;
-
-        .v-divider{
-            display: none;
-        }
-
-        .col-sm-6{
-            padding:0 12px 16px 12px;
-        }
-
-        .content-card{
-
-        }
-
-
-        p.content-heading{
-            //font-size: 14pt;
-            padding-bottom: 16px;
-        }
-
-        p.content-caption{
-            //font-size: 11pt;
-            margin:0 0 5px 0;
-        }
-
-        p.content-title{
-            //font-size: 14pt;
-            margin:0;
-        }
-
-        p.content-subtitle{
-            margin:0;
-        }
-
-        div.content-avatar, p.sermon-count{
-
-        }
-
-        div.content-avatar-img{
-            height: 25px;
-            width: 25px;
-        }
-
-        div.content-avatar-name span{
-            //font-size: 11pt;
-            margin-left: 12px;
-        }
-
-        div.content-button{
-            //width: 150px;
-            //margin:44px auto 12px auto;
-
-            button{
-                //padding: 7px;
-                //font-size: 10pt;
-            }
-        }
-
-        .content-description{
-            //font-size: 11pt;
-            margin: 0;
-        }
-    }
+    //.content{
+    //    padding: 64px 30px;
+    //
+    //    .v-divider{
+    //        display: none;
+    //    }
+    //
+    //    .col-sm-6{
+    //        padding:0 12px 16px 12px;
+    //    }
+    //
+    //    .content-card{
+    //
+    //    }
+    //
+    //
+    //    p.content-heading{
+    //        //font-size: 14pt;
+    //        padding-bottom: 16px;
+    //    }
+    //
+    //    p.content-caption{
+    //        //font-size: 11pt;
+    //        margin:0 0 5px 0;
+    //    }
+    //
+    //    p.content-title{
+    //        //font-size: 14pt;
+    //        margin:0;
+    //    }
+    //
+    //    p.content-subtitle{
+    //        margin:0;
+    //    }
+    //
+    //    div.content-avatar, p.sermon-count{
+    //
+    //    }
+    //
+    //    div.content-avatar-img{
+    //        height: 25px;
+    //        width: 25px;
+    //    }
+    //
+    //    div.content-avatar-name span{
+    //        //font-size: 11pt;
+    //        margin-left: 12px;
+    //    }
+    //
+    //    div.content-button{
+    //        //width: 150px;
+    //        //margin:44px auto 12px auto;
+    //
+    //        button{
+    //            //padding: 7px;
+    //            //font-size: 10pt;
+    //        }
+    //    }
+    //
+    //    .content-description{
+    //        //font-size: 11pt;
+    //        margin: 0;
+    //    }
+    //}
 }
 
 </style>
@@ -604,9 +633,9 @@ export default {
         AppFooter
     },
     created(){
-        this.$store.dispatch('SermonsIndex')
-        this.$store.dispatch('SeriesIndex')
-        this.$store.dispatch('AuthorsIndex')
+        // this.$store.dispatch('SermonsIndex')
+        // this.$store.dispatch('SeriesIndex')
+        // this.$store.dispatch('AuthorsIndex')
 
     },
     mounted(){
