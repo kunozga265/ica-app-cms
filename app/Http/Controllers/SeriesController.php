@@ -11,6 +11,13 @@ use Validator;
 
 class SeriesController extends Controller
 {
+    public function search($query){
+        $series=Series::search($query)->limit(2)->get();
+        return response()->json([
+            "series" => Resources\SeriesSearchResource::collection($series)
+        ],200);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,6 +27,16 @@ class SeriesController extends Controller
     {
         $series= Series::where("first_sermon_date","!=",null)->orderBy("first_sermon_date","desc")->paginate(2);
         return response()->json(new Resources\SeriesCollection($series),200);
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function options()
+    {
+        $series= Series::orderBy("title","asc")->get();
+        return response()->json(Resources\SeriesOptionsResource::collection($series),200);
     }
 
     /**
