@@ -7,9 +7,9 @@
             </v-btn>
         </span>
         <v-list dense class="mt-8">
-            <v-list-item link exact :to="{ name: 'home' }" @click="drawer=false">
+            <v-list-item link exact :to="{ name: 'dashboard' }" @click="drawer=false">
                 <v-list-item-content>
-                    <v-list-item-title ><span class="custom-font bold">HOME</span></v-list-item-title>
+                    <v-list-item-title ><span class="custom-font bold">DASHBOARD</span></v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
             <v-list-item link exact :to="{ name: 'sermons' }" @click="drawer=false">
