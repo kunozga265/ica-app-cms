@@ -32,7 +32,13 @@ export default {
     store: function(data){
         return axios.post( API.API_URL + '/' + controller + '/',
             {
-
+                title:data.title,
+                subtitle:data.subtitle,
+                body:data.body,
+                author_id:data.author_id,
+                series_id:data.series_id,
+                video_url:data.video_url,
+                published_at:data.published_at
             }
         );
     },
@@ -40,18 +46,24 @@ export default {
     /*
       POST
     */
-    update: function( data,slug){
-        return axios.post( API.API_URL + '/' + controller + '/' + slug,
+    update: function( data){
+        return axios.post( API.API_URL + '/' + controller + '/' + data.slug,
             {
-
+                title:data.title,
+                subtitle:data.subtitle,
+                body:data.body,
+                author_id:data.author_id,
+                series_id:data.series_id,
+                video_url:data.video_url,
+                published_at:data.published_at
             }
         );
     },
     /*
       DELETE
     */
-    destroy: function( slug){
-        return axios.delete( API.API_URL + '/' + controller + '/'+slug);
+    destroy: function(data){
+        return axios.delete( API.API_URL + '/' + controller + '/'+data.slug);
     },
 
 }

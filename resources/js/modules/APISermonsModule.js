@@ -30,7 +30,7 @@ export const Sermons = {
         SermonsIndex({commit}, data){
             commit('setSermonsLoadStatus',1);
 
-            API.index()
+            API.index(data.page)
                 .then(function (response) {
                     if(response.status===204){
                         commit('setSermonsLoadStatus',4);
@@ -110,48 +110,47 @@ export const Sermons = {
             commit('setSearchResultsStatus',0);
             commit('setSearchResults',[])
         },
-        store({commit},data){
+        SermonStore({commit},data){
             commit('setSermonsStoreStatus',1);
             API.store(data)
                 .then(function (response) {
-                    if(response.data.response==false){
+                    if(response.status===204){
                         commit('setSermonsStoreStatus',4);
                     }
-                    else{
+                    else if (response.status===200){
                         commit('setSermonsStoreStatus',2);
-                        commit('setSermons',response.Sermons);
+                        // commit('setSermons',response.Sermons);
                     }
                 })
-                .catch(function () {
-                    commit('setSermonsStoreStatus',3);
+                .catch(function (response) {
+                    commit('setSermonsStoreStatus',response);
                 })
         },
-        update({commit},data){
+        SermonUpdate({commit},data){
             commit('setSermonsUpdateStatus',1);
             API.update(data)
                 .then(function (response) {
-                    if(response.data.response==false){
+                    if(response.status===204){
                         commit('setSermonsUpdateStatus',4);
                     }
-                    else{
+                    else if(response.status===200){
                         commit('setSermonsUpdateStatus',2);
-                        commit('setSermons',response.Sermons);
+                        // commit('setSermons',response.Sermons);
                     }
                 })
                 .catch(function () {
                     commit('setSermonsUpdateStatus',3);
                 })
         },
-        destroy({commit},data){
+        SermonDestroy({commit},data){
             commit('setSermonsDeleteStatus',1);
             API.destroy(data)
                 .then(function (response) {
-                    if(response.data.response==false){
+                    if(response.status===204){
                         commit('setSermonsDeleteStatus',4);
                     }
-                    else{
+                    else if(response.status===200){
                         commit('setSermonsDeleteStatus',2);
-                        commit('setSermons',response.Sermons);
                     }
                 })
                 .catch(function () {
@@ -236,6 +235,12 @@ export const Sermons = {
         },
         getMoreSermons(state){
             return state.SermonsCurrentPage<state.SermonsLastPage
+        },
+        getSermonsLastPage(state){
+            return state.SermonsLastPage
+        },
+        getSermonsCurrentPage(state){
+            return state.SermonsCurrentPage
         },
         getSearchResults(state){
             return state.SearchResults;
