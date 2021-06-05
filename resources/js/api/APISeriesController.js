@@ -18,6 +18,18 @@ export default {
     show: function(slug){
         return axios.get( API.API_URL + '/' + controller + '/'+slug);
     },
+    /*
+        GET
+    */
+    search: function(query){
+        return axios.get( API.API_URL + '/' + controller + '/search/'+query);
+    },
+    /*
+        GET
+    */
+    options: function(){
+        return axios.get( API.API_URL + '/' + controller + '/options');
+    },
 
     /*
       POST

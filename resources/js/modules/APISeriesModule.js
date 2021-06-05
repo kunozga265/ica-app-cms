@@ -21,6 +21,13 @@ export const Series = {
 
         SeriesLastPage:0,
         SeriesCurrentPage:0,
+
+        SeriesSearchResults:[],
+        SeriesSearchResultsStatus:0,
+
+        SeriesOptions:[],
+        SeriesOptionsStatus:0
+
     },
     actions:{
         SeriesIndex({commit},data){
@@ -82,6 +89,43 @@ export const Series = {
                 .catch(function () {
                     commit('setSingleSeriesLoadStatus', 3);
                 })
+        },
+        SeriesSearch({commit}, data){
+            commit('setSeriesSearchResultsStatus',1);
+
+            API.search(data.query)
+                .then(function (response) {
+                    if(response.status===204){
+                        commit('setSeriesSearchResultsStatus',4);
+                    }
+                    else{
+                        commit('setSeriesSearchResultsStatus',2);
+                        commit('setSeriesSearchResults',response.data.series)
+                    }
+
+                })
+                .catch(function () {
+                    commit('setSearchResults',[]);
+                    commit('setSeriesSearchResultsStatus',3);
+                });
+        },
+        SeriesOptions({commit}, data){
+            commit('setSeriesOptionsStatus',1);
+
+            API.options()
+                .then(function (response) {
+                    if(response.status===204){
+                        commit('setSeriesOptionsStatus',4);
+                    }
+                    else{
+                        commit('setSeriesOptionsStatus',2);
+                        commit('setSeriesOptions',response.data)
+                    }
+
+                })
+                .catch(function () {
+                    commit('setSeriesOptionsStatus',3);
+                });
         },
 
         store({commit},data){
@@ -171,7 +215,24 @@ export const Series = {
         },
         setSeriesCurrentPage(state,currentPage){
             state.SeriesCurrentPage=currentPage;
-        }
+        },
+
+        //search
+
+        setSeriesSearchResults(state,SearchResults){
+            state.SeriesSearchResults=SearchResults
+        },
+        setSeriesSearchResultsStatus(state,status){
+            state.SeriesSearchResultsStatus=status;
+        },
+
+        setSeriesOptions(state,SearchResults){
+            state.SeriesOptions=SearchResults
+        },
+        setSeriesOptionsStatus(state,status){
+            state.SeriesOptionsStatus=status;
+        },
+
 
     },
     getters:{
@@ -201,7 +262,19 @@ export const Series = {
         },
         getMoreSeries(state){
             return state.SeriesCurrentPage<state.SeriesLastPage
-        }
+        },
+        getSeriesSearchResults(state){
+            return state.SeriesSearchResults;
+        },
+        getSeriesSearchResultsStatus(state){
+            return state.SeriesSearchResultsStatus;
+        },
+        getSeriesOptions(state){
+            return state.SeriesOptions;
+        },
+        getSeriesOptionsStatus(state){
+            return state.SeriesOptionsStatus;
+        },
     }
 
 };
