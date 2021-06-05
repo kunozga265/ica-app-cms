@@ -25,6 +25,8 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^27.1.0",
+        "@ckeditor/ckeditor5-vue2": "^1.0.5",
         "es6-promise": "^4.2.8",
         "vue-router": "^3.5.1",
         "vuetify": "^2.5.0",
