@@ -38,8 +38,10 @@ Route::group(["prefix"=>"authors"],function (){
 });
 
 Route::group(["prefix"=>"series"],function (){
+    Route::get('/search/{query}','App\Http\Controllers\SeriesController@search');
     Route::get('/','App\Http\Controllers\SeriesController@index');
-    Route::get('/{slug}','App\Http\Controllers\SeriesController@show');
+    Route::get('/options','App\Http\Controllers\SeriesController@options');
+    Route::get('/view/{slug}','App\Http\Controllers\SeriesController@show');
     Route::post('/','App\Http\Controllers\SeriesController@store');
     Route::post('/{slug}','App\Http\Controllers\SeriesController@update');
     Route::delete('/{slug}','App\Http\Controllers\SeriesController@destroy');
