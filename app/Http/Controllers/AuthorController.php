@@ -18,7 +18,7 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $authors= Author::all();
+        $authors= Author::orderBy("name","asc")->get();
         return response()->json(["authors"=>Resources\AuthorResource::collection($authors)],200);
     }
 
@@ -31,19 +31,20 @@ class AuthorController extends Controller
     public function store(Request $request)
     {
         $validator=Validator::make($request->all(),[
-            "name"          =>  "required | unique:authors",
+            "name"          =>  "required",
             "title"         =>  "required",
             "ica_pastor"    =>  "required",
         ]);
 
         if ($validator->fails()){
-            return response()->json(["message"=>"Name, title and ICA pastor attributes required. Furthermore the name should be unique."],400);
+            return response()->json(["message"=>"Name, title and ICA pastor attributes required."],400);
         }
 
         $author=new Author([
             "avatar"        =>  $request->avatar != null? /*Image Upload*/ $request->avatar : "images/avatar.png",
             "name"          =>  $request->name,
-            "slug"          =>  Str::slug($request->name),
+            "suffix"          =>  $request->suffix,
+            "slug"          =>  Str::slug($request->name).date("-Y-m-d"),
             "title"         =>  $request->title,
             "biography"     =>  Purifier::clean($request->biography),
             "ica_pastor"    =>  $request->ica_pastor,
@@ -88,20 +89,21 @@ class AuthorController extends Controller
             return response()->json(["response"=>false],204);
         else {
             $validator=Validator::make($request->all(),[
-                "name"          =>  "required | unique:authors",
+                "name"          =>  "required",
                 "title"         =>  "required",
                 "ica_pastor"    =>  "required",
                 "avatar"        =>  "required",
             ]);
 
             if ($validator->fails()){
-                return response()->json(["message"=>"Name, title, avatar and ICA pastor attributes required. Furthermore the name should be unique."],400);
+                return response()->json(["message"=>"Name, title, avatar and ICA pastor attributes required."],400);
             }
 
             $author->update([
                 "avatar"        =>  $request->avatar,
                 "name"          =>  $request->name,
-                "slug"          =>  Str::slug($request->name),
+                "suffix"          =>  $request->suffix,
+                "slug"          =>  Str::slug($request->name).date("-Y-m-d"),
                 "title"         =>  $request->title,
                 "biography"     =>  Purifier::clean($request->biography),
                 "ica_pastor"    =>  $request->ica_pastor,
