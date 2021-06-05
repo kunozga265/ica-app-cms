@@ -17,6 +17,7 @@ class CreateAuthorsTable extends Migration
             $table->id();
             $table->string("avatar");
             $table->string("name");
+            $table->string("suffix")->nullable();
             $table->string("title");
             $table->string("slug");
             $table->boolean("ica_pastor");
