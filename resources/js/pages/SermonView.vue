@@ -5,6 +5,10 @@
     font-family: 'Raleway', sans-serif;
     color:$app-color;
     padding: 0 16px;
+
+  .header-subtitle:hover{
+    cursor: pointer;
+  }
 }
 
 .header-content{
@@ -139,7 +143,7 @@
                     <div class="header-content ">
                         <p class="header-caption">{{computeDate(sermonCompound.sermon.published_date)}}</p>
                         <h1 class="header-title" >{{sermonCompound.sermon.title}}</h1>
-                        <p class="header-subtitle" v-if="sermonCompound.sermon.series">{{sermonCompound.sermon.series.title}}</p>
+                        <p class="header-subtitle" v-if="sermonCompound.sermon.series" @click="routeToSeriesView(sermonCompound.sermon.series.slug)">{{sermonCompound.sermon.series.title}}</p>
                     </div>
                     <v-divider></v-divider>
                     <div class="d-flex align-center sermon-avatar">
@@ -163,43 +167,43 @@
                     <div v-html="sermonCompound.sermon.body"></div>
                 </v-container>
             </v-layout>
-            <v-layout
-                class="content"
-                style="background-color: #fafafa"
-                v-if="(sermonCompound.sermonSeries).length!==0"
-            >
-                <v-container>
-                    <p class="content-heading">Sermons in this series</p>
-                    <v-row>
-                        <v-col
-                            cols="12"
-                            sm="6"
-                            md="4"
-                            v-for="sermon in sermonCompound.sermonSeries"
-                            :key="sermon.id"
-                            @click="routeToSermon(sermon.slug)"
-                        >
-                            <div class="content-card">
-                                <v-divider></v-divider>
-                                <p class="content-caption">{{computeDate(sermon.published_date)}}</p>
-                                <p class="content-title">{{ sermon.title }}</p>
-                                <!--                            <p class="content-subtitle" v-if="sermon.series != null">{{ sermon.series.title }}</p>-->
-                                <div class="d-flex align-center content-avatar">
-                                    <div class="content-avatar-img"
-                                         :style="{
-                                        backgroundImage:`url(${computeImageUrl(sermon.author.avatar)})`
-                                     }"
-                                    ></div>
-                                    <div class="content-avatar-name"><span>{{ sermon.author.name }}</span></div>
-                                </div>
-                            </div>
-                        </v-col>
-                    </v-row>
-                    <div class="content-button">
-                        <button   @click="routeToSeriesView(sermonCompound.sermon.series.slug)">View series</button>
-                    </div>
-                </v-container>
-            </v-layout>
+<!--            <v-layout-->
+<!--                class="content"-->
+<!--                style="background-color: #fafafa"-->
+<!--                v-if="(sermonCompound.sermonSeries).length!==0"-->
+<!--            >-->
+<!--                <v-container>-->
+<!--                    <p class="content-heading">Sermons in this series</p>-->
+<!--                    <v-row>-->
+<!--                        <v-col-->
+<!--                            cols="12"-->
+<!--                            sm="6"-->
+<!--                            md="4"-->
+<!--                            v-for="sermon in sermonCompound.sermonSeries"-->
+<!--                            :key="sermon.id"-->
+<!--                            @click="routeToSermon(sermon.slug)"-->
+<!--                        >-->
+<!--                            <div class="content-card">-->
+<!--                                <v-divider></v-divider>-->
+<!--                                <p class="content-caption">{{computeDate(sermon.published_date)}}</p>-->
+<!--                                <p class="content-title">{{ sermon.title }}</p>-->
+<!--                                &lt;!&ndash;                            <p class="content-subtitle" v-if="sermon.series != null">{{ sermon.series.title }}</p>&ndash;&gt;-->
+<!--                                <div class="d-flex align-center content-avatar">-->
+<!--                                    <div class="content-avatar-img"-->
+<!--                                         :style="{-->
+<!--                                        backgroundImage:`url(${computeImageUrl(sermon.author.avatar)})`-->
+<!--                                     }"-->
+<!--                                    ></div>-->
+<!--                                    <div class="content-avatar-name"><span>{{ sermon.author.name }}</span></div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </v-col>-->
+<!--                    </v-row>-->
+<!--                    <div class="content-button">-->
+<!--                        <button   @click="routeToSeriesView(sermonCompound.sermon.series.slug)">View series</button>-->
+<!--                    </div>-->
+<!--                </v-container>-->
+<!--            </v-layout>-->
         </div>
         <div v-else-if="sermonLoadStatus===3">
             <p>An error occurred</p>
