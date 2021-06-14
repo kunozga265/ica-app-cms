@@ -23,6 +23,7 @@ class CreateAuthorsTable extends Migration
             $table->boolean("ica_pastor");
             $table->text("biography")->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
