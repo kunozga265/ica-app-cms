@@ -1,5 +1,5 @@
 <style scoped lang="scss">
-@import "../../sass/_variables.scss";
+@import "../../../sass/variables";
 
 .content-wrapper{
   //padding: 36px;
@@ -188,7 +188,7 @@
               </v-col>
               <v-col
                   cols="12"
-                  class="text-sm-center"
+                  class="text-xs-center"
               >
                 <v-btn :disabled="sermonsStoreStatus===1" dark @click="postSermon">Post</v-btn>
               </v-col>
@@ -206,7 +206,7 @@
 
 <script>
 
-import {API} from "../config";
+import {API} from "../../config";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 
 export default {
