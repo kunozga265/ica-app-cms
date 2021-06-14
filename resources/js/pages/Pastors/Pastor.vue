@@ -1,5 +1,5 @@
 <style scoped lang="scss">
-@import "../../sass/_variables.scss";
+@import "../../../sass/variables";
 
 #pastor{
     padding: 0 16px;
@@ -48,7 +48,7 @@
 
 @media (min-width: 600px) {
     .header-content{
-        padding: 65px 0;
+        padding: 65px 0 0;
     }
 
     #pastor{
@@ -67,7 +67,7 @@
 }
 @media (min-width: 768px) {
     .header-content{
-        padding: 70px 0 76px 0;
+        padding: 70px 0 0 0;
     }
 
     #pastor{
@@ -130,8 +130,8 @@
             <div class="header-content ">
               <div class="pastor-image"
                    :style="{
-                                        backgroundImage:`url(${computeImageUrl(author.avatar)})`
-                                     }"
+                      backgroundImage:`url(${computeImageUrl(author.avatar)})`
+                   }"
               ></div>
               <p class="header-caption">{{author.title}}</p>
               <h1 class="header-title">{{ author.name }}</h1>
@@ -140,55 +140,44 @@
                 <div>{{author.biography}}</div>
               </div>
             </div>
-            <v-divider></v-divider>
+<!--            <v-divider></v-divider>-->
           </v-container>
         </v-layout>
-        <v-layout
-            class="content"
-        >
+        <v-layout class="content">
           <v-container>
-            <!--                <p class="content-heading">{{ computeSermonsCount(author.sermon_count) }} </p>-->
-            <div
-                class="compound-view-container"
-                v-for="(sermonCompound,index) in authorSermons"
-                :index="index"
-            >
-              <p class="content-heading">{{ sermonCompound.month + " " + sermonCompound.year }}</p>
-              <v-row>
-                <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                    v-for="sermon in sermonCompound.sermons"
-                    :key="sermon.id"
-                    @click="routeToSermon(sermon.slug)"
-                >
-                  <div class="content-card">
-                    <v-divider></v-divider>
-                    <p class="content-caption">{{computeDate(sermon.published_date)}}</p>
-                    <p class="content-title">{{ sermon.title }}</p>
-                    <p class="content-subtitle" v-if="sermon.series != null">{{ sermon.series.title }}</p>
-                    <div class="d-flex align-center content-avatar">
-                      <div class="content-avatar-img"
-                           :style="{
-                                          backgroundImage:`url(${computeImageUrl(sermon.author.avatar)})`
-                                       }"
-                      ></div>
-                      <div class="content-avatar-name"><span>{{ sermon.author.name }}</span></div>
-                    </div>
-                  </div>
-                </v-col>
-              </v-row>
-            </div>
-            <div v-if="authorSermonsAppendStatus!==1" v-show="moreSermons" class="content-button">
-              <button :disabled="authorSermonsAppendStatus===1" @click="loadMore">Load More</button>
-            </div>
-            <div v-else>
+            <div v-if="authorSermonsStatus===1">
               <div class="content-spacer"></div>
               <div class="d-flex justify-center">
                 <v-progress-circular indeterminate></v-progress-circular>
               </div>
             </div>
+            <!--                <p class="content-heading">{{ computeSermonsCount(author.sermon_count) }} </p>-->
+            <div
+                class="compound-view-container"
+                v-for="(sermonCompound,index) in authorSermons"
+                :index="index"
+                v-else-if="authorSermonsStatus===2"
+            >
+              <p class="content-heading">{{ sermonCompound.month + " " + sermonCompound.year }}</p>
+              <v-row>
+                <sermon
+                    v-for="sermon in sermonCompound.sermons"
+                    :key="sermon.id"
+                    :sermon="sermon"
+                    :delete-status="sermonsDeleteStatus"
+                    :restore-status="sermonsRestoreStatus"
+                ></sermon>
+              </v-row>
+            </div>
+            <v-pagination
+                v-model="page"
+                :length="lastPage"
+                v-show="lastPage!==0 && authorSermons.length!==0"
+            ></v-pagination>
+<!--            <div v-if="authorSermonsAppendStatus!==1" v-show="moreSermons" class="content-button">-->
+<!--              <button :disabled="authorSermonsAppendStatus===1" @click="loadMore">Load More</button>-->
+<!--            </div>-->
+
           </v-container>
         </v-layout>
       </div>
@@ -202,20 +191,28 @@
 </template>
 
 <script>
-import {API} from "../config";
+import {API} from "../../config";
+import Sermon from "../../components/Sermon";
 
 export default {
     props:['slug'],
     data: () => ({
-
+      page:1,
+      snackbar:false,
+      snackbarMessage:"",
+      deleteDialog:false
     }),
     components:{
-
+      Sermon
     },
     created(){
       window.scrollTo(0,0)
       this.$store.dispatch('AuthorShow',{
         slug:this.slug
+      })
+      this.$store.dispatch('AuthorSermons',{
+        slug:this.slug,
+        page:1
       })
     },
     mounted(){
@@ -233,30 +230,32 @@ export default {
         let sorted=[]
         let index=0
 
-        if (unsorted.length!==0){
-          let currentMonth=unsorted[0].published_date.month
-          let currentYear=unsorted[0].published_date.year
+        if (unsorted){
+          if (unsorted.length!==0) {
+            let currentMonth = unsorted[0].published_date.month
+            let currentYear = unsorted[0].published_date.year
 
-          for (let item in unsorted){
-            if (item==='0'){
-              sorted.push({
-                month: currentMonth,
-                year: currentYear,
-                sermons:[unsorted[item]]
-              })
-            }else{
-              if (currentMonth===unsorted[item].published_date.month && currentYear===unsorted[item].published_date.year){
-                sorted[index].sermons.push(unsorted[item])
-              }else{
-                index++
-                currentMonth=unsorted[item].published_date.month
-                currentYear=unsorted[item].published_date.year
-
+            for (let item in unsorted) {
+              if (item === '0') {
                 sorted.push({
                   month: currentMonth,
                   year: currentYear,
-                  sermons:[unsorted[item]]
+                  sermons: [unsorted[item]]
                 })
+              } else {
+                if (currentMonth === unsorted[item].published_date.month && currentYear === unsorted[item].published_date.year) {
+                  sorted[index].sermons.push(unsorted[item])
+                } else {
+                  index++
+                  currentMonth = unsorted[item].published_date.month
+                  currentYear = unsorted[item].published_date.year
+
+                  sorted.push({
+                    month: currentMonth,
+                    year: currentYear,
+                    sermons: [unsorted[item]]
+                  })
+                }
               }
             }
           }
@@ -264,15 +263,49 @@ export default {
         }else
           return []
       },
-      authorSermonsAppendStatus(){
-        return this.$store.getters.getAuthorSermonsAppendStatus
+      authorSermonsStatus(){
+        return this.$store.getters.getAuthorSermonsLoadStatus
       },
       moreSermons(){
         return this.$store.getters.getMoreAuthorSermons
+      },
+      sermonsDeleteStatus(){
+        return this.$store.getters.getSermonsDeleteStatus
+      },
+      sermonsRestoreStatus(){
+        return this.$store.getters.getSermonsRestoreStatus
+      },
+      lastPage(){
+        return this.$store.getters.getAuthorSermonsLastPage
       }
     },
     watch: {
-
+      page:function () {
+        this.$store.dispatch('AuthorSermons',{
+          slug:this.slug,
+          page:this.page
+        })
+      },
+      sermonsDeleteStatus:function () {
+        switch (this.sermonsDeleteStatus) {
+          case 1:
+            this.snackbarMessage="Deleting sermon";
+            break;
+          case 2:
+            this.snackbarMessage="Deleted successfully.";
+            this.$router.go();
+            break;
+          case 3:
+            this.snackbarMessage="Deleting was unsuccessful.";
+            break;
+          case 4:
+            this.snackbarMessage="Deleting was unsuccessful. Check your connection.";
+            break;
+          default:
+            break;
+        }
+        this.snackbar=true;
+      },
     },
     methods:{
       loadMore(){
