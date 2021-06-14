@@ -2,15 +2,17 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import Dashboard from './pages/Dashboard.vue';
-import Sermons from './pages/Sermons.vue';
-import Series from "./pages/Series";
+import Sermons from './pages/Sermons/Sermons.vue';
+import Series from "./pages/Series/Series";
 import Pastors from "./pages/Pastors";
 import Sermon from "./pages/SermonView";
-import SeriesView from "./pages/SeriesView";
+import SeriesView from "./pages/Series/SeriesView";
 import Pastor from "./pages/Pastor";
 import Search from "./pages/Search";
-import SermonNew from "./pages/SermonNew";
-import SermonEdit from "./pages/SermonEdit";
+import SermonNew from "./pages/Sermons/SermonNew";
+import SermonEdit from "./pages/Sermons/SermonEdit";
+import SeriesNew from "./pages/Series/SeriesNew";
+import SeriesEdit from "./pages/Series/SeriesEdit";
 
 Vue.use(VueRouter);
 
@@ -51,10 +53,21 @@ const router = new VueRouter({
             component: Series
         },
         {
-            path: '/series/:slug',
+            path: '/series/view/:slug',
             name: 'series-view',
             props: true,
             component: SeriesView
+        },
+        {
+            path: '/series/new',
+            name: 'series-new',
+            component: SeriesNew
+        },
+        {
+            path: '/series/edit/:slug',
+            name: 'series-edit',
+            props: true,
+            component: SeriesEdit
         },
         {
             path: '/pastors',
