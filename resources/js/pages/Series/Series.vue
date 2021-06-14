@@ -82,7 +82,6 @@
 </template>
 
 <script>
-import {API} from "../../config";
 import Series from "../../components/Series";
 
 export default {
