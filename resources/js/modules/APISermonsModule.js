@@ -16,6 +16,7 @@ export const Sermons = {
         SermonsStoreStatus:0,
         SermonsUpdateStatus:0,
         SermonsDeleteStatus:0,
+        SermonsRestoreStatus:0,
 
         Sermon:{},
         SermonLoadStatus:0,
@@ -30,7 +31,7 @@ export const Sermons = {
         SermonsIndex({commit}, data){
             commit('setSermonsLoadStatus',1);
 
-            API.index(data.page)
+            API.index(data)
                 .then(function (response) {
                     if(response.status===204){
                         commit('setSermonsLoadStatus',4);
@@ -106,6 +107,12 @@ export const Sermons = {
                     commit('setSearchResultsStatus',3);
                 });
         },
+        SermonsClear({commit}, data){
+            commit('setSermonsLoadStatus',0);
+            commit('setSermons',[])
+            commit('setSermonsLastPage',0)
+            commit('setSermonsCurrentPage',0)
+        },
         SermonsClearSearch({commit}, data){
             commit('setSearchResultsStatus',0);
             commit('setSearchResults',[])
@@ -140,6 +147,36 @@ export const Sermons = {
                 })
                 .catch(function () {
                     commit('setSermonsUpdateStatus',3);
+                })
+        },
+        SermonTrash({commit},data){
+            commit('setSermonsDeleteStatus',1);
+            API.trash(data)
+                .then(function (response) {
+                    if(response.status===204){
+                        commit('setSermonsDeleteStatus',4);
+                    }
+                    else if(response.status===200){
+                        commit('setSermonsDeleteStatus',2);
+                    }
+                })
+                .catch(function () {
+                    commit('setSermonsDeleteStatus',3);
+                })
+        },
+        SermonRestore({commit},data){
+            commit('setSermonsRestoreStatus',1);
+            API.restore(data)
+                .then(function (response) {
+                    if(response.status===204){
+                        commit('setSermonsRestoreStatus',4);
+                    }
+                    else if(response.status===200){
+                        commit('setSermonsRestoreStatus',2);
+                    }
+                })
+                .catch(function () {
+                    commit('setSermonsRestoreStatus',3);
                 })
         },
         SermonDestroy({commit},data){
@@ -191,6 +228,9 @@ export const Sermons = {
         setSermonsDeleteStatus(state,status){
             state.SermonsDeleteStatus=status;
         },
+        setSermonsRestoreStatus(state,status){
+            state.SermonsRestoreStatus=status;
+        },
         //Pagination
         setSermonsLastPage(state,lastPage){
             state.SermonsLastPage=lastPage;
@@ -226,6 +266,9 @@ export const Sermons = {
         },
         getSermonsDeleteStatus(state){
             return state.SermonsDeleteStatus;
+        },
+        getSermonsRestoreStatus(state){
+            return state.SermonsRestoreStatus;
         },
         getSermon(state){
             return state.Sermon;

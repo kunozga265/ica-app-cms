@@ -8,8 +8,8 @@ export default {
     /*
         GET
     */
-    index: function(page=1){
-        return axios.get( API.API_URL + '/' + controller + '?page='+page);
+    index: function(data){
+        return axios.get( API.API_URL + '/' + controller + '/filter/'+data.filter + '/' + data.query +'?page='+data.page);
     },
 
     /*
@@ -62,8 +62,19 @@ export default {
     /*
       DELETE
     */
-    destroy: function(data){
-        return axios.delete( API.API_URL + '/' + controller + '/'+data.slug);
+    trash: function(data){
+        return axios.delete( API.API_URL + '/' + controller + '/trash/'+data.slug);
     },
-
+    /*
+      DELETE
+    */
+    restore: function(data){
+        return axios.delete( API.API_URL + '/' + controller + '/restore/' + data.slug);
+    },
+    /*
+      DELETE
+    */
+    destroy: function(data){
+        return axios.delete( API.API_URL + '/' + controller + '/destroy/'+data.slug);
+    },
 }
