@@ -34,10 +34,14 @@ Route::group(["prefix"=>"sermons"],function (){
 
 Route::group(["prefix"=>"authors"],function (){
     Route::get('/','App\Http\Controllers\AuthorController@index');
+    Route::get('/filter/{filter}/{query}','App\Http\Controllers\AuthorController@getFiltered');
     Route::get('/{slug}','App\Http\Controllers\AuthorController@show');
+    Route::get('/{slug}/sermons','App\Http\Controllers\AuthorController@getSermonsByAuthor');
     Route::post('/','App\Http\Controllers\AuthorController@store');
     Route::post('/{slug}','App\Http\Controllers\AuthorController@update');
-    Route::delete('/{slug}','App\Http\Controllers\AuthorController@destroy');
+    Route::delete('/trash/{slug}','App\Http\Controllers\AuthorController@trash');
+    Route::delete('/restore/{slug}','App\Http\Controllers\AuthorController@restore');
+    Route::delete('/destroy/{slug}','App\Http\Controllers\AuthorController@destroy');
 });
 
 Route::group(["prefix"=>"series"],function (){
