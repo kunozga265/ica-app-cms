@@ -23,10 +23,13 @@ Route::group(["prefix"=>"sermons"],function (){
     Route::get('/search/{query}','App\Http\Controllers\SermonController@search');
     Route::get('/','App\Http\Controllers\SermonController@index');
     Route::get('/get/{timestamp}','App\Http\Controllers\SermonController@getLatest');
+    Route::get('/filter/{filter}/{query}','App\Http\Controllers\SermonController@getFiltered');
     Route::get('/{slug}','App\Http\Controllers\SermonController@show');
     Route::post('/','App\Http\Controllers\SermonController@store');
     Route::post('/{slug}','App\Http\Controllers\SermonController@update');
-    Route::delete('/{slug}','App\Http\Controllers\SermonController@destroy');
+    Route::delete('/trash/{slug}','App\Http\Controllers\SermonController@trash');
+    Route::delete('/restore/{slug}','App\Http\Controllers\SermonController@restore');
+    Route::delete('/destroy/{slug}','App\Http\Controllers\SermonController@destroy');
 });
 
 Route::group(["prefix"=>"authors"],function (){
@@ -40,11 +43,14 @@ Route::group(["prefix"=>"authors"],function (){
 Route::group(["prefix"=>"series"],function (){
     Route::get('/search/{query}','App\Http\Controllers\SeriesController@search');
     Route::get('/','App\Http\Controllers\SeriesController@index');
+    Route::get('/filter/{filter}/{query}','App\Http\Controllers\SeriesController@getFiltered');
     Route::get('/options','App\Http\Controllers\SeriesController@options');
-    Route::get('/view/{slug}','App\Http\Controllers\SeriesController@show');
+    Route::get('/view/{slug}/{filter}','App\Http\Controllers\SeriesController@show');
     Route::post('/','App\Http\Controllers\SeriesController@store');
     Route::post('/{slug}','App\Http\Controllers\SeriesController@update');
-    Route::delete('/{slug}','App\Http\Controllers\SeriesController@destroy');
+    Route::delete('/trash/{slug}','App\Http\Controllers\SeriesController@trash');
+    Route::delete('/restore/{slug}','App\Http\Controllers\SeriesController@restore');
+    Route::delete('/destroy/{slug}','App\Http\Controllers\SeriesController@destroy');
 });
 
 Route::group(["prefix"=>"categories"],function (){
