@@ -15,6 +15,7 @@ export const Series = {
         SeriesStoreStatus:0,
         SeriesUpdateStatus:0,
         SeriesDeleteStatus:0,
+        SeriesRestoreStatus:0,
 
         SingleSeries:{},
         SingleSeriesLoadStatus:0,
@@ -33,7 +34,7 @@ export const Series = {
         SeriesIndex({commit},data){
             commit('setSeriesLoadStatus',1);
 
-            API.index()
+            API.index(data)
                 .then(function (response) {
                     if(response.data.response===204){
                         commit('setSeriesLoadStatus',4);
@@ -75,7 +76,7 @@ export const Series = {
         SeriesShow({commit,state},data){
             commit('setSingleSeriesLoadStatus',1);
 
-            API.show(data.slug)
+            API.show(data)
                 .then(function (response) {
                     if (response.status === 204) {
                         commit('setSingleSeriesLoadStatus', 4);
@@ -127,49 +128,82 @@ export const Series = {
                     commit('setSeriesOptionsStatus',3);
                 });
         },
+        SeriesClear({commit},data){
+            commit('setSeriesLoadStatus',0);
+            commit('setSeries',[]);
+            commit('setSeriesLastPage',0)
+            commit('setSeriesCurrentPage',0)
+        },
 
-        store({commit},data){
+        SeriesStore({commit},data){
             commit('setSeriesStoreStatus',1);
             API.store(data)
                 .then(function (response) {
-                    if(response.data.response==false){
+                    if(response.status===204){
                         commit('setSeriesStoreStatus',4);
                     }
-                    else{
+                    else if(response.status===200){
                         commit('setSeriesStoreStatus',2);
-                        commit('setSeries',response.Series);
                     }
                 })
                 .catch(function () {
                     commit('setSeriesStoreStatus',3);
                 })
         },
-        update({commit},data){
+        SeriesUpdate({commit},data){
             commit('setSeriesUpdateStatus',1);
             API.update(data)
                 .then(function (response) {
-                    if(response.data.response==false){
+                    if(response.status===204){
                         commit('setSeriesUpdateStatus',4);
                     }
-                    else{
+                    else if(response.status===200){
                         commit('setSeriesUpdateStatus',2);
-                        commit('setSeries',response.Series);
                     }
                 })
                 .catch(function () {
                     commit('setSeriesUpdateStatus',3);
                 })
         },
-        destroy({commit},data){
+        SeriesTrash({commit},data){
+            commit('setSeriesDeleteStatus',1);
+            API.trash(data)
+                .then(function (response) {
+                    if(response.status===204){
+                        commit('setSeriesDeleteStatus',response);
+                    }
+                    else{
+                        commit('setSeriesDeleteStatus',2);
+                    }
+                })
+                .catch(function () {
+                    commit('setSeriesDeleteStatus',3);
+                })
+        },
+        SeriesRestore({commit},data){
+            commit('setSeriesRestoreStatus',1);
+            API.restore(data)
+                .then(function (response) {
+                    if(response.status===204){
+                        commit('setSeriesRestoreStatus',4);
+                    }
+                    else{
+                        commit('setSeriesRestoreStatus',2);
+                    }
+                })
+                .catch(function () {
+                    commit('setSeriesRestoreStatus',3);
+                })
+        },
+        SeriesDestroy({commit},data){
             commit('setSeriesDeleteStatus',1);
             API.destroy(data)
                 .then(function (response) {
-                    if(response.data.response==false){
+                    if(response.status===204){
                         commit('setSeriesDeleteStatus',4);
                     }
                     else{
                         commit('setSeriesDeleteStatus',2);
-                        commit('setSeries',response.Series);
                     }
                 })
                 .catch(function () {
@@ -208,6 +242,9 @@ export const Series = {
         },
         setSeriesDeleteStatus(state,status){
             state.SeriesDeleteStatus=status;
+        },
+        setSeriesRestoreStatus(state,status){
+            state.SeriesRestoreStatus=status;
         },
         //Pagination
         setSeriesLastPage(state,lastPage){
@@ -254,6 +291,9 @@ export const Series = {
         getSeriesDeleteStatus(state){
             return state.SeriesDeleteStatus;
         },
+        getSeriesRestoreStatus(state){
+            return state.SeriesRestoreStatus;
+        },
         getSingleSeries(state){
             return state.SingleSeries;
         },
@@ -262,6 +302,9 @@ export const Series = {
         },
         getMoreSeries(state){
             return state.SeriesCurrentPage<state.SeriesLastPage
+        },
+        getSeriesLastPage(state){
+            return state.SeriesLastPage
         },
         getSeriesSearchResults(state){
             return state.SeriesSearchResults;
