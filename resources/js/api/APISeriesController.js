@@ -8,15 +8,15 @@ export default {
     /*
         GET
     */
-    index: function(page=1){
-        return axios.get( API.API_URL + '/' + controller + '?page='+page);
+    index: function(data){
+        return axios.get( API.API_URL + '/' + controller + '/filter/'+data.filter + '/' + data.query +'?page='+data.page);
     },
 
     /*
         GET
     */
-    show: function(slug){
-        return axios.get( API.API_URL + '/' + controller + '/'+slug);
+    show: function(data){
+        return axios.get( API.API_URL + '/' + controller + '/view/'+data.slug+ '/'+data.filter);
     },
     /*
         GET
@@ -37,7 +37,8 @@ export default {
     store: function(data){
         return axios.post( API.API_URL + '/' + controller + '/',
             {
-
+                title:data.title,
+                description:data.description,
             }
         );
     },
@@ -45,18 +46,31 @@ export default {
     /*
       POST
     */
-    update: function( data,slug){
-        return axios.post( API.API_URL + '/' + controller + '/' + slug,
+    update: function( data){
+        return axios.post( API.API_URL + '/' + controller + '/' + data.slug,
             {
-
+                title:data.title,
+                description:data.description,
             }
         );
     },
     /*
       DELETE
     */
-    destroy: function( slug){
-        return axios.delete( API.API_URL + '/' + controller + '/'+slug);
+    trash: function(data){
+        return axios.delete( API.API_URL + '/' + controller + '/trash/'+data.slug);
+    },
+    /*
+      DELETE
+    */
+    restore: function(data){
+        return axios.delete( API.API_URL + '/' + controller + '/restore/'+data.slug);
+    },
+    /*
+      DELETE
+    */
+    destroy: function(data){
+        return axios.delete( API.API_URL + '/' + controller + '/destroy/'+data.slug);
     },
 
 }
