@@ -8,8 +8,14 @@ export default {
     /*
         GET
     */
-    index: function(){
-        return axios.get( API.API_URL + '/' + controller + '/');
+    index: function(data){
+        return axios.get( API.API_URL + '/' + controller + '/filter/'+data.filter + '/' + data.query);
+    },
+    /*
+        GET
+    */
+    getSermonsByAuthor: function(data){
+        return axios.get( API.API_URL + '/' + controller + '/'+data.slug + '/sermons?page=' + data.page);
     },
 
     /*
@@ -25,7 +31,12 @@ export default {
     store: function(data){
         return axios.post( API.API_URL + '/' + controller + '/',
             {
-
+                name:data.name,
+                suffix:data.suffix,
+                title:data.title,
+                avatar:data.avatar,
+                ica_pastor:data.ica_pastor,
+                biography:data.biography
             }
         );
     },
@@ -33,18 +44,35 @@ export default {
     /*
       POST
     */
-    update: function( data,slug){
-        return axios.post( API.API_URL + '/' + controller + '/' + slug,
+    update: function(data){
+        return axios.post( API.API_URL + '/' + controller + '/' + data.slug,
             {
-
+                name:data.name,
+                suffix:data.suffix,
+                title:data.title,
+                avatar:data.avatar,
+                ica_pastor:data.ica_pastor,
+                biography:data.biography
             }
         );
     },
     /*
       DELETE
     */
-    destroy: function( slug){
-        return axios.delete( API.API_URL + '/' + controller + '/'+slug);
+    trash: function(data){
+        return axios.delete( API.API_URL + '/' + controller + '/trash/'+data.slug);
+    },
+    /*
+      DELETE
+    */
+    restore: function(data){
+        return axios.delete( API.API_URL + '/' + controller + '/restore/'+data.slug);
+    },
+    /*
+      DELETE
+    */
+    destroy: function(data){
+        return axios.delete( API.API_URL + '/' + controller + '/destroy/'+data.slug);
     },
 
 }
