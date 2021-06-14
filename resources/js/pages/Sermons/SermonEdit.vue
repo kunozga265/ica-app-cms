@@ -1,5 +1,5 @@
 <style scoped lang="scss">
-@import "../../sass/_variables.scss";
+@import "../../../sass/variables";
 
 .content-wrapper{
   //padding: 36px;
@@ -186,7 +186,7 @@
 
 <script>
 
-import {API} from "../config";
+import {API} from "../../config";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 
 export default {
@@ -337,7 +337,7 @@ export default {
             break;
           case 2:
             this.snackbarMessage="Updated successfully.";
-            this.$router.push('/sermons');
+            this.$router.go(-1);
             break;
           case 3:
             this.snackbarMessage="Updating was unsuccessful.";
