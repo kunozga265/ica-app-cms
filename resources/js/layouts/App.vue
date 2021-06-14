@@ -85,6 +85,10 @@ h1.header-title {
 
 }
 
+.v-pagination{
+  padding: 54px 0 0;
+}
+
 .content{
     padding: 30px 16px;
     font-family: 'Raleway', sans-serif;
@@ -113,7 +117,7 @@ h1.header-title {
 
 
     p.content-heading{
-        font-size: 14pt;
+        font-size: 13pt;
         //padding-bottom: 16px;
     }
 
@@ -192,7 +196,7 @@ h1.header-title {
     }
 
     .compound-view-container{
-        margin-top: 42px;
+        margin-top: 24px;
     }
     .compound-view-container:first-of-type{
         margin-top: 0;
@@ -634,7 +638,6 @@ export default {
     },
     created(){
         // this.$store.dispatch('SermonsIndex')
-        // this.$store.dispatch('SeriesIndex')
         // this.$store.dispatch('AuthorsIndex')
 
     },
