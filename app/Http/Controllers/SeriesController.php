@@ -40,6 +40,34 @@ class SeriesController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @param string $filter
+     * @param string $query
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getFiltered($filter,$query)
+    {
+        switch ($filter){
+            case "Published":
+                $series= Series::where("first_sermon_date","!=",null)->orderBy("first_sermon_date","desc")->paginate(2);
+                break;
+            case "Unpublished":
+                $series= Series::where("first_sermon_date",null)->orderBy("title","asc")->paginate(2);
+                break;
+            case "Trashed":
+                $series= Series::onlyTrashed()->orderBy("title","asc")->paginate(2);
+                break;
+            case "Search":
+                $series=Series::search($query)->paginate(2);
+                break;
+            default:
+                return response()->json([],204);
+        }
+        return response()->json(new Resources\SeriesCollection($series),200);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -60,7 +88,6 @@ class SeriesController extends Controller
             "slug"              =>  Str::slug($request->title).date("-Y-m-d"),
             "description"       =>  Purifier::clean($request->description),
             "theme_id"          =>  $request->theme_id,
-            "first_sermon_date" =>  $request->first_sermon_date,
         ]);
 
         $series->save();
@@ -72,16 +99,22 @@ class SeriesController extends Controller
      * Display the specified resource.
      *
      * @param  string $slug
+     * @param  string $filter
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($slug)
+    public function show($slug,$filter)
     {
         $series = Series::where('slug','=',$slug)->first();
 
         if (!is_object($series))
             return response()->json(["response"=>false],204);
         else {
-            $sermons=$series->sermons()->orderBy("published_at","desc")->get();
+            if ($filter=="Filter")
+                $sermons=[];
+            else
+                $sermons=$series->sermons()->orderBy("published_at","desc")->get();
+
+
             return response()->json([
                 "series" => new Resources\SeriesResource($series),
                 "sermons"=>Resources\SermonResource::collection($sermons)
@@ -107,7 +140,6 @@ class SeriesController extends Controller
                 "slug"          =>  Str::slug($request->title).date("-Y-m-d"),
                 "description"   =>  Purifier::clean($request->description),
                 "theme_id"      =>  $request->theme_id,
-                "first_sermon_date" =>  $request->first_sermon_date,
             ]);
             return response()->json(["series"=>new Resources\SeriesResource($series)],200);
         }
@@ -119,13 +151,55 @@ class SeriesController extends Controller
      * @param  string  $slug
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($slug)
+    public function trash($slug)
     {
         $series = Series::where('slug','=',$slug)->first();
         if (!is_object($series))
             return response()->json(["response"=>false],204);
         else {
+            $series->update([
+                "first_sermon_date" =>null
+            ]);
+            if($series->sermons->count()>0){
+                foreach ($series->sermons as $sermon){
+                    $sermon->update([
+                        'series_id'=>null
+                    ]);
+                }
+            }
             $series->delete();
+            return response()->json(["response" => true], 200);
+        }
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function restore($slug)
+    {
+        $series = Series::onlyTrashed()->where('slug','=',$slug)->first();
+        if (!is_object($series))
+            return response()->json(["response"=>false],204);
+        else {
+            $series->restore();
+            return response()->json(["response" => true], 200);
+        }
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy($slug)
+    {
+        $series = Series::onlyTrashed()->where('slug','=',$slug)->first();
+        if (!is_object($series))
+            return response()->json(["response"=>false],204);
+        else {
+            $series->forceDelete();
             return response()->json(["response" => true], 200);
         }
     }
