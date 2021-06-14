@@ -37,6 +37,7 @@ class SermonResource extends JsonResource
             ],
             "created_at"    =>  $this->created_at->getTimestamp(),
             "updated_at"    =>  $this->updated_at->getTimestamp(),
+            "trashed"       =>  $this->trashed()
         ];
     }
 }

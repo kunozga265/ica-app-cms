@@ -43,7 +43,8 @@ class SeriesResource extends JsonResource
             "duration"      =>  $duration,
             "duration_year" =>  $duration_year,
             "sermon_count"  =>  $sermon_count,
-            "first_sermon_date"  =>  $this->first_sermon_date
+            "first_sermon_date"  =>  $this->first_sermon_date,
+            "trashed"       =>  $this->trashed()
         ];
     }
 }
