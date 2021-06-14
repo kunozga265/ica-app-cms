@@ -74,6 +74,11 @@ h1.header-title {
 //    }
 //}
 
+.more-details{
+  position: absolute;
+  right: 0;
+}
+
 .v-application ul.more-details-dropdown{
   list-style:none;
   padding: 0 12px;
@@ -108,11 +113,10 @@ h1.header-title {
     .content-wrapper{
       padding:0 24px 0 0;
     }
-    .more-details{
-      position: absolute;
-      right: 0;
-    }
+
   }
+
+
 
 
 
