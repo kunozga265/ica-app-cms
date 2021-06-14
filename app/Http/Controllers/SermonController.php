@@ -70,6 +70,34 @@ class SermonController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @param string $filter
+     * @param string $query
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getFiltered($filter,$query)
+    {
+        switch ($filter){
+            case "Published":
+                $sermons= Sermon::where("published_at", "<=", Carbon::now()->getTimestamp())->orderBy("published_at","desc")->paginate(3);
+                break;
+            case "Scheduled":
+                $sermons= Sermon::where("published_at", ">", Carbon::now()->getTimestamp())->orderBy("published_at","desc")->paginate(3);
+                break;
+            case "Trashed":
+                $sermons=Sermon::onlyTrashed()->orderBy("published_at","desc")->paginate(3);
+                break;
+            case "Search":
+                $sermons=Sermon::search($query)->paginate(3);
+                break;
+            default:
+                return response()->json([],204);
+        }
+        return response()->json(new Resources\SermonCollection($sermons),200);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -103,7 +131,7 @@ class SermonController extends Controller
         if($sermon->series !==null) {
             $series = Series::find($sermon->series->id);
 
-            if (is_object($series) && $series->first_sermon_date == null) {
+            if ($series->first_sermon_date == null || $series->first_sermon_date > $sermon->published_at) {
                 $series->update([
                     "first_sermon_date" => $sermon->published_at
                 ]);
@@ -151,6 +179,7 @@ class SermonController extends Controller
         if (!is_object($sermon))
             return response()->json(["response"=>false],204);
         else {
+            $existentSeries=$sermon->series_id;
             $sermon->update([
                 "title"         =>  $request->title,
                 "slug"          =>  Str::slug($request->title).date("-Y-m-d"),
@@ -163,15 +192,36 @@ class SermonController extends Controller
                 "published_at"  =>  $request->published_at
             ]);
 
-            if($sermon->series !==null) {
-                $series = Series::find($sermon->series->id);
-
-                if (is_object($series) && $series->first_sermon_date == null) {
-                    $series->update([
-                        "first_sermon_date" => $sermon->published_at
-                    ]);
-                }
+            if($existentSeries){
+                $this->setSeriesFirstSermonDate($existentSeries);
             }
+
+            if($request->series_id && $request->series_id!=$existentSeries){
+                $this->setSeriesFirstSermonDate($request->series_id);
+            }
+
+//
+//            if($sermon->series !==null) {
+//                $series = Series::find($sermon->series->id);
+//
+//                if ($series->first_sermon_date == null || $series->first_sermon_date > $sermon->published_at) {
+//                    $series->update([
+//                        "first_sermon_date" => $sermon->published_at
+//                    ]);
+//                }
+//            }elseif ($sermon->series == null && $existentSeries!=null){
+//                $series = Series::find($existentSeries);
+//                if ($series->count()==0){
+//                    $series->update([
+//                        "first_sermon_date" => 0
+//                    ]);
+//                }else{
+//                    $sermons=$series->sermons()->orderBy("published_at","asc")->limit(1)->get();
+//                    $series->update([
+//                        "first_sermon_date" =>$sermons->published_at
+//                    ]);
+//                }
+//            }
 
             return response()->json(["sermon"=>new Resources\SermonResource($sermon)],200);
         }
@@ -183,14 +233,69 @@ class SermonController extends Controller
      * @param  string $slug
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($slug)
+    public function trash($slug)
     {
         $sermon = Sermon::where('slug','=',$slug)->first();
         if (!is_object($sermon))
-            return response()->json(["response"=>false],204);
+            return response()->json(["response" => false], 204);
         else {
             $sermon->delete();
+            if($sermon->series !==null) {
+                $this->setSeriesFirstSermonDate($sermon->series->id);
+            }
             return response()->json(["response" => true], 200);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  string $slug
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function restore($slug)
+    {
+        $sermon = Sermon::onlyTrashed()->where('slug','=',$slug)->first();
+        if (!is_object($sermon))
+            return response()->json(["response"=>false],204);
+        else {
+            $sermon->restore();
+            if($sermon->series !==null) {
+                $this->setSeriesFirstSermonDate($sermon->series->id);
+            }
+            return response()->json(["response" => true], 200);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  string $slug
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy($slug)
+    {
+        $sermon = Sermon::onlyTrashed()->where('slug','=',$slug)->first();
+        if (!is_object($sermon))
+            return response()->json(["response"=>false],204);
+        else {
+            $sermon->forceDelete();
+            return response()->json(["response" => true], 200);
+        }
+    }
+
+    private function setSeriesFirstSermonDate($seriesId){
+        $series = Series::find($seriesId);
+        $sermons=$series->sermons()->orderBy("published_at","asc")->get();
+
+        if($sermons->isNotEmpty()){
+            $series->update([
+                "first_sermon_date" =>$sermons->first()->published_at
+            ]);
+        }else{
+            $series->update([
+                "first_sermon_date" =>null
+            ]);
         }
     }
 }
