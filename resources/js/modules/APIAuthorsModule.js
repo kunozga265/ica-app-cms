@@ -14,6 +14,7 @@ export const Authors = {
         AuthorsStoreStatus:0,
         AuthorsUpdateStatus:0,
         AuthorsDeleteStatus:0,
+        AuthorsRestoreStatus:0,
 
         Author:{},
         AuthorLoadStatus:0,
@@ -21,21 +22,21 @@ export const Authors = {
         AuthorSermonsLoadStatus:0,
         AuthorSermonsAppendStatus:0,
 
-        lastPage:0,
-        currentPage:0,
+        AuthorSermonsLastPage:0,
+        AuthorSermonsCurrentPage:0,
     },
     actions:{
         AuthorsIndex({commit},data){
             commit('setAuthorsLoadStatus',1);
 
-            API.index()
+            API.index(data)
                 .then(function (response) {
                     if(response.data.response===false){
                         commit('setAuthorsLoadStatus',4);
                     }
                     else{
                         commit('setAuthorsLoadStatus',2);
-                        commit('setAuthors',response.data.authors);
+                        commit('setAuthors',response.data);
                     }
 
                 })
@@ -54,9 +55,9 @@ export const Authors = {
                     }
                     else{
                         commit('setAuthor', response.data.author);
-                        commit('setAuthorSermons', response.data.sermons.sermons);
-                        commit('setLastPage',response.data.sermons.meta.last_page)
-                        commit('setCurrentPage',response.data.sermons.meta.current_page)
+                        // commit('setAuthorSermons', response.data.sermons.sermons);
+                        // commit('setLastPage',response.data.sermons.meta.last_page)
+                        // commit('setCurrentPage',response.data.sermons.meta.current_page)
                         commit('setAuthorLoadStatus', 2);
                     }
                 })
@@ -87,49 +88,100 @@ export const Authors = {
                     })
             }
         },
+        AuthorSermons({commit}, data){
+            commit('setAuthorSermonsLoadStatus',1);
 
-        store({commit},data){
+            API.getSermonsByAuthor(data)
+                .then(function (response) {
+                    if(response.status===204){
+                        commit('setAuthorSermonsLoadStatus',4);
+                    }
+                    else if (response.status===200){
+                        commit('setAuthorSermonsLoadStatus',2);
+                        commit('setAuthorSermons',response.data.sermons)
+                        commit('setAuthorSermonsLastPage',response.data.meta.last_page)
+                        commit('setAuthorSermonsCurrentPage',response.data.meta.current_page)
+                    }
+
+                })
+                .catch(function () {
+                    commit('setAuthorSermonsLoadStatus',3);
+                });
+        },
+        AuthorsClear({commit},data){
+            commit('setAuthorsLoadStatus',0);
+            commit('setAuthors',[]);
+        },
+
+        AuthorsStore({commit},data){
             commit('setAuthorsStoreStatus',1);
             API.store(data)
                 .then(function (response) {
-                    if(response.data.response==false){
+                    if(response.status===204){
                         commit('setAuthorsStoreStatus',4);
                     }
-                    else{
+                    else if(response.status===200){
                         commit('setAuthorsStoreStatus',2);
-                        commit('setAuthors',response.Authors);
                     }
                 })
                 .catch(function () {
                     commit('setAuthorsStoreStatus',3);
                 })
         },
-        update({commit},data){
+        AuthorsUpdate({commit},data){
             commit('setAuthorsUpdateStatus',1);
             API.update(data)
                 .then(function (response) {
-                    if(response.data.response==false){
+                    if(response.status===204){
                         commit('setAuthorsUpdateStatus',4);
                     }
                     else{
                         commit('setAuthorsUpdateStatus',2);
-                        commit('setAuthors',response.Authors);
                     }
                 })
                 .catch(function () {
                     commit('setAuthorsUpdateStatus',3);
                 })
         },
-        destroy({commit},data){
+        AuthorTrash({commit},data){
             commit('setAuthorsDeleteStatus',1);
-            API.destroy(data)
+            API.trash(data)
                 .then(function (response) {
-                    if(response.data.response==false){
+                    if(response.status===204){
                         commit('setAuthorsDeleteStatus',4);
                     }
                     else{
                         commit('setAuthorsDeleteStatus',2);
-                        commit('setAuthors',response.Authors);
+                    }
+                })
+                .catch(function () {
+                    commit('setAuthorsDeleteStatus',3);
+                })
+        },
+        AuthorRestore({commit},data){
+            commit('setAuthorsRestoreStatus',1);
+            API.restore(data)
+                .then(function (response) {
+                    if(response.status===204){
+                        commit('setAuthorsRestoreStatus',4);
+                    }
+                    else{
+                        commit('setAuthorsRestoreStatus',2);
+                    }
+                })
+                .catch(function () {
+                    commit('setAuthorsRestoreStatus',3);
+                })
+        },
+        AuthorDestroy({commit},data){
+            commit('setAuthorsDeleteStatus',1);
+            API.destroy(data)
+                .then(function (response) {
+                    if(response.status===204){
+                        commit('setAuthorsDeleteStatus',4);
+                    }
+                    else{
+                        commit('setAuthorsDeleteStatus',2);
                     }
                 })
                 .catch(function () {
@@ -178,12 +230,15 @@ export const Authors = {
         setAuthorsDeleteStatus(state,status){
             state.AuthorsDeleteStatus=status;
         },
-        //Pagination
-        setLastPage(state,lastPage){
-            state.lastPage=lastPage;
+        setAuthorsRestoreStatus(state,status){
+            state.AuthorsRestoreStatus=status;
         },
-        setCurrentPage(state,currentPage){
-            state.currentPage=currentPage;
+        //Pagination
+        setAuthorSermonsLastPage(state,lastPage){
+            state.AuthorSermonsLastPage=lastPage;
+        },
+        setAuthorSermonsCurrentPage(state,currentPage){
+            state.AuthorSermonsCurrentPage=currentPage;
         }
 
     },
@@ -203,6 +258,9 @@ export const Authors = {
         getAuthorsDeleteStatus(state){
             return state.AuthorsDeleteStatus;
         },
+        getAuthorsRestoreStatus(state){
+            return state.AuthorsRestoreStatus;
+        },
         getAuthor(state){
             return state.Author;
         },
@@ -220,6 +278,9 @@ export const Authors = {
         },
         getMoreAuthorSermons(state){
             return state.currentPage<state.lastPage
+        },
+        getAuthorSermonsLastPage(state){
+            return state.AuthorSermonsLastPage
         }
     }
 
