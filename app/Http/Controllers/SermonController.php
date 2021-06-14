@@ -89,7 +89,7 @@ class SermonController extends Controller
                 $sermons=Sermon::onlyTrashed()->orderBy("published_at","desc")->paginate(3);
                 break;
             case "Search":
-                $sermons=Sermon::search($query)->paginate(3);
+                $sermons=Sermon::search($query)->withTrashed()->paginate(3);
                 break;
             default:
                 return response()->json([],204);

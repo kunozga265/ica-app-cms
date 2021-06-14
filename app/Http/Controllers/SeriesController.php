@@ -59,7 +59,7 @@ class SeriesController extends Controller
                 $series= Series::onlyTrashed()->orderBy("title","asc")->paginate(2);
                 break;
             case "Search":
-                $series=Series::search($query)->paginate(2);
+                $series=Series::search($query)->withTrashed()->paginate(2);
                 break;
             default:
                 return response()->json([],204);
