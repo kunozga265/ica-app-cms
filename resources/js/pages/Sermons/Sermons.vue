@@ -1,5 +1,5 @@
 <style scoped lang="scss">
-@import "../../sass/_variables.scss";
+@import "../../../sass/variables";
 
 </style>
 
@@ -9,14 +9,31 @@
             <v-container>
               <h1 class="header-title">Sermons</h1>
               <v-select
+                  v-if="!searchable"
                   v-model="selectedOption"
                   :items="options"
-                  solo
+                  filled
+                  label="Filter by"
+                  append-outer-icon="mdi-magnify"
+                  @click:append-outer="searchable=!searchable"
               ></v-select>
-<!--            </v-container>-->
-<!--        </v-layout>-->
-<!--        <v-layout class="content">-->
-<!--            <v-container>-->
+              <v-text-field
+                  v-else
+                  v-model="query"
+                  filled
+                  placeholder="Search Sermons"
+                  append-outer-icon="mdi-filter-menu"
+                  prepend-inner-icon="mdi-magnify"
+                  @click:append-outer="searchable=!searchable"
+                  @click:prepend-inner="searchSermons"
+                  v-on:keyup.enter="searchSermons"
+              ></v-text-field>
+              <div  v-if="sermonsLoadStatus===1">
+                <div class="content-spacer"></div>
+                <div class="d-flex justify-center">
+                  <v-progress-circular indeterminate></v-progress-circular>
+                </div>
+              </div>
               <div
                   class="compound-view-container"
                   v-for="(sermonCompound,index) in sermons"
@@ -24,61 +41,19 @@
               >
                 <p class="content-heading">{{ sermonCompound.month + " " + sermonCompound.year }}</p>
                 <v-row>
-                  <v-col
-                      cols="12"
+                  <sermon
                       v-for="sermon in sermonCompound.sermons"
                       :key="sermon.id"
-                  >
-                    <div class="content-card">
-                      <v-divider></v-divider>
-                      <div class="more-details">
-                        <v-menu>
-                          <template v-slot:activator="{on,attrs}">
-                            <v-btn
-                                icon
-                                v-bind="attrs"
-                                v-on="on"
-                            >
-                              <v-icon>mdi-dots-vertical</v-icon>
-                            </v-btn>
-                          </template>
-                          <v-list>
-                            <ul class="more-details-dropdown">
-                              <li>
-                                <v-btn icon color="info" @click="routeToViewSermon(sermon.slug)"><v-icon>mdi-eye</v-icon></v-btn>
-                              </li>
-                              <li>
-                                <v-btn icon color="success" @click="routeToEditSermon(sermon.slug)"><v-icon>mdi-pencil</v-icon></v-btn>
-                              </li>
-                              <li>
-                                <v-btn icon color="error" @click="deletableSlug(sermon.slug)" :disabled="sermonsDeleteStatus===1"><v-icon>mdi-delete</v-icon></v-btn>
-                              </li>
-                            </ul>
-                          </v-list>
-                        </v-menu>
-                      </div>
-                      <div class="content-wrapper">
-                      <p class="content-title">{{ sermon.title }}</p>
-                      <p class="content-subtitle" v-if="sermon.series != null">{{ sermon.series.title }}</p>
-                      <p class="content-caption">{{computeDate(sermon.published_date)+ " | " + sermon.author.name}}</p>
-                    </div>
-                      <v-dialog v-model="deleteDialog" max-width="400">
-                        <v-card>
-                          <v-card-title>Are you sure?</v-card-title>
-                          <v-card-text>You are about to delete this sermon. This sermon will be trashed and can later be restore.</v-card-text>
-                          <v-card-actions>
-                            <v-btn color="error" @click="deleteSermon">Delete</v-btn>
-                            <v-btn color="error"  @click="deleteDialog=false" text>Cancel</v-btn>
-                          </v-card-actions>
-                        </v-card>
-                      </v-dialog>
-                  </div>
-                  </v-col>
+                      :sermon="sermon"
+                      :delete-status="sermonsDeleteStatus"
+                      :restore-status="sermonsRestoreStatus"
+                  ></sermon>
                 </v-row>
               </div>
               <v-pagination
                   v-model="page"
                   :length="lastPage"
+                  v-show="lastPage!==0"
               ></v-pagination>
 
             </v-container>
@@ -104,24 +79,26 @@
 
 <script>
 
-import {API} from "../config";
+import {API} from "../../config";
+import Sermon from "../../components/Sermon";
 
 export default {
     data: () => ({
-      options:["Published","Scheduled","Drafts","Trashed"],
+      options:["Published","Scheduled","Trashed"],
       selectedOption:"Published",
       page:1,
-      deleteDialog:false,
       snackbar:false,
       snackbarMessage:"",
-      deleteSlug:null
+      searchable:false,
+      query:""
     }),
     components:{
-
+      Sermon
     },
     created(){
       window.scrollTo(0,0)
       this.$store.dispatch('SermonsIndex',{
+        filter:this.selectedOption,
         page:1
       })
     },
@@ -175,27 +152,57 @@ export default {
       sermonsDeleteStatus(){
           return this.$store.getters.getSermonsDeleteStatus
       },
+      sermonsRestoreStatus(){
+          return this.$store.getters.getSermonsRestoreStatus
+      },
       lastPage(){
         return this.$store.getters.getSermonsLastPage
       }
     },
     watch: {
       page:function () {
+        if(this.searchable){
+          this.$store.dispatch("SermonsIndex", {
+            filter: "Search",
+            query: this.query,
+            page:this.page
+          })
+        }else{
+          this.$store.dispatch("SermonsIndex",{
+            filter:this.selectedOption,
+            page:this.page
+          })
+        }
+      },
+
+      searchable:function(){
+        if(this.searchable){
+          this.$store.dispatch("SermonsClear")
+        }else{
+          this.$store.dispatch("SermonsIndex",{
+            filter:this.selectedOption,
+            page:1
+          })
+        }
+      },
+
+      selectedOption:function(){
+        this.page=1
         this.$store.dispatch("SermonsIndex",{
-          page:this.page
+          filter:this.selectedOption,
+          page:1
         })
       },
 
       sermonsDeleteStatus:function () {
         switch (this.sermonsDeleteStatus) {
           case 1:
-            this.deleteSlug=null
-            this.deleteDialog=false
             this.snackbarMessage="Deleting sermon";
             break;
           case 2:
             this.snackbarMessage="Deleted successfully.";
             this.$store.dispatch('SermonsIndex',{
+              filter:this.selectedOption,
               page:this.page
             })
             break;
@@ -210,44 +217,43 @@ export default {
         }
         this.snackbar=true;
       },
-      deleteDialog:function () {
-        if (this.deleteDialog===false)
-          this.deleteSlug=null
-      }
-
-
+      sermonsRestoreStatus:function () {
+        switch (this.sermonsRestoreStatus) {
+          case 1:
+            this.snackbarMessage="Restoring sermon";
+            break;
+          case 2:
+            this.snackbarMessage="Restored successfully.";
+            this.$store.dispatch('SermonsIndex',{
+              filter:this.selectedOption,
+              page:this.page
+            })
+            break;
+          case 3:
+            this.snackbarMessage="Restoring was unsuccessful.";
+            break;
+          case 4:
+            this.snackbarMessage="Restoring was unsuccessful. Check your connection.";
+            break;
+          default:
+            break;
+        }
+        this.snackbar=true;
+      },
     },
     methods:{
-        // loadMore(){
-        //     this.$store.dispatch('AppendSermons')
-        // },
-        computeDate:function (date) {
-            return date.month + " " + date.day + ", " + date.year
-        },
-        routeToViewSermon(slug){
-            this.$router.push({name:"sermon-view", params:{slug:slug}})
-        },
-        routeToEditSermon(slug){
-            this.$router.push({name:"sermon-edit", params:{slug:slug}})
-        },
-        routeToNewSermon(){
-            this.$router.push({name:"sermon-new"})
-        },
-        computeImageUrl(url){
-            return API.URL+url
-        },
-        deleteSermon(){
-          if(this.deleteSlug!==null){
-            this.$store.dispatch('SermonDestroy',{
-              slug:this.deleteSlug
-            })
-            console.log(this.deleteSlug)
-          }
-        },
-        deletableSlug(slug){
-          this.deleteDialog=true
-          this.deleteSlug=slug
+      routeToNewSermon(){
+        this.$router.push({name:"sermon-new"})
+      },
+      searchSermons(){
+        if (this.query.length!==0) {
+          this.$store.dispatch("SermonsIndex", {
+            filter: "Search",
+            query: this.query,
+            page: 1
+          })
         }
+      }
     }
 
 }
