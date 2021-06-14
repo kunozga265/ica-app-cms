@@ -25,6 +25,7 @@ class CreateSermonsTable extends Migration
             $table->integer("category_id")->nullable();
             $table->double("published_at");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

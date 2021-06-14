@@ -21,6 +21,7 @@ class CreateSeriesTable extends Migration
             $table->integer('theme_id')->nullable();
             $table->integer('first_sermon_date')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
