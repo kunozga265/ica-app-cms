@@ -221,7 +221,9 @@ export default {
       this.$store.dispatch('SermonShow',{
         slug:this.slug
       })
-      this.$store.dispatch("AuthorsIndex")
+      this.$store.dispatch("AuthorsIndex",{
+        filter:"All"
+      })
       this.$store.dispatch("SeriesOptions")
 
     },

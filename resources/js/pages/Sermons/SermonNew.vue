@@ -237,7 +237,9 @@ export default {
     },
     created(){
         window.scrollTo(0,0)
-      this.$store.dispatch("AuthorsIndex")
+      this.$store.dispatch("AuthorsIndex",{
+        filter:"All"
+      })
       this.$store.dispatch("SeriesOptions")
 
     },
