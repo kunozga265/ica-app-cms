@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Sermon;
+use App\Models\View;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -73,6 +74,11 @@ class SermonTableSeeder extends Seeder
             "category_id"   =>  1
         ]);
         $sermon->save();
+        $view=new View([
+           "sermon_id"  =>  $sermon->id,
+           "count"      =>  0
+        ]);
+        $view->save();
 
         $sermon= new Sermon([
             "title"         =>  "Pang'ono Pang'ono",
@@ -101,6 +107,12 @@ class SermonTableSeeder extends Seeder
             "category_id"   =>  2
         ]);
         $sermon->save();
+        $view=new View([
+            "sermon_id"  =>  $sermon->id,
+            "count"      =>  0
+        ]);
+        $view->save();
+
 
         $sermon= new Sermon([
             "title"         =>  "Good (towards) Government",
@@ -148,6 +160,11 @@ class SermonTableSeeder extends Seeder
             "slug"          =>  Str::slug("Good (towards) Government").date("-Y-m-d"),
         ]);
         $sermon->save();
+        $view=new View([
+            "sermon_id"  =>  $sermon->id,
+            "count"      =>  0
+        ]);
+        $view->save();
 
         $sermon= new Sermon([
             "title"         =>  "Attitudes for Excellence",
@@ -181,6 +198,11 @@ class SermonTableSeeder extends Seeder
             "slug"          =>  Str::slug("Attitudes for Excellence").date("-Y-m-d"),
         ]);
         $sermon->save();
+        $view=new View([
+            "sermon_id"  =>  $sermon->id,
+            "count"      =>  0
+        ]);
+        $view->save();
 
         $sermon= new Sermon([
             "title"         =>  "Striving Together in Prayer",
@@ -214,6 +236,11 @@ class SermonTableSeeder extends Seeder
             "slug"          =>  Str::slug("Striving Together in Prayer").date("-Y-m-d"),
         ]);
         $sermon->save();
+        $view=new View([
+            "sermon_id"  =>  $sermon->id,
+            "count"      =>  0
+        ]);
+        $view->save();
 
         $sermon= new Sermon([
             "title"         =>  "Sending them in a Manner Worthy of God",
@@ -257,6 +284,11 @@ class SermonTableSeeder extends Seeder
             "slug"          =>  Str::slug("Sending them in a Manner Worthy of God").date("-Y-m-d"),
         ]);
         $sermon->save();
+        $view=new View([
+            "sermon_id"  =>  $sermon->id,
+            "count"      =>  0
+        ]);
+        $view->save();
 
         $sermon= new Sermon([
             "title"         =>  "Don’t Be Ashamed of the Gospel",
@@ -301,6 +333,11 @@ class SermonTableSeeder extends Seeder
 
         ]);
         $sermon->save();
+        $view=new View([
+            "sermon_id"  =>  $sermon->id,
+            "count"      =>  0
+        ]);
+        $view->save();
 
         $sermon= new Sermon([
             "title"         =>  "Through the Eyes of His Kindness",
@@ -340,6 +377,11 @@ class SermonTableSeeder extends Seeder
             "slug"          =>  Str::slug("Through the Eyes of His Kindness").date("-Y-m-d"),
         ]);
         $sermon->save();
+        $view=new View([
+            "sermon_id"  =>  $sermon->id,
+            "count"      =>  0
+        ]);
+        $view->save();
 
         $sermon= new Sermon([
             "title"         =>  "We Are All Deplorables",
@@ -381,6 +423,11 @@ class SermonTableSeeder extends Seeder
             "slug"          =>  Str::slug("We Are All Deplorables").date("-Y-m-d"),
         ]);
         $sermon->save();
+        $view=new View([
+            "sermon_id"  =>  $sermon->id,
+            "count"      =>  0
+        ]);
+        $view->save();
 
         $sermon= new Sermon([
             "title"         =>  "Justified!",
@@ -446,5 +493,10 @@ class SermonTableSeeder extends Seeder
             "slug"          =>  Str::slug("Justified!").date("-Y-m-d"),
         ]);
         $sermon->save();
+        $view=new View([
+            "sermon_id"  =>  $sermon->id,
+            "count"      =>  0
+        ]);
+        $view->save();
     }
 }

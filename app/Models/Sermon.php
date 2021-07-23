@@ -27,6 +27,10 @@ class Sermon extends Model
         return $this->belongsTo("App\Models\Category");
     }
 
+    public function views(){
+        return $this->belongsTo("App\Models\View","sermon_id");
+    }
+
     public function searchableAs(){
       return "sermons_index";
     }

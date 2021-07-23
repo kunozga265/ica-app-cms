@@ -112,7 +112,7 @@ export default {
           let index=0
 
           if(unsorted){
-              if (unsorted.length!==0){
+              if (unsorted.length!==0 && unsorted[0].published_date){
                   let currentMonth=unsorted[0].published_date.month
                   let currentYear=unsorted[0].published_date.year
 

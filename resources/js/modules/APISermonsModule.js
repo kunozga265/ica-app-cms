@@ -10,7 +10,6 @@ import API from '../api/APISermonsController.js';
 export const Sermons = {
     state: {
         Sermons:[],
-        // AppSermons:[],
         SermonsLoadStatus:0,
         SermonsAppendStatus:0,
         SermonsStoreStatus:0,
@@ -25,7 +24,10 @@ export const Sermons = {
         SermonsCurrentPage:0,
 
         SearchResults:[],
-        SearchResultsStatus:0
+        SearchResultsStatus:0,
+
+        ScheduledSermons:[],
+        ScheduledSermonsLoadStatus:0,
     },
     actions:{
         SermonsIndex({commit}, data){
@@ -70,6 +72,24 @@ export const Sermons = {
                         commit('setSermonsAppendStatus',3);
                     });
             }
+        },
+        SermonsScheduled({commit}, data){
+            commit('setScheduledSermonsLoadStatus',1);
+
+            API.scheduled()
+                .then(function (response) {
+                    if(response.status===204){
+                        commit('setScheduledSermonsLoadStatus',4);
+                    }
+                    else if (response.status===200){
+                        commit('setScheduledSermonsLoadStatus',2);
+                        commit('setScheduledSermons',response.data)
+                    }
+
+                })
+                .catch(function () {
+                    commit('setScheduledSermonsLoadStatus',3);
+                });
         },
         SermonShow({commit,state},data){
             commit('setSermonLoadStatus',1);
@@ -204,6 +224,13 @@ export const Sermons = {
         setSermonsLoadStatus(state,status){
             state.SermonsLoadStatus=status;
         },
+        setScheduledSermons(state,Sermons){
+            state.ScheduledSermons=Sermons;
+            // state.AppSermons=Sermons;
+        },
+        setScheduledSermonsLoadStatus(state,status){
+            state.ScheduledSermonsLoadStatus=status;
+        },
         appendSermons(state,Sermons){
             for(let x in Sermons){
                 (state.Sermons).push(Sermons[x]);
@@ -254,6 +281,12 @@ export const Sermons = {
         },
         getSermonsLoadStatus(state){
             return state.SermonsLoadStatus;
+        },
+        getScheduledSermons(state){
+            return state.ScheduledSermons;
+        },
+        getScheduledSermonsLoadStatus(state){
+            return state.ScheduledSermonsLoadStatus;
         },
         getSermonsAppendStatus(state){
             return state.SermonsAppendStatus;

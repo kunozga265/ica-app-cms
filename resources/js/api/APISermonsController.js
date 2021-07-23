@@ -16,7 +16,15 @@ export default {
         GET
     */
     show: function(slug){
-        return axios.get( API.API_URL + '/' + controller + '/'+slug);
+        return axios.get( API.API_URL + '/' + controller + '/view/'+slug);
+    },
+
+
+    /*
+        GET
+    */
+    scheduled: function(){
+        return axios.get( API.API_URL + '/' + controller + '/scheduled');
     },
 
     /*

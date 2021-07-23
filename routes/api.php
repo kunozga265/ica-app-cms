@@ -23,8 +23,10 @@ Route::group(["prefix"=>"sermons"],function (){
     Route::get('/search/{query}','App\Http\Controllers\SermonController@search');
     Route::get('/','App\Http\Controllers\SermonController@index');
     Route::get('/get/{timestamp}','App\Http\Controllers\SermonController@getLatest');
+    Route::get('/scheduled','App\Http\Controllers\SermonController@getScheduled');
     Route::get('/filter/{filter}/{query}','App\Http\Controllers\SermonController@getFiltered');
-    Route::get('/{slug}','App\Http\Controllers\SermonController@show');
+//    Route::get('/views','App\Http\Controllers\SermonController@getViews');
+    Route::get('/view/{slug}','App\Http\Controllers\SermonController@show');
     Route::post('/','App\Http\Controllers\SermonController@store');
     Route::post('/{slug}','App\Http\Controllers\SermonController@update');
     Route::delete('/trash/{slug}','App\Http\Controllers\SermonController@trash');

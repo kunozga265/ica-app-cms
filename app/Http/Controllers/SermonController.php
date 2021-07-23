@@ -6,6 +6,7 @@ use App\Http\Resources;
 use App\Models\Author;
 use App\Models\Sermon;
 use App\Models\Series;
+use App\Models\View;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
@@ -86,16 +87,41 @@ class SermonController extends Controller
                 $sermons= Sermon::where("published_at", ">", Carbon::now()->getTimestamp())->orderBy("published_at","desc")->paginate(3);
                 break;
             case "Trashed":
-                $sermons=Sermon::onlyTrashed()->orderBy("published_at","desc")->paginate(3);
+                $sermons=Sermon::onlyTrashed()->orderBy("published_at","asc")->paginate(3);
                 break;
             case "Search":
                 $sermons=Sermon::search($query)->withTrashed()->paginate(3);
+                break;
+            case "Views":
+                $views=View::orderBy("count","desc")->paginate(2);
+                return response()->json(new Resources\ViewCollection($views),200);
                 break;
             default:
                 return response()->json([],204);
         }
         return response()->json(new Resources\SermonCollection($sermons),200);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getScheduled()
+    {
+        $sermons= Sermon::where("published_at", ">", Carbon::now()->getTimestamp())->orderBy("published_at","asc")->get();
+        return response()->json(Resources\SermonResource::collection($sermons),200);
+    }
+//    /**
+//     * Display a listing of the resource.
+//     *
+//     * @return \Illuminate\Http\JsonResponse
+//     */
+//    public function getViews()
+//    {
+//        $views=View::orderBy("count","desc")->paginate(2);
+//        return response()->json(new Resources\ViewCollection($views),200);
+//    }
 
     /**
      * Store a newly created resource in storage.
@@ -153,6 +179,11 @@ class SermonController extends Controller
         if (!is_object($sermon))
             return response()->json(["response"=>false],204);
         else {
+            $view=View::where("sermon_id",$sermon->id)->first();
+            $view->update([
+                "count"=>($view->count)+1
+            ]);
+
 //            if ($sermon->series_id!=null)
 //                $sermonSeries=Sermon::where("series_id","=",$sermon->series_id)->where("id","!=",$sermon->id)->orderBy("published_at","desc")->get();
 //            else
