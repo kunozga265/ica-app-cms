@@ -349,7 +349,7 @@ class SermonController extends Controller
             $filename=uniqid().".".$extension;
             $request->image->move(public_path("images/sermons"),$filename);
 
-            return response()->json(['url'=>"http://localhost:8000/images/sermons/$filename"],200);
+            return response()->json(['url'=>"https://ica.ovationadagency.com/images/sermons/$filename"],200);
 
         }catch (\RuntimeException $e){
             return response()->json([
