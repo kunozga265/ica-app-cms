@@ -51,6 +51,17 @@
 }
 
 
+//#body {
+//  width: 100%;
+//  background-color: red;
+//
+//  img {
+//    width: 300px;
+//    margin: auto;
+//
+//  }
+//}
+
 @media (min-width: 600px) {
   .header-content{
     padding: 65px 0;
@@ -83,6 +94,16 @@
 
     }
   }
+
+  //#body {
+  //  width: 100%;
+  //
+  //  img {
+  //    width: 600px;
+  //    margin: auto;
+  //
+  //  }
+  //}
 
 }
 @media (min-width: 768px) {
@@ -206,7 +227,9 @@
               class="content"
           >
             <v-container>
-              <div v-html="sermon.body"></div>
+              <v-col cols="12" id="body">
+                <div  v-html="sermon.body"></div>
+              </v-col>
             </v-container>
           </v-layout>
           <v-card-actions>
@@ -240,8 +263,34 @@ export default {
     created(){
 
     },
-    mounted(){
+    updated(){
+      var width=window.innerWidth
 
+      const images=document.getElementsByTagName('img')
+      for (let i=0;i<images.length;i++){
+        images[i].style.display="block"
+        images[i].style.margin="auto"
+
+        if (width <= 375){
+          images[i].style.maxWidth='200px'
+        }else if(width <= 600){
+          images[i].style.maxWidth='250px'
+        }else if(width <= 768){
+          images[i].style.maxWidth='300px'
+        }else if(width <= 960){
+          images[i].style.maxWidth='350px'
+        }else{
+          images[i].style.maxWidth='400px'
+        }
+      }
+
+      const blockquotes=document.getElementsByTagName('blockquote')
+
+      for (let y=0;y<blockquotes.length;y++) {
+        blockquotes[y].style.borderLeft = "5px solid #e2e2e2"
+        blockquotes[y].style.padding = "5px 20px"
+        blockquotes[y].style.backgroundColor = "#fafafa"
+      }
     },
     computed: {
 

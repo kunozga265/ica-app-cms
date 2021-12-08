@@ -29,6 +29,7 @@ Route::group(["prefix"=>"sermons"],function (){
     Route::get('/view/{slug}','App\Http\Controllers\SermonController@show');
     Route::post('/','App\Http\Controllers\SermonController@store');
     Route::post('/{slug}','App\Http\Controllers\SermonController@update');
+    Route::post('/upload/image','App\Http\Controllers\SermonController@uploadImage');
     Route::delete('/trash/{slug}','App\Http\Controllers\SermonController@trash');
     Route::delete('/restore/{slug}','App\Http\Controllers\SermonController@restore');
     Route::delete('/destroy/{slug}','App\Http\Controllers\SermonController@destroy');

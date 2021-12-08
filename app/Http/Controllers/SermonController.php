@@ -154,6 +154,12 @@ class SermonController extends Controller
         ]);
 
         $sermon->save();
+        $view=new View([
+            "sermon_id"  =>  $sermon->id,
+            "count"      =>  0
+        ]);
+        $view->save();
+
         if($sermon->series !==null) {
             $series = Series::find($sermon->series->id);
 
@@ -179,10 +185,11 @@ class SermonController extends Controller
         if (!is_object($sermon))
             return response()->json(["response"=>false],204);
         else {
+            /* We will use this elsewhere
             $view=View::where("sermon_id",$sermon->id)->first();
             $view->update([
                 "count"=>($view->count)+1
-            ]);
+            ]);*/
 
 //            if ($sermon->series_id!=null)
 //                $sermonSeries=Sermon::where("series_id","=",$sermon->series_id)->where("id","!=",$sermon->id)->orderBy("published_at","desc")->get();
@@ -327,6 +334,27 @@ class SermonController extends Controller
             $series->update([
                 "first_sermon_date" =>null
             ]);
+        }
+    }
+
+    public function uploadImage(Request $request)
+    {
+
+        try {
+//            $request->validate([
+//                'image'=>'mimes:jpeg,png'
+//            ]);
+
+            $extension=$request->image->extension();
+            $filename=uniqid().".".$extension;
+            $request->image->move(public_path("images/sermons"),$filename);
+
+            return response()->json(['url'=>"http://localhost:8000/images/sermons/$filename"],200);
+
+        }catch (\RuntimeException $e){
+            return response()->json([
+                'error' => "The image upload failed",
+            ],501);
         }
     }
 }
