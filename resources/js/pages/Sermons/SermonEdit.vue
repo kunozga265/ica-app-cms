@@ -188,6 +188,7 @@
 
 import {API} from "../../config";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
+import uploader from "../../functions/uploader";
 
 export default {
   props:['slug'],
@@ -205,7 +206,8 @@ export default {
 
       editor:ClassicEditor,
       editorConfig:{
-        toolbar:['bold','italic','link','|','bulletedList','numberedList','|','undo','redo']
+        toolbar:['bold','italic','|','blockquote','link','|','bulletedList','numberedList','|', 'imageUpload','|','undo','redo'],
+        extraPlugins:[uploader]
       },
       rules: {
         required: value => !!value || 'Required',
