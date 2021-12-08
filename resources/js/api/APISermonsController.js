@@ -38,7 +38,7 @@ export default {
       POST
     */
     store: function(data){
-        return axios.post( API.API_URL + '/' + controller + '/',
+        return axios.post( API.API_URL + '/' + controller,
             {
                 title:data.title,
                 subtitle:data.subtitle,
