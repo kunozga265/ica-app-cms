@@ -23,6 +23,7 @@ Route::group(["prefix"=>"sermons"],function (){
     Route::get('/search/{query}','App\Http\Controllers\SermonController@search');
     Route::get('/','App\Http\Controllers\SermonController@index');
     Route::get('/get/{timestamp}','App\Http\Controllers\SermonController@getLatest');
+    Route::get('/get/{author_id}/{category}/{sort}/{fromDate}/{endDate}','App\Http\Controllers\SermonController@getSermons');
     Route::get('/scheduled','App\Http\Controllers\SermonController@getScheduled');
     Route::get('/filter/{filter}/{query}','App\Http\Controllers\SermonController@getFiltered');
 //    Route::get('/views','App\Http\Controllers\SermonController@getViews');

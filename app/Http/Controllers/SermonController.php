@@ -16,6 +16,7 @@ use Validator;
 
 class SermonController extends Controller
 {
+
   /**
    * Display the specified resource.
    *
@@ -67,6 +68,59 @@ class SermonController extends Controller
     public function index()
     {
         $sermons= Sermon::orderBy("published_at","desc")->paginate(3);
+        return response()->json(new Resources\SermonCollection($sermons),200);
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     * @param $author_id
+     * @param $category
+     * @param $sort
+     * @param $fromDate
+     * * @param $endDate
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSermons($author_id, $category, $sort, $fromDate, $endDate)
+    {
+        $pagination_items=10;
+        if($author_id==0){
+            switch ($sort){
+                case "TITLE_ASC":
+                    $sermons= Sermon::where("published_at","<=",$fromDate)->where("published_at",">=",$endDate)->orderBy("title","asc")->paginate($pagination_items);
+                    break;
+                case "TITLE_DESC":
+                    $sermons= Sermon::where("published_at","<=",$fromDate)->where("published_at",">=",$endDate)->orderBy("title","desc")->paginate($pagination_items);
+                    break;
+                case "DATE_ASC":
+                    $sermons= Sermon::where("published_at","<=",$fromDate)->where("published_at",">=",$endDate)->orderBy("published_at","asc")->paginate($pagination_items);
+                    break;
+                case "DATE_DESC":
+                    $sermons= Sermon::where("published_at","<=",$fromDate)->where("published_at",">=",$endDate)->orderBy("published_at","desc")->paginate($pagination_items);
+                    break;
+                default:
+                    $sermons=[];
+            }
+
+        }else{
+            switch ($sort){
+                case "TITLE_ASC":
+                    $sermons= Sermon::where("author_id",$author_id)->where("published_at","<=",$fromDate)->where("published_at",">=",$endDate)->orderBy("title","asc")->paginate($pagination_items);
+                    break;
+                case "TITLE_DESC":
+                    $sermons= Sermon::where("author_id",$author_id)->where("published_at","<=",$fromDate)->where("published_at",">=",$endDate)->orderBy("title","desc")->paginate($pagination_items);
+                    break;
+                case "DATE_ASC":
+                    $sermons= Sermon::where("author_id",$author_id)->where("published_at","<=",$fromDate)->where("published_at",">=",$endDate)->orderBy("published_at","asc")->paginate($pagination_items);
+                    break;
+                case "DATE_DESC":
+                    $sermons= Sermon::where("author_id",$author_id)->where("published_at","<=",$fromDate)->where("published_at",">=",$endDate)->orderBy("published_at","desc")->paginate($pagination_items);
+                    break;
+                default:
+                    $sermons=[];
+            }
+        }
+
         return response()->json(new Resources\SermonCollection($sermons),200);
     }
 
