@@ -18,9 +18,9 @@ class SeriesCollection extends ResourceCollection
             'series'      =>  SeriesResource::collection($this->collection),
             'meta'      =>  [
                 'current_page'      =>  $this->currentPage(),
-//                'total'             =>  $this->total(),
+                'total'             =>  $this->total(),
 //                'per_page'          =>  $this->perPage(),
-//                'count'             =>  $this->count(),
+                'count'             =>  $this->count(),
                 'has_more_pages'    =>  $this->hasMorePages(),
                 'last_page'         =>  $this->lastPage()
             ]
