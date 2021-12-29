@@ -68,6 +68,36 @@ class SeriesController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     * @param $sort
+     * @param $fromDate
+     * @param $endDate
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSeries($sort, $fromDate, $endDate)
+    {
+        $pagination_items=10;
+        switch ($sort){
+            case "TITLE_ASC":
+                $series= Series::where("first_sermon_date","<=",$fromDate)->where("first_sermon_date",">=",$endDate)->orderBy("title","asc")->paginate($pagination_items);
+                break;
+            case "TITLE_DESC":
+                $series= Series::where("first_sermon_date","<=",$fromDate)->where("first_sermon_date",">=",$endDate)->orderBy("title","desc")->paginate($pagination_items);
+                break;
+            case "DATE_ASC":
+                $series= Series::where("first_sermon_date","<=",$fromDate)->where("first_sermon_date",">=",$endDate)->orderBy("first_sermon_date","asc")->paginate($pagination_items);
+                break;
+            case "DATE_DESC":
+                $series= Series::where("first_sermon_date","<=",$fromDate)->where("first_sermon_date",">=",$endDate)->orderBy("first_sermon_date","desc")->paginate($pagination_items);
+                break;
+            default:
+                $series=[];
+        }
+
+        return response()->json(new Resources\SeriesCollection($series),200);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

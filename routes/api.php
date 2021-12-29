@@ -51,6 +51,7 @@ Route::group(["prefix"=>"authors"],function (){
 Route::group(["prefix"=>"series"],function (){
     Route::get('/search/{query}','App\Http\Controllers\SeriesController@search');
     Route::get('/','App\Http\Controllers\SeriesController@index');
+    Route::get('/get/{sort}/{fromDate}/{endDate}','App\Http\Controllers\SeriesController@getSeries');
     Route::get('/filter/{filter}/{query}','App\Http\Controllers\SeriesController@getFiltered');
     Route::get('/options','App\Http\Controllers\SeriesController@options');
     Route::get('/view/{slug}/{filter}','App\Http\Controllers\SeriesController@show');
