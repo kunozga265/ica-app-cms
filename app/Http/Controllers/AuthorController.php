@@ -20,7 +20,7 @@ class AuthorController extends Controller
     public function index()
     {
         $authors= Author::orderBy("name","asc")->get();
-        return response()->json(["authors"=>Resources\AuthorResource::collection($authors)],200);
+        return response()->json(Resources\AuthorResource::collection($authors),200);
     }
 
 
