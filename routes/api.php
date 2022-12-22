@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
+Route::get('/dashboard','App\Http\Controllers\AppController@dashboard');
+
 
 Route::group(["prefix"=>"sermons"],function (){
     Route::get('/search/{query}','App\Http\Controllers\SermonController@search');
