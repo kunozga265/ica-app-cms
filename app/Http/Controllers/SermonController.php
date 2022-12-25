@@ -25,11 +25,12 @@ class SermonController extends Controller
    */
    public function search($query){
      $sermons=Sermon::search($query)->get();
-     $series=Series::search($query)->get();
-     return response()->json([
-       "sermons" => Resources\SermonResource::collection($sermons),
-       "series" => Resources\SeriesSearchResource::collection($series)
-     ],200);
+//     $series=Series::search($query)->get();
+//     return response()->json([
+//       "sermons" => Resources\SermonResource::collection($sermons),
+//       "series" => Resources\SeriesSearchResource::collection($series)
+//     ],200);
+       return response()->json(Resources\SermonResource::collection($sermons),200);
    }
 
     /**
