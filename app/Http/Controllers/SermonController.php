@@ -17,6 +17,24 @@ use Validator;
 class SermonController extends Controller
 {
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function bySeries($slug)
+    {
+        $series = Series::where('slug','=',$slug)->first();
+
+        if (!is_object($series))
+            return response()->json(["response"=>false],204);
+        else {
+            $sermons=$series->sermons()->orderBy("published_at","desc")->get();
+
+            return response()->json(Resources\SermonResource::collection($sermons), 200);
+        }
+    }
+
   /**
    * Display the specified resource.
    *
