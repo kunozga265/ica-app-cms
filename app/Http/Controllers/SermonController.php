@@ -24,13 +24,13 @@ class SermonController extends Controller
    * @return \Illuminate\Http\JsonResponse
    */
    public function search($query){
-     $sermons=Sermon::search($query)->get();
+     $sermons=Sermon::where('title', 'like', '%' .$query. '%')->orderBy('title','asc')->paginate(50);
 //     $series=Series::search($query)->get();
 //     return response()->json([
 //       "sermons" => Resources\SermonResource::collection($sermons),
 //       "series" => Resources\SeriesSearchResource::collection($series)
 //     ],200);
-       return response()->json(Resources\SermonResource::collection($sermons),200);
+       return response()->json(new Resources\SermonCollection($sermons),200);
    }
 
     /**
@@ -68,7 +68,7 @@ class SermonController extends Controller
      */
     public function index()
     {
-        $sermons= Sermon::orderBy("published_at","desc")->paginate(3);
+        $sermons= Sermon::orderBy("published_at","desc")->paginate(50);
         return response()->json(new Resources\SermonCollection($sermons),200);
     }
 

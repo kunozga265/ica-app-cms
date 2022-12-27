@@ -22,6 +22,7 @@ Route::get('/dashboard','App\Http\Controllers\AppController@dashboard');
 
 
 Route::group(["prefix"=>"sermons"],function (){
+    Route::get('/series/{slug}','App\Http\Controllers\SermonController@bySeries');
     Route::get('/search/{query}','App\Http\Controllers\SermonController@search');
     Route::get('/','App\Http\Controllers\SermonController@index');
     Route::get('/get/{timestamp}','App\Http\Controllers\SermonController@getLatest');

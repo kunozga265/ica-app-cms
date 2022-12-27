@@ -12,10 +12,8 @@ use Validator;
 class SeriesController extends Controller
 {
     public function search($query){
-        $series=Series::search($query)->limit(2)->get();
-        return response()->json([
-            "series" => Resources\SeriesSearchResource::collection($series)
-        ],200);
+        $series=Series::where('title', 'like', '%' .$query. '%')->orderBy('title','asc')->paginate(50);
+        return response()->json(new Resources\SeriesCollection($series),200);
     }
 
     /**
@@ -25,7 +23,7 @@ class SeriesController extends Controller
      */
     public function index()
     {
-        $series= Series::where("first_sermon_date","!=",null)->orderBy("first_sermon_date","desc")->paginate(2);
+        $series= Series::where("first_sermon_date","!=",null)->orderBy("first_sermon_date","desc")->paginate(50);
         return response()->json(new Resources\SeriesCollection($series),200);
     }
     /**
