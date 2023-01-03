@@ -122,8 +122,10 @@ class AuthorController extends Controller
         if (!is_object($author))
             return response()->json(["response"=>false],204);
         else {
-            $sermons= Author::where('slug',$slug)->first()->sermons()->orderBy("published_at","desc")->paginate(2);
-            return response()->json(new Resources\SermonCollection($sermons), 200);
+//            $sermons= Author::where('slug',$slug)->first()->sermons()->orderBy("published_at","desc")->paginate(2);
+//            return response()->json(new Resources\SermonCollection($sermons), 200);
+            $sermons= Author::where('slug',$slug)->first()->sermons()->orderBy("published_at","desc")->get();
+            return response()->json(Resources\SermonResource::collection($sermons), 200);
         }
     }
 
