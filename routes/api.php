@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
+Route::group(["prefix"=>"1.0.0"],function (){
+    Route::get('/dashboard','App\Http\Controllers\AppController@dashboard_1_0_0');
+});
+
+
 Route::get('/dashboard','App\Http\Controllers\AppController@dashboard');
 
 
@@ -79,4 +84,12 @@ Route::group(["prefix"=>"themes"],function (){
     Route::post('/','App\Http\Controllers\ThemeController@store');
     Route::post('/{slug}','App\Http\Controllers\ThemeController@update');
     Route::delete('/{slug}','App\Http\Controllers\ThemeController@destroy');
+});
+
+Route::group(["prefix"=>"prayers"],function (){
+    Route::get('/','App\Http\Controllers\PrayerController@index');
+    Route::get('/{id}','App\Http\Controllers\PrayerController@show');
+    Route::post('/','App\Http\Controllers\PrayerController@store');
+    Route::post('/{id}','App\Http\Controllers\PrayerController@update');
+    Route::delete('/{id}','App\Http\Controllers\PrayerController@destroy');
 });
