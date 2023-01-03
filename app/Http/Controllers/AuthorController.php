@@ -128,6 +128,22 @@ class AuthorController extends Controller
             return response()->json(Resources\SermonResource::collection($sermons), 200);
         }
     }
+    /**
+     * Display the specified resource.
+     *
+     * @param  string $slug
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSermonsByAuthor_1_0_0($slug)
+    {
+        $author = Author::where('slug','=',$slug)->first();
+        if (!is_object($author))
+            return response()->json(["response"=>false],204);
+        else {
+            $sermons= Author::where('slug',$slug)->first()->sermons()->orderBy("published_at","desc")->paginate(5);
+            return response()->json(new Resources\SermonCollection($sermons), 200);
+        }
+    }
 
     /**
      * Update the specified resource in storage.
