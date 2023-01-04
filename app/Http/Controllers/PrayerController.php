@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PrayerCollection;
 use App\Models\Prayer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -12,9 +13,11 @@ class PrayerController extends Controller
     public function index()
     {
         $now=Carbon::now()->getTimestamp();
-        $prayers=Prayer::where('date','<=',$now)->get();
-        return response()->json($prayers);
+        $prayers=Prayer::where('date','<=',$now)->paginate(5);
+
+        return response()->json(new PrayerCollection($prayers));
     }
+
     public function store(Request $request)
     {
 

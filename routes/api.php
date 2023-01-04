@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(["prefix"=>"1.0.0"],function (){
     Route::get('/dashboard','App\Http\Controllers\AppController@dashboard_1_0_0');
-    Route::get('/{slug}/sermons','App\Http\Controllers\AuthorController@getSermonsByAuthor_1_0_0');
+    Route::get('authors/{slug}/sermons','App\Http\Controllers\AuthorController@getSermonsByAuthor_1_0_0');
 });
 
 
