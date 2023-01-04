@@ -16,6 +16,7 @@ class PrayerResource extends JsonResource
     {
         return [
             'id'            =>  $this->id,
+            'date'          =>  $this->date,
             'title'         =>  $this->title,
             'verses'        =>  $this->verses,
             'body'          =>  $this->body,
