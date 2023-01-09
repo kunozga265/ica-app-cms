@@ -13,7 +13,7 @@ class PrayerController extends Controller
     public function index()
     {
         $now=Carbon::now()->getTimestamp();
-        $prayers=Prayer::where('date','<=',$now)->paginate(5);
+        $prayers=Prayer::where('date','<=',$now)->orderBy('date','desc')->paginate((new AppController())->paginate);
 
         return response()->json(new PrayerCollection($prayers));
     }

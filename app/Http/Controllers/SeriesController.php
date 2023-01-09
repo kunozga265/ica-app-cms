@@ -12,7 +12,7 @@ use Validator;
 class SeriesController extends Controller
 {
     public function search($query){
-        $series=Series::where('title', 'like', '%' .$query. '%')->orderBy('title','asc')->paginate(50);
+        $series=Series::where('title', 'like', '%' .$query. '%')->orderBy('title','asc')->paginate((new AppController())->paginate);
         return response()->json(new Resources\SeriesCollection($series),200);
     }
 
@@ -23,7 +23,7 @@ class SeriesController extends Controller
      */
     public function index()
     {
-        $series= Series::where("first_sermon_date","!=",null)->orderBy("first_sermon_date","desc")->paginate(50);
+        $series= Series::where("first_sermon_date","!=",null)->orderBy("first_sermon_date","desc")->paginate((new AppController())->paginate);
         return response()->json(new Resources\SeriesCollection($series),200);
     }
     /**
@@ -48,16 +48,16 @@ class SeriesController extends Controller
     {
         switch ($filter){
             case "Published":
-                $series= Series::where("first_sermon_date","!=",null)->orderBy("first_sermon_date","desc")->paginate(2);
+                $series= Series::where("first_sermon_date","!=",null)->orderBy("first_sermon_date","desc")->paginate((new AppController())->paginate);
                 break;
             case "Unpublished":
-                $series= Series::where("first_sermon_date",null)->orderBy("title","asc")->paginate(2);
+                $series= Series::where("first_sermon_date",null)->orderBy("title","asc")->paginate((new AppController())->paginate);
                 break;
             case "Trashed":
-                $series= Series::onlyTrashed()->orderBy("title","asc")->paginate(2);
+                $series= Series::onlyTrashed()->orderBy("title","asc")->paginate((new AppController())->paginate);
                 break;
             case "Search":
-                $series=Series::search($query)->withTrashed()->paginate(2);
+                $series=Series::search($query)->withTrashed()->paginate((new AppController())->paginate);
                 break;
             default:
                 return response()->json([],204);
@@ -74,7 +74,7 @@ class SeriesController extends Controller
      */
     public function getSeries($sort, $fromDate, $endDate)
     {
-        $pagination_items=10;
+        $pagination_items=(new AppController())->paginate;
         switch ($sort){
             case "TITLE_ASC":
                 $series= Series::where("first_sermon_date","<=",$fromDate)->where("first_sermon_date",">=",$endDate)->orderBy("title","asc")->paginate($pagination_items);

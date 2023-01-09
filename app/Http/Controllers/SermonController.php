@@ -42,7 +42,7 @@ class SermonController extends Controller
    * @return \Illuminate\Http\JsonResponse
    */
    public function search($query){
-     $sermons=Sermon::where('title', 'like', '%' .$query. '%')->orderBy('title','asc')->paginate(50);
+     $sermons=Sermon::where('title', 'like', '%' .$query. '%')->orderBy('title','asc')->paginate((new AppController())->paginate);
 //     $series=Series::search($query)->get();
 //     return response()->json([
 //       "sermons" => Resources\SermonResource::collection($sermons),
@@ -86,7 +86,7 @@ class SermonController extends Controller
      */
     public function index()
     {
-        $sermons= Sermon::orderBy("published_at","desc")->paginate(50);
+        $sermons= Sermon::orderBy("published_at","desc")->paginate((new AppController())->paginate);
         return response()->json(new Resources\SermonCollection($sermons),200);
     }
 
@@ -102,7 +102,7 @@ class SermonController extends Controller
      */
     public function getSermons($author_id, $category, $sort, $fromDate, $endDate)
     {
-        $pagination_items=10;
+        $pagination_items=(new AppController())->paginate;
         if($author_id==0){
             switch ($sort){
                 case "TITLE_ASC":
@@ -154,19 +154,19 @@ class SermonController extends Controller
     {
         switch ($filter){
             case "Published":
-                $sermons= Sermon::where("published_at", "<=", Carbon::now()->getTimestamp())->orderBy("published_at","desc")->paginate(3);
+                $sermons= Sermon::where("published_at", "<=", Carbon::now()->getTimestamp())->orderBy("published_at","desc")->paginate((new AppController())->paginate);
                 break;
             case "Scheduled":
-                $sermons= Sermon::where("published_at", ">", Carbon::now()->getTimestamp())->orderBy("published_at","desc")->paginate(3);
+                $sermons= Sermon::where("published_at", ">", Carbon::now()->getTimestamp())->orderBy("published_at","desc")->paginate((new AppController())->paginate);
                 break;
             case "Trashed":
-                $sermons=Sermon::onlyTrashed()->orderBy("published_at","asc")->paginate(3);
+                $sermons=Sermon::onlyTrashed()->orderBy("published_at","asc")->paginate((new AppController())->paginate);
                 break;
             case "Search":
-                $sermons=Sermon::search($query)->withTrashed()->paginate(3);
+                $sermons=Sermon::search($query)->withTrashed()->paginate((new AppController())->paginate);
                 break;
             case "Views":
-                $views=View::orderBy("count","desc")->paginate(2);
+                $views=View::orderBy("count","desc")->paginate((new AppController())->paginate);
                 return response()->json(new Resources\ViewCollection($views),200);
                 break;
             default:

@@ -10,6 +10,8 @@ use App\Http\Resources;
 
 class AppController extends Controller
 {
+    public $paginate=20;
+
     public function dashboard()
     {
         //get sermons
