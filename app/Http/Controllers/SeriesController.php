@@ -114,7 +114,8 @@ class SeriesController extends Controller
         $series=new Series([
             "title"             =>  $request->title,
             "slug"              =>  Str::slug($request->title).date("-Y-m-d"),
-            "description"       =>  Purifier::clean($request->description),
+//            "description"       =>  Purifier::clean($request->description),
+            "description"       =>  $request->description,
             "theme_id"          =>  $request->theme_id,
         ]);
 

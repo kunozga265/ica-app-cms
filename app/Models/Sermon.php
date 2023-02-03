@@ -42,6 +42,7 @@ class Sermon extends Model
         "body",
         "author_id",
         "series_id",
+        "video_url",
         "category_id",
         "published_at",
     ];

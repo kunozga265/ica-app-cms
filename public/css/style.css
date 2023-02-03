@@ -1,0 +1,153 @@
+.card{
+    height: 100%;
+    margin-bottom: 0;
+    box-shadow: 0 3px 3px -2px rgb(39 44 51 / 10%), 0 3px 4px 0 rgb(39 44 51 / 4%), 0 1px 8px 0 rgb(39 44 51 / 2%);
+}
+
+a{
+    color: #6c757d;
+}
+a:hover{
+    color: #6c757d;
+}
+
+.sermon{
+    margin-bottom: 24px;
+}
+
+.sermon .card:hover{
+    cursor: pointer;
+}
+
+.font-bold{
+    font-weight: bold;
+}
+
+.text-black-900{
+    color: #272727;
+}
+
+.text-gray-500{
+    color: #a1a1a1;
+}
+
+.text-gray-200{
+    color: #f3f3f3;
+}
+
+.text-xl{
+    font-size: 20px;
+}
+
+.text-lg{
+    font-size: 16px;
+}
+
+.text-base{
+    font-size: 14px;
+}
+
+.text-sm{
+    font-size: 12px;
+}
+
+.text-xs{
+    font-size: 10px;
+}
+
+.chip{
+    color: #a1a1a1;
+    background-color: #f3f3f3;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 10px;
+    padding: 4px 8px;
+}
+
+.big-chip{
+    color: #a1a1a1;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 6px 10px;
+}
+
+/* Padding */
+.p-10 {
+    padding: 10px;
+}
+.p-20{
+    padding: 20px;
+}
+.p-40{
+    padding: 40px;
+}
+
+/* Margin */
+.ml-8{
+    margin-left: 8px;
+}
+
+.mb-8{
+    margin-bottom: 8px;
+}
+
+.mt-16{
+    margin-top: 16px;
+}
+
+.mb-16{
+    margin-bottom: 16px;
+}
+
+.p-btn{
+    color: white;
+    background-color: #148BDD;
+    padding: 8px 12px;
+    size: 14px;
+    border-radius: 6px;
+    border: 0;
+}
+
+.p-btn:hover{
+}
+
+.image-placeholder{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.avatar{
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+.flex{
+    display: flex;
+}
+.author{
+    margin-bottom: 24px;
+}
+
+.author .image-placeholder{
+    height: 300px;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.justify-center{
+    justify-content: center;
+}
+
+.justify-between{
+    justify-content: space-between;
+}
+
+.text-red{
+    color:#921c32;
+}

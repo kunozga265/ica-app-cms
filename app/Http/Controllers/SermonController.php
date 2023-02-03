@@ -8,6 +8,7 @@ use App\Models\Sermon;
 use App\Models\Series;
 use App\Models\View;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
@@ -35,21 +36,21 @@ class SermonController extends Controller
         }
     }
 
-  /**
-   * Display the specified resource.
-   *
-   * @param  string  $query
-   * @return \Illuminate\Http\JsonResponse
-   */
-   public function search($query){
-     $sermons=Sermon::where('title', 'like', '%' .$query. '%')->orderBy('title','asc')->paginate((new AppController())->paginate);
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $query
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search($query){
+        $sermons=Sermon::where('title', 'like', '%' .$query. '%')->orderBy('title','asc')->paginate((new AppController())->paginate);
 //     $series=Series::search($query)->get();
 //     return response()->json([
 //       "sermons" => Resources\SermonResource::collection($sermons),
 //       "series" => Resources\SeriesSearchResource::collection($series)
 //     ],200);
-       return response()->json(new Resources\SermonCollection($sermons),200);
-   }
+        return response()->json(new Resources\SermonCollection($sermons),200);
+    }
 
     /**
      * Display the specified resource.
@@ -61,7 +62,7 @@ class SermonController extends Controller
     {
         //if timestamp is zero get the latest sermon
         if ($timestamp==0) {
-             $sermons = Sermon::where("published_at", "<=", Carbon::now()->getTimestamp())->orderBy("published_at","desc")->limit(1)->get();
+            $sermons = Sermon::where("published_at", "<=", Carbon::now()->getTimestamp())->orderBy("published_at","desc")->limit(1)->get();
 //            $sermons = Sermon::all();
 //            dd($sermons);
         }
@@ -196,6 +197,11 @@ class SermonController extends Controller
 //        return response()->json(new Resources\ViewCollection($views),200);
 //    }
 
+    public function create()
+    {
+        return view('');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -242,6 +248,9 @@ class SermonController extends Controller
                 ]);
             }
         }
+
+        $author=$sermon->author->suffix." ".$sermon->author->name;
+        $this->pushNotification('general',$sermon->title,$author);
 
         return response()->json(["sermon"=>new Resources\SermonResource($sermon)],200);
     }
@@ -428,6 +437,36 @@ class SermonController extends Controller
             return response()->json([
                 'error' => "The image upload failed",
             ],501);
+        }
+    }
+
+    private function pushNotification($title,$subject,$message){
+        //notification
+        try{
+            $client=new Client();
+            $to=str_replace(' ','',$title);
+            $notificationRequest=$client->request('POST','https://fcm.googleapis.com/fcm/send',[
+                'headers'=>[
+                    'Authorization' => 'key=AAAAQdj1ZOU:APA91bHbQ6JbhcEoHTyQthEp1j8QjlDUM7ftsFmcMRUvgKuZJBy5-IQQ_6eZZAfJ5fUM1qP60dATN-DiOzM3LcUnjcjR7-vGzE02iC7jCEuJU3GC_qrLXcxyY6P7zy57joaqbytyWj59',
+                    'Content-Type'   =>  'application/json',
+                ],
+                'json'=>[
+                    "priority"=>"high",
+                    "content_available"=>true,
+                    "to"=>"/topics/$to",
+                    "notification"=>[
+                        "title"=>$subject,
+                        "body"=>$message
+                    ]
+                ]
+            ]);
+
+            // Develop a use for this
+            if ($notificationRequest->getStatusCode()==200){}
+
+
+        }catch (\GuzzleHttp\Exception\GuzzleException $e){
+            //Log information
         }
     }
 }

@@ -26,7 +26,7 @@ class SermonResource extends JsonResource
             "subtitle"      =>  $this->subtitle,
             "video_url"     =>  $this->video_url,
             "body"          =>  $this->body,
-            "author"        =>  $this->author,
+            "author"        =>  new AuthorResource($this->author),
             "series"        =>  new SeriesResource($this->series),
             "category"      =>  $this->category,
             "published_at"  =>  $this->published_at,
