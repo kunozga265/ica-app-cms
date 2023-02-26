@@ -1,8 +1,8 @@
 <?php
 
-namespace \Auth;
+namespace App\Http\Controllers\Auth;
 
-use \Controller;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
