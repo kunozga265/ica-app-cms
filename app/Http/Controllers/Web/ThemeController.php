@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources;
 use App\Models\Theme;
 use Mews\Purifier\Facades\Purifier;

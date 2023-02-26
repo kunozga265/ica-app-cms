@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::group(["prefix"=>"1.0.0"],function (){
+
+    Route::post('/seeder',[\App\Http\Controllers\API\V1_0_0\AppController::class, 'seeder']);
+
     /* Home Page */
     Route::get('/dashboard',[\App\Http\Controllers\API\V1_0_0\AppController::class, 'dashboard']);
 

@@ -1,6 +1,6 @@
 <?php
 
-use \Web;
+use App\Http\Controllers\Web;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;

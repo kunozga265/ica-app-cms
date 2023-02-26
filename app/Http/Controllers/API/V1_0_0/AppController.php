@@ -34,42 +34,42 @@ class AppController extends Controller
     {
         foreach ($request->sermons as $sermon){
             Sermon::create([
-                "title"         =>  $sermon->title,
-                "slug"          =>  $sermon->slug,
-                "subtitle"      =>  $sermon->subtitle,
-                "video_url"     =>  $sermon->video_url,
-                "body"          =>  $sermon->body,
-                "author_id"     =>  $sermon->author["id"],
-                "series_id"     =>  $sermon->series["id"],
-                "published_at"  =>  $sermon->published_at
+                "title"             =>  $sermon["title"],
+                "slug"              =>  $sermon["slug"],
+                "subtitle"          =>  $sermon["subtitle"],
+                "video_url"         =>  $sermon["video_url"],
+                "body"              =>  $sermon["body"],
+                "author_id"         =>  $sermon["author"]["id"],
+                "series_id"         =>  $sermon["series"]?$sermon["series"]["id"]:null,
+                "published_at"      =>  $sermon["published_at"]
             ]);
         }
 
         foreach ($request->series as $series) {
             Series::create([
-                "title"             =>  $series->title,
-                "slug"              =>  $series->slug,
-                "description"       =>  $series->description,
+                "title"             =>  $series["title"],
+                "slug"              =>  $series["slug"],
+                "description"       =>  $series["description"],
             ]);
         }
 
         foreach ($request->authors as $author) {
             Author::create([
-                "avatar"        =>  $author->avatar,
-                "name"          =>  $author->name,
-                "suffix"        =>  $author->suffix,
-                "slug"          =>  $author->slug,
-                "title"         =>  $author->title,
-                "biography"     =>  $author->biography,
-                "ica_pastor"    =>  $author->ica_pastor,
+                "avatar"            =>  $author["avatar"],
+                "name"              =>  $author["name"],
+                "suffix"            =>  $author["suffix"],
+                "slug"              =>  $author["slug"],
+                "title"             =>  $author["title"],
+                "biography"         =>  $author["biography"],
+                "ica_pastor"        =>  $author["ica_pastor"],
             ]);
         }
         foreach ($request->prayers as $prayer) {
             Prayer::create([
-                'title'     => $prayer->title,
-                'date'      => $prayer->date,
-                'verses'    => $prayer->verses,
-                'body'      => $prayer->body
+                'title'             => $prayer["title"],
+                'date'              => $prayer["date"],
+                'verses'            => $prayer["verses"],
+                'body'              => $prayer["body"]
             ]);
         }
 
