@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace \Web;
 
-use App\Http\Controllers\Controller;
+use \Controller;
 use App\Http\Resources\PrayerCollection;
 use App\Models\Prayer;
 use Carbon\Carbon;

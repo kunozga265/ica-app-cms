@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace \Web;
 
-use App\Http\Controllers\AppController;
-use App\Http\Controllers\Controller;
+use \AppController;
+use \Controller;
 use App\Http\Resources;
 use App\Models\Author;
 use App\Models\Sermon;

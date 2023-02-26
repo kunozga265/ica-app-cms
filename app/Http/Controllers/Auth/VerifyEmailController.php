@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace \Auth;
 
-use App\Http\Controllers\Controller;
+use \Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;

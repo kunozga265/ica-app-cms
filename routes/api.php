@@ -19,12 +19,37 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::group(["prefix"=>"1.0.0"],function (){
-    Route::get('/dashboard','App\Http\Controllers\AppController@dashboard_1_0_0');
-    Route::get('authors/{slug}/sermons','App\Http\Controllers\AuthorController@getSermonsByAuthor_1_0_0');
+    /* Home Page */
+    Route::get('/dashboard',[\App\Http\Controllers\API\V1_0_0\AppController::class, 'dashboard']);
+
+    /* Sermons */
+    Route::group(["prefix"=>"sermons"],function () {
+        Route::get('/search/{query}', [\App\Http\Controllers\API\V1_0_0\SermonController::class, 'search']);
+        Route::get('/', [\App\Http\Controllers\API\V1_0_0\SermonController::class, 'index']);
+        Route::get('/series/{slug}', [\App\Http\Controllers\API\V1_0_0\SermonController::class, 'bySeries']);
+        Route::get('/authors/{slug}', [\App\Http\Controllers\API\V1_0_0\AuthorController::class, 'getSermonsByAuthor']);
+    });
+
+    /* Series */
+    Route::group(["prefix"=>"series"],function () {
+        Route::get('/search/{query}', [\App\Http\Controllers\API\V1_0_0\SeriesController::class, 'search']);
+        Route::get('/', [\App\Http\Controllers\API\V1_0_0\SeriesController::class, 'index']);
+    });
+
+    /* Authors */
+    Route::group(["prefix"=>"authors"],function () {
+        Route::get('/authors', [\App\Http\Controllers\API\V1_0_0\AuthorController::class, 'index']);
+    });
+
+    /* Prayers */
+    Route::group(["prefix"=>"prayers"],function (){
+        Route::get('/',[\App\Http\Controllers\API\V1_0_0\PrayerController::class, 'index']);
+    });
 });
 
 
-Route::get('/dashboard','App\Http\Controllers\AppController@dashboard');
+/* Disabled */
+/*Route::get('/dashboard','App\Http\Controllers\AppController@dashboard');
 
 
 Route::group(["prefix"=>"sermons"],function (){
@@ -93,4 +118,5 @@ Route::group(["prefix"=>"prayers"],function (){
     Route::post('/','App\Http\Controllers\PrayerController@store');
     Route::post('/{id}','App\Http\Controllers\PrayerController@update');
     Route::delete('/{id}','App\Http\Controllers\PrayerController@destroy');
-});
+});*/
+

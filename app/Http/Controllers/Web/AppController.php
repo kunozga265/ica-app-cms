@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace \Web;
 
-use App\Http\Controllers\Controller;
+use \Controller;
 use App\Models\Prayer;
 use App\Models\Sermon;
 use App\Models\User;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace \Web;
 
-use App\Http\Controllers\Controller;
+use \Controller;
 use App\Models\Series;
 use App\Http\Resources;
 use Illuminate\Http\Request;

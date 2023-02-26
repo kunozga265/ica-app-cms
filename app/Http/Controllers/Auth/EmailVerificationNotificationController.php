@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace \Auth;
 
-use App\Http\Controllers\Controller;
+use \Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 

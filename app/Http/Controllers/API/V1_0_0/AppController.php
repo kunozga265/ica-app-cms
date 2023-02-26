@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\V1_0_0;
 
+use App\Http\Controllers\Controller;
 use App\Models\Prayer;
 use App\Models\Sermon;
 use Carbon\Carbon;
@@ -13,12 +14,6 @@ class AppController extends Controller
     public $paginate=20;
 
     public function dashboard()
-    {
-        //get sermons
-        $sermons = Sermon::orderBy("published_at","desc")->limit(5)->get();
-        return response()->json(Resources\SermonResource::collection($sermons),200);
-    }
-    public function dashboard_1_0_0()
     {
         //get sermons
         $sermons = Sermon::orderBy("published_at","desc")->limit(5)->get();

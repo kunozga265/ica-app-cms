@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\V1_0_0;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources;
 use App\Models\Author;
 use App\Models\Sermon;
@@ -17,6 +18,22 @@ use Validator;
 
 class SermonController extends Controller
 {
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $query
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search($query){
+        $sermons=Sermon::where('title', 'like', '%' .$query. '%')->orderBy('title','asc')->paginate((new AppController())->paginate);
+//     $series=Series::search($query)->get();
+//     return response()->json([
+//       "sermons" => Resources\SermonResource::collection($sermons),
+//       "series" => Resources\SeriesSearchResource::collection($series)
+//     ],200);
+        return response()->json(new Resources\SermonCollection($sermons),200);
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -39,18 +56,21 @@ class SermonController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  string  $query
+     * @param  string $slug
      * @return \Illuminate\Http\JsonResponse
      */
-    public function search($query){
-        $sermons=Sermon::where('title', 'like', '%' .$query. '%')->orderBy('title','asc')->paginate((new AppController())->paginate);
-//     $series=Series::search($query)->get();
-//     return response()->json([
-//       "sermons" => Resources\SermonResource::collection($sermons),
-//       "series" => Resources\SeriesSearchResource::collection($series)
-//     ],200);
-        return response()->json(new Resources\SermonCollection($sermons),200);
+    public function getSermonsByAuthor($slug)
+    {
+        $author = Author::where('slug','=',$slug)->first();
+        if (!is_object($author))
+            return response()->json(["response"=>false],204);
+        else {
+            $sermons= Author::where('slug',$slug)->first()->sermons()->orderBy("published_at","desc")->paginate((new AppController())->paginate);
+            return response()->json(new Resources\SermonCollection($sermons), 200);
+        }
     }
+
+
 
     /**
      * Display the specified resource.
