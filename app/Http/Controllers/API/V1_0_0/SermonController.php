@@ -34,6 +34,16 @@ class SermonController extends Controller
         return response()->json(new Resources\SermonCollection($sermons),200);
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index()
+    {
+        $sermons= Sermon::orderBy("published_at","desc")->paginate((new AppController())->paginate);
+        return response()->json(new Resources\SermonCollection($sermons),200);
+    }
 
     /**
      * Display a listing of the resource.
@@ -70,8 +80,6 @@ class SermonController extends Controller
         }
     }
 
-
-
     /**
      * Display the specified resource.
      *
@@ -99,18 +107,6 @@ class SermonController extends Controller
         else
             return response()->json(Resources\SermonResource::collection($sermons),200);
     }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function index()
-    {
-        $sermons= Sermon::orderBy("published_at","desc")->paginate((new AppController())->paginate);
-        return response()->json(new Resources\SermonCollection($sermons),200);
-    }
-
 
     /**
      * Display a listing of the resource.

@@ -27,7 +27,8 @@ Route::group(["prefix"=>"1.0.0"],function (){
         Route::get('/search/{query}', [\App\Http\Controllers\API\V1_0_0\SermonController::class, 'search']);
         Route::get('/', [\App\Http\Controllers\API\V1_0_0\SermonController::class, 'index']);
         Route::get('/series/{slug}', [\App\Http\Controllers\API\V1_0_0\SermonController::class, 'bySeries']);
-        Route::get('/authors/{slug}', [\App\Http\Controllers\API\V1_0_0\AuthorController::class, 'getSermonsByAuthor']);
+        Route::get('/authors/{slug}', [\App\Http\Controllers\API\V1_0_0\SermonController::class, 'getSermonsByAuthor']);
+        Route::post('/',[\App\Http\Controllers\API\V1_0_0\SermonController::class,'store']);
     });
 
     /* Series */
