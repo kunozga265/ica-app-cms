@@ -47,9 +47,10 @@ class AppController extends Controller
 
         foreach ($request->series as $series) {
             Series::create([
-                "title"             =>  $series["title"],
-                "slug"              =>  $series["slug"],
-                "description"       =>  $series["description"],
+                "title"                 =>  $series["title"],
+                "slug"                  =>  $series["slug"],
+                "description"           =>  $series["description"],
+                "first_sermon_date"     =>  $series["first_sermon_date"],
             ]);
         }
 
