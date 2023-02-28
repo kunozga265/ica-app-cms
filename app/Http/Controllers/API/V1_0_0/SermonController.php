@@ -236,12 +236,16 @@ class SermonController extends Controller
             return response()->json(["message"=>"Title, body and author_id attributes required"],400);
         }
 
+        $body=$request->body;
+        str_replace("\n","",$body);
+        str_replace("\t","",$body);
+
         $sermon=new Sermon([
             "title"         =>  $request->title,
             "slug"          =>  Str::slug($request->title).date("-Y-m-d"),
             "subtitle"      =>  $request->subtitle,
             "video_url"     =>  $request->video_url,
-            "body"          =>  Purifier::clean($request->body),
+            "body"          =>  $body,
             "author_id"     =>  $request->author_id,
             "series_id"     =>  $request->series_id,
             "category_id"   =>  $request->category_id,
@@ -328,7 +332,7 @@ class SermonController extends Controller
                 "published_at"  =>  $request->published_at
             ]);
 
-            if($existentSeries){
+            if(isset($existentSeries)){
                 $this->setSeriesFirstSermonDate($existentSeries);
             }
 

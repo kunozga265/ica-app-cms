@@ -84,35 +84,7 @@
 
         <script>
             $( function() {
-                var availableTags = [
-                    "ActionScript",
-                    "AppleScript",
-                    "Asp",
-                    "BASIC",
-                    "C",
-                    "C++",
-                    "Clojure",
-                    "COBOL",
-                    "ColdFusion",
-                    "Erlang",
-                    "Fortran",
-                    "Groovy",
-                    "Haskell",
-                    "Java",
-                    "JavaScript",
-                    "Lisp",
-                    "Perl",
-                    "PHP",
-                    "Python",
-                    "Ruby",
-                    "Scala",
-                    "Scheme"
-                ];
-
-                $( "#tags" ).autocomplete({
-                    source: availableTags
-                });
-/*
+                /*
                 var authors={!! json_encode($authors->toArray()) !!};
                 $( "#author" ).autocomplete({
                     source: authors
@@ -122,8 +94,6 @@
                 $( "#series" ).autocomplete({
                     source: series
                 });*/
-
-
             } );
         </script>
     @endpush

@@ -42,7 +42,7 @@ Route::group(["prefix"=>"1.0.0"],function (){
 
     /* Authors */
     Route::group(["prefix"=>"authors"],function () {
-        Route::get('/authors', [\App\Http\Controllers\API\V1_0_0\AuthorController::class, 'index']);
+        Route::get('/', [\App\Http\Controllers\API\V1_0_0\AuthorController::class, 'index']);
     });
 
     /* Prayers */

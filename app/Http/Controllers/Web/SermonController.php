@@ -265,7 +265,7 @@ class SermonController extends Controller
             "slug"          =>  Str::slug($request->title).date("-Y-m-d"),
             "subtitle"      =>  $request->subtitle,
             "video_url"     =>  $request->video_url,
-            "body"          =>  Purifier::clean($request->body),
+            "body"          =>  Purifier::clean((new AppController())->filterBody($request->body)),
             "author_id"     =>  $request->author_id,
             "series_id"     =>  $request->series_id,
             "category_id"   =>  $request->category_id,
@@ -367,12 +367,13 @@ class SermonController extends Controller
         else {
             $date=explode('-',$request->date);
             $existentSeries=$sermon->series_id;
+
             $sermon->update([
                 "title"         =>  $request->title,
                 "slug"          =>  Str::slug($request->title).date("-Y-m-d"),
                 "subtitle"      =>  $request->subtitle,
                 "video_url"     =>  $request->video_url,
-                "body"          =>  Purifier::clean($request->body),
+                "body"          =>  Purifier::clean((new AppController())->filterBody($request->body)),
                 "author_id"     =>  $request->author_id,
                 "series_id"     =>  $request->series_id,
                 "category_id"   =>  $request->category_id,

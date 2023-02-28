@@ -10,6 +10,7 @@ use App\Models\Sermon;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Resources;
+use Mews\Purifier\Facades\Purifier;
 
 class AppController extends Controller
 {
@@ -38,7 +39,7 @@ class AppController extends Controller
                 "slug"              =>  $sermon["slug"],
                 "subtitle"          =>  $sermon["subtitle"],
                 "video_url"         =>  $sermon["video_url"],
-                "body"              =>  $sermon["body"],
+                "body"              =>  Purifier::clean($this->filterBody($sermon["body"])),
                 "author_id"         =>  $sermon["author"]["id"],
                 "series_id"         =>  $sermon["series"]?$sermon["series"]["id"]:null,
                 "published_at"      =>  $sermon["published_at"]
@@ -75,6 +76,22 @@ class AppController extends Controller
         }
 
         dd("DB Seeded");
+    }
+
+    private function filterBody($body)
+    {
+        $body=json_decode(str_replace('\r\n\t<li>','<li>',json_encode($body)));
+        $body=json_decode(str_replace('\r\n\t\t<li>','<li>',json_encode($body)));
+        $body=json_decode(str_replace('<li>\r\n\t<p>','<li>',json_encode($body)));
+        $body=json_decode(str_replace('<\/p>\r\n\r\n\t<ul>','\r\n\t<ul>',json_encode($body)));
+        $body=json_decode(str_replace('<\/p>\r\n\r\n\t<ol>','\r\n\t<ol>',json_encode($body)));
+        $body=json_decode(str_replace('<\/ul>\r\n\t<\/li>','<\/ul><\/li>',json_encode($body)));
+        $body=json_decode(str_replace('<\/ol>\r\n\t<\/li>','<\/ol><\/li>',json_encode($body)));
+        $body=json_decode(str_replace('<\/li>\r\n\t<\/ul>','<\/li><\/ul>',json_encode($body)));
+        $body=json_decode(str_replace('<\/li>\r\n\t<\/ol>','<\/li><\/ol>',json_encode($body)));
+
+        return $body;
+
     }
 
 }
