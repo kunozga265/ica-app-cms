@@ -32,11 +32,11 @@ class SeriesSearchResource extends JsonResource
         }
 
         return [
-            'id'            =>  $this->id,
+            'id'            =>  intval($this->id),
             "title"         =>  $this->title,
             "description"   =>  $this->description,
             "duration"      =>  $duration,
-            "sermon_count"   =>  $this->sermons->count()
+            "sermon_count"  =>  intval($this->sermons->count())
         ];
     }
 }

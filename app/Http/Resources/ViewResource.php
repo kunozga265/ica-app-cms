@@ -15,9 +15,9 @@ class ViewResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "id"            =>  $this->id,
+            "id"            =>  intval($this->id),
             "sermon"        =>  new SermonResource($this->sermon),
-            "count"         =>  $this->count
+            "count"         =>  intval($this->count)
         ];
     }
 }

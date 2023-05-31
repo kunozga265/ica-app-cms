@@ -20,7 +20,7 @@ class SermonResource extends JsonResource
 
 //        $published_date=Carbon::createFromTimestamp($this->published_at);
         return [
-            "id"            =>  $this->id,
+            "id"            =>  intval($this->id),
             "title"         =>  $this->title,
             "slug"          =>  $this->slug,
             "subtitle"      =>  $this->subtitle,
@@ -29,14 +29,14 @@ class SermonResource extends JsonResource
             "author"        =>  new AuthorResource($this->author),
             "series"        =>  new SeriesResource($this->series),
             "category"      =>  $this->category,
-            "published_at"  =>  $this->published_at,
+            "published_at"  =>  intval($this->published_at),
             "published_date"  =>  [
                 'day'   => date("d",$this->published_at),
                 'month'   => date("M",$this->published_at),
                 'year'   => date("Y",$this->published_at)
             ],
-            "created_at"    =>  $this->created_at->getTimestamp(),
-            "updated_at"    =>  $this->updated_at->getTimestamp(),
+            "created_at"    =>  intval($this->created_at->getTimestamp()),
+            "updated_at"    =>  intval($this->updated_at->getTimestamp()),
             "trashed"       =>  $this->trashed()
         ];
     }

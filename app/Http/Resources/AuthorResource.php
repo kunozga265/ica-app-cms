@@ -15,15 +15,15 @@ class AuthorResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "id"                =>  $this->id,
+            "id"                =>  intval($this->id),
             "avatar"            =>  $this->avatar,
             "name"              =>  $this->name,
             "suffix"            =>  $this->suffix,
             "title"             =>  $this->title,
             "slug"              =>  $this->slug,
-            "ica_pastor"        =>  $this->ica_pastor,
+            "ica_pastor"        =>  intval($this->ica_pastor),
             "biography"         =>  $this->biography,
-            "sermon_count"      =>  $this->sermons->count(),
+            "sermon_count"      =>  intval($this->sermons->count()),
             "trashed"           =>  $this->trashed()
         ];
     }

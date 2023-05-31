@@ -16,7 +16,7 @@ class SeriesOptionsResource extends JsonResource
     {
 
         return [
-            'id'            =>  $this->id,
+            'id'            =>  intval($this->id),
             "title"         =>  $this->title,
         ];
     }

@@ -15,8 +15,8 @@ class PrayerResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'            =>  $this->id,
-            'date'          =>  $this->date,
+            'id'            =>  intval($this->id),
+            'date'          =>  intval($this->date),
             'title'         =>  $this->title,
             'verses'        =>  $this->verses,
             'body'          =>  $this->body,

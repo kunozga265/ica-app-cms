@@ -35,15 +35,15 @@ class SeriesResource extends JsonResource
         $duration_year=$sermon_count==0?null:date("Y", $first_sermon[0]->published_at);
 
         return [
-            "id"            =>  $this->id,
+            "id"            =>  intval($this->id),
             "title"         =>  $this->title,
             "slug"          =>  $this->slug,
             "description"   =>  $this->description,
             "theme"         =>  $this->theme,
             "duration"      =>  $duration,
             "duration_year" =>  $duration_year,
-            "sermon_count"  =>  $sermon_count,
-            "first_sermon_date"  =>  $this->first_sermon_date,
+            "sermon_count"  =>  intval($sermon_count),
+            "first_sermon_date"  =>  intval($this->first_sermon_date),
             "trashed"       =>  $this->trashed()
         ];
     }
