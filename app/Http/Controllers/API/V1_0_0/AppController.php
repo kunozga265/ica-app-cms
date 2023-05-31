@@ -27,7 +27,7 @@ class AppController extends Controller
 
         return response()->json([
             'sermons'   => Resources\SermonResource::collection($sermons),
-            'prayer'    => $prayer
+            'prayer'    => new Resources\PrayerResource($prayer)
         ]);
     }
 
