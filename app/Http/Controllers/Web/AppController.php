@@ -83,15 +83,21 @@ class AppController extends Controller
 
     public function filterBody($body)
     {
-        $body=json_decode(str_replace('\r\n\t<li>','<li>',json_encode($body)));
-        $body=json_decode(str_replace('\r\n\t\t<li>','<li>',json_encode($body)));
-        $body=json_decode(str_replace('<li>\r\n\t<p>','<li>',json_encode($body)));
-        $body=json_decode(str_replace('<\/p>\r\n\r\n\t<ul>','\r\n\t<ul>',json_encode($body)));
-        $body=json_decode(str_replace('<\/p>\r\n\r\n\t<ol>','\r\n\t<ol>',json_encode($body)));
-        $body=json_decode(str_replace('<\/ul>\r\n\t<\/li>','<\/ul><\/li>',json_encode($body)));
-        $body=json_decode(str_replace('<\/ol>\r\n\t<\/li>','<\/ol><\/li>',json_encode($body)));
-        $body=json_decode(str_replace('<\/li>\r\n\t<\/ul>','<\/li><\/ul>',json_encode($body)));
-        $body=json_decode(str_replace('<\/li>\r\n\t<\/ol>','<\/li><\/ol>',json_encode($body)));
+      $body=json_decode(str_replace('\r\n\t<li>','<li>',json_encode($body)));
+     $body=json_decode(str_replace('\r\n\t\t<li>','<li>',json_encode($body)));
+     $body=json_decode(str_replace('\r\n\t\t\t<li>','<li>',json_encode($body)));
+     $body=json_decode(str_replace('\r\n\t\t<ul>','<ul>',json_encode($body)));
+     $body=json_decode(str_replace('\r\n\t\t<\/ul>','<\/ul>',json_encode($body)));
+     $body=json_decode(str_replace('<li>\r\n\t<p>','<li>',json_encode($body)));
+     $body=json_decode(str_replace('<\/p>\r\n\r\n\t<ul>','\r\n\t<ul>',json_encode($body)));
+     $body=json_decode(str_replace('<\/p>\r\n\r\n\t<ol>','\r\n\t<ol>',json_encode($body)));
+     $body=json_decode(str_replace('<\/ul>\r\n\t<\/li>','<\/ul><\/li>',json_encode($body)));
+     $body=json_decode(str_replace('<\/ul>\r\n\t\t<\/li>','<\/ul><\/li>',json_encode($body)));
+     $body=json_decode(str_replace('<\/ol>\r\n\t<\/li>','<\/ol><\/li>',json_encode($body)));
+     $body=json_decode(str_replace('<\/li>\r\n\t<\/ul>','<\/li><\/ul>',json_encode($body)));
+     $body=json_decode(str_replace('<\/li>\r\n\t<\/ol>','<\/li><\/ol>',json_encode($body)));
+     $body=json_decode(str_replace('<br \/>\r\n\t','<br \/>',json_encode($body)));
+     $body=json_decode(str_replace('<br \/>\t','<br \/>',json_encode($body)));
 
         return $body;
 
