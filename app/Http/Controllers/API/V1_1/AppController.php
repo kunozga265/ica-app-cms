@@ -31,6 +31,19 @@ class AppController extends Controller
         ]);
     }
 
+    public function search($query)
+    {
+        $sermons=Sermon::where('title', 'like', '%' .$query. '%')->orderBy('title','asc')->limit(20)->get();
+        $series=Series::where('title', 'like', '%' .$query. '%')->orderBy('title','asc')->limit(20)->get();
+        $authors=Author::where('name', 'like', '%' .$query. '%')->orderBy('name','asc')->paginate((new AppController())->paginate);
+
+        return response()->json([
+            'sermons'   => Resources\SermonResource::collection($sermons),
+            'series'    => Resources\SeriesResource::collection($series),
+            'authors'   => Resources\AuthorResource::collection($authors),
+        ]);
+    }
+
     public function seeder(Request $request)
     {
         foreach ($request->sermons as $sermon){
