@@ -15,7 +15,7 @@ class PrayerCollection extends ResourceCollection
     public function toArray($request)
     {
         return  [
-            'prayers'   =>  PrayerResource::collection($this->collection),
+            'data'   =>  PrayerResource::collection($this->collection),
             'meta'      =>  [
                 'current_page'      =>  $this->currentPage(),
                 'total'             =>  $this->total(),

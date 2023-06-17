@@ -15,7 +15,7 @@ class SeriesCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'series'      =>  SeriesResource::collection($this->collection),
+            'data'      =>  SeriesResource::collection($this->collection),
             'meta'      =>  [
                 'current_page'      =>  $this->currentPage(),
                 'total'             =>  $this->total(),
