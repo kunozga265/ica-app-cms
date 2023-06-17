@@ -18,16 +18,19 @@ class AppController extends Controller
 
     public function dashboard()
     {
-        //get sermons
-        $sermons = Sermon::orderBy("published_at","desc")->limit(5)->get();
-
         //get prayer points
         $now=Carbon::now()->getTimestamp();
-        $prayer=Prayer::where('date','<=',$now)->orderBy('date','desc')->first();
+        $prayers=Prayer::where('date','<=',$now)->orderBy('date','desc')->paginate((new AppController())->paginate);
+
+        $sermons= Sermon::orderBy("published_at","desc")->paginate((new AppController())->paginate);
+        $series= Series::where("first_sermon_date","!=",null)->orderBy("first_sermon_date","desc")->paginate((new AppController())->paginate);
+        $authors= Author::paginate((new AppController())->paginate);
 
         return response()->json([
-            'sermons'   => Resources\SermonResource::collection($sermons),
-            'prayer'    => new Resources\PrayerResource($prayer)
+            'sermons'   => new Resources\SermonCollection($sermons),
+            'series'    => new Resources\SeriesCollection($series),
+            'authors'   => new Resources\AuthorCollection($authors),
+            'prayers'   => new Resources\PrayerCollection($prayers)
         ]);
     }
 
