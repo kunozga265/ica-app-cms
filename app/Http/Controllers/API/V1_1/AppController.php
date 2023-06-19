@@ -27,10 +27,10 @@ class AppController extends Controller
         $authors= Author::paginate((new AppController())->paginate);
 
         return response()->json([
-            'sermons'   => new Resources\SermonCollection($sermons),
-            'series'    => new Resources\SeriesCollection($series),
-            'authors'   => new Resources\AuthorCollection($authors),
-            'prayers'   => new Resources\PrayerCollection($prayers)
+            'sermons'   => new Resources\V1_1\SermonCollection($sermons),
+            'series'    => new Resources\V1_1\SeriesCollection($series),
+            'authors'   => new Resources\V1_1\AuthorCollection($authors),
+            'prayers'   => new Resources\V1_1\PrayerCollection($prayers)
         ]);
     }
 

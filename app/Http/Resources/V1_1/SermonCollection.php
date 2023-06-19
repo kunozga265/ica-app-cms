@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\V1_1;
 
+use App\Http\Resources\SermonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class SeriesCollection extends ResourceCollection
+class SermonCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -15,7 +16,7 @@ class SeriesCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'series'      =>  SeriesResource::collection($this->collection),
+            'sermons'      =>  SermonResource::collection($this->collection),
             'meta'      =>  [
                 'current_page'      =>  $this->currentPage(),
                 'total'             =>  $this->total(),
