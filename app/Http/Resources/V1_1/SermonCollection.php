@@ -16,7 +16,7 @@ class SermonCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'sermons'      =>  SermonResource::collection($this->collection),
+            'data'      =>  SermonResource::collection($this->collection),
             'meta'      =>  [
                 'current_page'      =>  $this->currentPage(),
                 'total'             =>  $this->total(),
