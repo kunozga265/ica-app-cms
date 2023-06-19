@@ -67,7 +67,7 @@ class SermonController extends Controller
             return response()->json(["response"=>false],204);
         else {
             $sermons= Author::where('slug',$slug)->first()->sermons()->orderBy("published_at","desc")->paginate((new AppController())->paginate);
-            return response()->json(new Resources\SermonCollection($sermons), 200);
+            return response()->json(new Resources\V1_1\SermonCollection($sermons), 200);
         }
     }
 }
