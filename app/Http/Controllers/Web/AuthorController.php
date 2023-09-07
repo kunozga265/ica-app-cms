@@ -84,8 +84,20 @@ class AuthorController extends Controller
             }
         }
 
+        $cover_image=null;
+        if (isset($request->cover_image)){
+            $filename=$slug."_cover_image.".$request->cover_image->extension();
+            try {
+                $request->cover_image->move(public_path('images/authors'),$filename);
+                $cover_image="images/authors/$filename";
+            }catch (FileException $exception){
+                //catch file exception
+            }
+        }
+
         $author=new Author([
             "avatar"        =>  $avatar,
+            "cover_image"   =>  $cover_image,
             "name"          =>  $request->name,
             "suffix"        =>  $request->suffix,
             "slug"          =>  $slug,
@@ -205,6 +217,22 @@ class AuthorController extends Controller
                     $request->avatar->move(public_path('images/authors'),$filename);
                     $author->update([
                         "avatar" => "images/authors/$filename"
+                    ]);
+                }catch (FileException $exception){
+                    //catch file exception
+                }
+            }
+
+            if(isset($request->cover_image)){
+                if(file_exists($author->cover_image)){
+                    Storage::disk("public_uploads")->delete($author->cover_image);
+                }
+
+                $filename=$slug."_cover_image.".$request->cover_image->extension();
+                try {
+                    $request->cover_image->move(public_path('images/authors'),$filename);
+                    $author->update([
+                        "cover_image" => "images/authors/$filename"
                     ]);
                 }catch (FileException $exception){
                     //catch file exception

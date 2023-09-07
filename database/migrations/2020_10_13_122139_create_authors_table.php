@@ -16,6 +16,7 @@ class CreateAuthorsTable extends Migration
         Schema::create('authors', function (Blueprint $table) {
             $table->id();
             $table->string("avatar");
+            $table->string("cover_image")->nullable();
             $table->string("name");
             $table->string("suffix")->nullable();
             $table->string("title");

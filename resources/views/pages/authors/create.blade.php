@@ -27,7 +27,7 @@
                     <input class="form-control" type="text" id="name" name="name" required placeholder="Enter name">
                 </div>
 
-                <div class="col-12 col-sm-6 mb-8">
+                <div class="col-12 mb-8">
                     <label class="" for="title">Title</label>
                     <input class="form-control" type="text" id="title" name="title" required placeholder="Enter title">
                 </div>
@@ -35,6 +35,11 @@
                 <div class="col-12 col-sm-6 mb-8">
                     <label class="" for="avatar">Avatar</label>
                     <input type="file" name="avatar" id="avatar" class="form-control">
+                </div>
+
+                <div class="col-12 col-sm-6 mb-8">
+                    <label class="" for="cover_image">Cover Image</label>
+                    <input type="file" name="cover_image" id="cover_image" class="form-control">
                 </div>
 
                 <div class="col-12 mb-8">

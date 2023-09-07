@@ -17,7 +17,7 @@ class AppController extends Controller
 {
     public $paginate=20;
 
-    public function dashboard()
+    public function initiate()
     {
         //get prayer points
         $now=Carbon::now()->getTimestamp();
@@ -27,6 +27,31 @@ class AppController extends Controller
         $series= Series::where("first_sermon_date","!=",null)->orderBy("first_sermon_date","desc")->limit((new AppController())->paginate)->get();
         $events= Event::orderBy("start_date","desc")->limit((new AppController())->paginate)->get();
         $authors= Author::all();
+
+        return response()->json([
+            'sermons'   => Resources\SermonResource::collection($sermons),
+            'series'    => Resources\SeriesResource::collection($series),
+            'authors'   => Resources\AuthorResource::collection($authors),
+            'prayers'   => Resources\PrayerResource::collection($prayers),
+            'events'    => Resources\EventResource::collection($events)
+        ]);
+    }
+
+    public function dashboard($timestamp)
+    {
+        if(!isset($timestamp)){
+            return response()->json([
+                "message" => "Timestamp is required."
+            ],400);
+        }
+
+        //get prayer points
+//        $now=Carbon::now()->getTimestamp();
+        $prayers=Prayer::where('date','>',$timestamp)->orderBy('date','desc')->limit((new AppController())->paginate)->get();
+        $sermons= Sermon::where('published_at','>',$timestamp)->orderBy("published_at","desc")->limit((new AppController())->paginate)->get();
+        $series= Series::where('created_at','>',Carbon::createFromTimestamp($timestamp))->where("first_sermon_date","!=",null)->orderBy("first_sermon_date","desc")->limit((new AppController())->paginate)->get();
+        $events= Event::where('start_date','>',$timestamp)->orderBy("start_date","desc")->limit((new AppController())->paginate)->get();
+        $authors= Author::where('created_at','>',Carbon::createFromTimestamp($timestamp))->get();
 
         return response()->json([
             'sermons'   => Resources\SermonResource::collection($sermons),

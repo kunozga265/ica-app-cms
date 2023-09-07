@@ -70,4 +70,10 @@ class SermonController extends Controller
             return response()->json(new Resources\V1_1\SermonCollection($sermons), 200);
         }
     }
+
+    public function getSermons($timestamp)
+    {
+        $sermons = Sermon::where("published_at","<=",$timestamp)->orderby("published_at","desc")->get();
+        return response()->json(Resources\SermonResource::collection($sermons),200);
+    }
 }

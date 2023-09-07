@@ -32,6 +32,10 @@
                 <div class="mb-8 flex">
                     <img style="max-width: 250px; margin:auto; " src="{{asset($author->avatar)}}" alt="">
                 </div>
+
+                <div class="mb-8 flex">
+                    <img style="max-width: 250px; margin:auto; " src="{{asset($author->cover_image)}}" alt="">
+                </div>
                 <div class="text-xl font-bold text-center">{{$author->suffix}} {{$author->name}}</div>
                     <div class="text-center">{{$author->title}}</div>
                     <div class="flex justify-center">

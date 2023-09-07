@@ -25,6 +25,7 @@ class Author extends Model
 
     protected $fillable=[
         "avatar",
+        "cover_image",
         "name",
         "suffix",
         "title",
