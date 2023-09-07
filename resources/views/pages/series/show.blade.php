@@ -32,6 +32,9 @@
                 </div>
                 <div class="text-xl font-bold">{{$series->title}}</div>
                 <div>{{$series->sermons->count()}} {{$series->sermons->count()==1?'Sermon':'Sermons'}}</div>
+                <div ></div>
+                <div class="mt-16">{!! $series->description !!}</div>
+
 
             </div>
         </div>

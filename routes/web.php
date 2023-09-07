@@ -95,6 +95,18 @@ Route::group(['middleware'=>'auth'],function (){
         Route::post('/{slug}/delete', [Web\PrayerController::class,'trash'])->name('prayers.trash');
     });
 
+    Route::group(['prefix'=>'events'],function(){
+
+        Route::get('/', [Web\EventController::class,'index'])->name('events.index');
+        Route::get('/{id}/view', [Web\EventController::class,'show'])->name('events.show');
+
+        Route::get('/create', [Web\EventController::class,'create'])->name('events.create');
+        Route::post('/store', [Web\EventController::class,'store'])->name('events.store');
+        Route::get('/{slug}/edit', [Web\EventController::class,'edit'])->name('events.edit');
+        Route::post('/{slug}/update', [Web\EventController::class,'update'])->name('events.update');
+        Route::post('/{slug}/delete', [Web\EventController::class,'trash'])->name('events.trash');
+    });
+
     Route::post('/image-upload', [Web\AppController::class, 'imageUpload'])->name('images.upload');
 
 });

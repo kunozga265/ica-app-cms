@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1_1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Author;
+use App\Models\Event;
 use App\Models\Prayer;
 use App\Models\Series;
 use App\Models\Sermon;
@@ -20,17 +21,19 @@ class AppController extends Controller
     {
         //get prayer points
         $now=Carbon::now()->getTimestamp();
-        $prayers=Prayer::where('date','<=',$now)->orderBy('date','desc')->paginate((new AppController())->paginate);
+        $prayers=Prayer::where('date','<=',$now)->orderBy('date','desc')->limit((new AppController())->paginate)->get();
 
-        $sermons= Sermon::orderBy("published_at","desc")->paginate((new AppController())->paginate);
-        $series= Series::where("first_sermon_date","!=",null)->orderBy("first_sermon_date","desc")->paginate((new AppController())->paginate);
-        $authors= Author::paginate((new AppController())->paginate);
+        $sermons= Sermon::orderBy("published_at","desc")->limit((new AppController())->paginate)->get();
+        $series= Series::where("first_sermon_date","!=",null)->orderBy("first_sermon_date","desc")->limit((new AppController())->paginate)->get();
+        $events= Event::orderBy("start_date","desc")->limit((new AppController())->paginate)->get();
+        $authors= Author::all();
 
         return response()->json([
-            'sermons'   => new Resources\V1_1\SermonCollection($sermons),
-            'series'    => new Resources\V1_1\SeriesCollection($series),
-            'authors'   => new Resources\V1_1\AuthorCollection($authors),
-            'prayers'   => new Resources\V1_1\PrayerCollection($prayers)
+            'sermons'   => Resources\SermonResource::collection($sermons),
+            'series'    => Resources\SeriesResource::collection($series),
+            'authors'   => Resources\AuthorResource::collection($authors),
+            'prayers'   => Resources\PrayerResource::collection($prayers),
+            'events'    => Resources\EventResource::collection($events)
         ]);
     }
 

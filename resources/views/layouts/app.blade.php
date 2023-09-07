@@ -100,6 +100,13 @@
                     </li>
 
                     <li>
+                        <a href="{{route('events.index')}}" class=" waves-effect">
+                            <i class="ri-calendar-line"></i>
+                            <span>Announcements/Events</span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
                             <i class="ri-account-circle-line"></i>
                             <span>Profile</span>

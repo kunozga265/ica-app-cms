@@ -24,7 +24,7 @@
                     <span class="big-chip">{{date('M d, Y',$prayer->date)}}</span>
                 </div>
                 <div class="text-xl font-bold">{{$prayer->title}}</div>
-{{--                <div class="text-gray-500">{{$prayer->verses}}</div>--}}
+                <div class="text-gray-500">{{$prayer->verses}}</div>
             </div>
         </div>
         <div class="card p-20">
