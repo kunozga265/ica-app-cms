@@ -32,7 +32,7 @@ class AppController extends Controller
             'sermons'   => Resources\SermonResource::collection($sermons),
             'series'    => Resources\SeriesResource::collection($series),
             'authors'   => Resources\AuthorResource::collection($authors),
-            'prayers'   => Resources\PrayerResource::collection($prayers),
+            'prayer_points'   => Resources\PrayerResource::collection($prayers),
             'events'    => Resources\EventResource::collection($events)
         ]);
     }
@@ -57,7 +57,7 @@ class AppController extends Controller
             'sermons'   => Resources\SermonResource::collection($sermons),
             'series'    => Resources\SeriesResource::collection($series),
             'authors'   => Resources\AuthorResource::collection($authors),
-            'prayers'   => Resources\PrayerResource::collection($prayers),
+            'prayer_points'   => Resources\PrayerResource::collection($prayers),
             'events'    => Resources\EventResource::collection($events)
         ]);
     }
