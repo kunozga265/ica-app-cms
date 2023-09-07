@@ -20,7 +20,8 @@ class SeriesController extends Controller
 
     public function index()
     {
-        $series= Series::where("first_sermon_date","!=",null)->orderBy("first_sermon_date","desc")->paginate((new AppController())->paginate);
+//        $series= Series::where("first_sermon_date","!=",null)->orderBy("first_sermon_date","desc")->paginate((new AppController())->paginate);
+        $series= Series::orderBy("first_sermon_date","desc")->paginate((new AppController())->paginate);
         return view('pages.series.index',compact('series'));
     }
     /**
@@ -110,8 +111,8 @@ class SeriesController extends Controller
         $series=new Series([
             "title"             =>  $request->title,
             "slug"              =>  Str::slug($request->title).date("-Y-m-d"),
-//            "description"       =>  Purifier::clean($request->description),
-            "description"       =>  $request->description,
+            "description"       =>  Purifier::clean($request->description),
+//            "description"       =>  $request->description,
             "theme_id"          =>  $request->theme_id,
         ]);
 
@@ -172,8 +173,8 @@ class SeriesController extends Controller
             $series->update([
                 "title"         =>  $request->title,
                 "slug"          =>  Str::slug($request->title).date("-Y-m-d"),
-//                "description"   =>  Purifier::clean($request->description),
-                "description"   =>  $request->description,
+                "description"   =>  Purifier::clean($request->description),
+//                "description"   =>  $request->description,
                 "theme_id"      =>  $request->theme_id,
             ]);
             return Redirect::route('series.index')->with('success','Series updated!');

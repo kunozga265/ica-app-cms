@@ -35,5 +35,6 @@
         </div>
 
     </div>
+    {{$series->links()}}
 
 </x-app-layout>
