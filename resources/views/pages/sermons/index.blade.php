@@ -46,6 +46,8 @@
             </div>
 
         @endforeach
-    </div>
 
+
+    </div>
+    {{$sermons_unsorted->links()}}
 </x-app-layout>

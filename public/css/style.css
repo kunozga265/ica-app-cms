@@ -151,3 +151,15 @@ a:hover{
 .text-red{
     color:#921c32;
 }
+
+svg.w-5.h-5{
+    height: 20px;
+}
+
+#layout-wrapper > div.main-content > div > div > nav {
+    display: block;
+}
+
+#layout-wrapper > div.main-content > div > div > nav > div{
+    margin-bottom: 20px;
+}

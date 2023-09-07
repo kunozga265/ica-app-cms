@@ -126,8 +126,9 @@ class SermonController extends Controller
             }
         }
         $sermons_compound=$sorted;
+        $sermons_unsorted = $unsorted;
 
-        return view('pages.sermons.index',compact("sermons_compound"));
+        return view('pages.sermons.index',compact("sermons_compound", "sermons_unsorted"));
     }
 
 
