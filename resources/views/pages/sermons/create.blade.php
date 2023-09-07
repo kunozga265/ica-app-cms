@@ -23,6 +23,11 @@
                 </div>
 
                 <div class="col-12 col-sm-6 mb-8">
+                    <label class="" for="subtitle">Subtitle</label>
+                    <input class="form-control" type="text" id="subtitle" name="subtitle" placeholder="Enter subtitle">
+                </div>
+
+                <div class="col-12 col-sm-6 mb-8">
                     <label class="" for="title">Date</label>
                     <input class="form-control" type="date" id="title" name="date" required>
                 </div>
@@ -47,7 +52,7 @@
                     </select>
                 </div>
 
-                <div class="col-12 mb-8">
+                <div class="col-12 col-sm-6 mb-8">
                     <label class="" for="title">Youtube Video Id</label>
                     <input class="form-control" type="text" id="title" name="video_url" placeholder="Enter Youtube Video ID">
                 </div>
