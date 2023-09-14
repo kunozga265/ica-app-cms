@@ -17,6 +17,7 @@ class AuthorResource extends JsonResource
         return [
             "id"                =>  intval($this->id),
             "avatar"            =>  $this->avatar,
+            "cover_image"       =>  $this->cover_image,
             "name"              =>  $this->name,
             "suffix"            =>  $this->suffix,
             "title"             =>  $this->title,
