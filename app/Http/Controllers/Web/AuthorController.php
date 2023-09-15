@@ -75,7 +75,7 @@ class AuthorController extends Controller
         $avatar="images/avatar.png";
 
         if (isset($request->avatar)){
-            $filename=$slug.".".$request->avatar->extension();
+            $filename=$slug.uniqid().".".$request->avatar->extension();
             try {
                 $request->avatar->move(public_path('images/authors'),$filename);
                 $avatar="images/authors/$filename";
@@ -86,7 +86,7 @@ class AuthorController extends Controller
 
         $cover_image=null;
         if (isset($request->cover_image)){
-            $filename=$slug."_cover_image.".$request->cover_image->extension();
+            $filename=$slug.uniqid()."_cover_image.".$request->cover_image->extension();
             try {
                 $request->cover_image->move(public_path('images/authors'),$filename);
                 $cover_image="images/authors/$filename";
@@ -212,7 +212,7 @@ class AuthorController extends Controller
                     Storage::disk("public_uploads")->delete($author->avatar);
                 }
 
-                $filename=$slug.".".$request->avatar->extension();
+                $filename=$slug.uniqid().".".$request->avatar->extension();
                 try {
                     $request->avatar->move(public_path('images/authors'),$filename);
                     $author->update([
@@ -228,7 +228,7 @@ class AuthorController extends Controller
                     Storage::disk("public_uploads")->delete($author->cover_image);
                 }
 
-                $filename=$slug."_cover_image.".$request->cover_image->extension();
+                $filename=$slug.uniqid()."_cover_image.".$request->cover_image->extension();
                 try {
                     $request->cover_image->move(public_path('images/authors'),$filename);
                     $author->update([
