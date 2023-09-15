@@ -46,12 +46,22 @@ class AppController extends Controller
         }
 
         //get prayer points
-//        $now=Carbon::now()->getTimestamp();
-        $prayers=Prayer::where('date','>',$timestamp)->orderBy('date','desc')->limit((new AppController())->paginate)->get();
-        $sermons= Sermon::where('published_at','>',$timestamp)->orderBy("published_at","desc")->limit((new AppController())->paginate)->get();
-        $series= Series::where('created_at','>',Carbon::createFromTimestamp($timestamp))->where("first_sermon_date","!=",null)->orderBy("first_sermon_date","desc")->limit((new AppController())->paginate)->get();
-        $events= Event::where('start_date','>',$timestamp)->orderBy("start_date","desc")->limit((new AppController())->paginate)->get();
-        $authors= Author::where('created_at','>',Carbon::createFromTimestamp($timestamp))->get();
+//        $now=Carbon::now()->getTimestamp(collection);
+        if($timestamp == 0){
+            $now=Carbon::now()->getTimestamp();
+            $prayers=Prayer::where('date','<=',$now)->orderBy('date','desc')->limit((new AppController())->paginate)->get();
+            $sermons= Sermon::orderBy("published_at","desc")->limit((new AppController())->paginate)->get();
+            $series= Series::where("first_sermon_date","!=",null)->orderBy("first_sermon_date","desc")->limit((new AppController())->paginate)->get();
+            $events= Event::orderBy("start_date","desc")->limit((new AppController())->paginate)->get();
+            $authors= Author::all();
+        }
+        else{
+            $prayers = Prayer::where('date', '>', $timestamp)->orWhere('updated_at', '>', Carbon::createFromTimestamp($timestamp))->orderBy('date', 'desc')->limit((new AppController())->paginate)->get();
+            $sermons = Sermon::where('published_at', '>', $timestamp)->orWhere('updated_at', '>', Carbon::createFromTimestamp($timestamp))->orderBy("published_at", "desc")->limit((new AppController())->paginate)->get();
+            $series = Series::where('updated_at', '>', Carbon::createFromTimestamp($timestamp))->where("first_sermon_date", "!=", null)->orderBy("first_sermon_date", "desc")->limit((new AppController())->paginate)->get();
+            $events = Event::where('start_date', '>', $timestamp)->orWhere('updated_at', '>', Carbon::createFromTimestamp($timestamp))->orderBy("start_date", "desc")->limit((new AppController())->paginate)->get();
+            $authors = Author::where('updated_at', '>', Carbon::createFromTimestamp($timestamp))->get();
+        }
 
         return response()->json([
             'sermons'   => Resources\SermonResource::collection($sermons),

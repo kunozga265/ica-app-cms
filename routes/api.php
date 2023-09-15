@@ -63,6 +63,7 @@ Route::group(["prefix"=>"1.1"],function (){
     /* Sermons */
     Route::group(["prefix"=>"sermons"],function () {
         Route::get('/', [\App\Http\Controllers\API\V1_1\SermonController::class, 'index']);
+        Route::get('/get/{timestamp}', [\App\Http\Controllers\API\V1_1\SermonController::class, 'getSermons']);
         Route::get('/series/{slug}', [\App\Http\Controllers\API\V1_1\SermonController::class, 'bySeries']);
         Route::get('/authors/{slug}', [\App\Http\Controllers\API\V1_1\SermonController::class, 'getSermonsByAuthor']);
     });

@@ -66,14 +66,16 @@ class SermonController extends Controller
         if (!is_object($author))
             return response()->json(["response"=>false],204);
         else {
-            $sermons= Author::where('slug',$slug)->first()->sermons()->orderBy("published_at","desc")->paginate((new AppController())->paginate);
-            return response()->json(new Resources\V1_1\SermonCollection($sermons), 200);
+//            $sermons= Author::where('slug',$slug)->first()->sermons()->orderBy("published_at","desc")->paginate((new AppController())->paginate);
+//            return response()->json(new Resources\V1_1\SermonCollection($sermons), 200);
+            $sermons=$author->sermons()->orderBy("published_at","desc")->get();
+            return response()->json(Resources\SermonResource::collection($sermons), 200);
         }
     }
 
     public function getSermons($timestamp)
     {
-        $sermons = Sermon::where("published_at","<=",$timestamp)->orderby("published_at","desc")->get();
+        $sermons = Sermon::where("published_at","<",$timestamp)->orderby("published_at","desc")->get();
         return response()->json(Resources\SermonResource::collection($sermons),200);
     }
 }
