@@ -36,4 +36,21 @@
 
     </div>
 
+    @push('scripts')
+        <script type="text/javascript">
+            CKEDITOR.replace('description', {
+                filebrowserUploadUrl: "{{route('images.upload', ['_token' => csrf_token() ])}}",
+                filebrowserUploadMethod: 'form',
+                toolbar:[
+                    { name: 'styles', items: [ 'FontSize' ] },
+                    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline',] },
+                    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'] },
+                    { name: 'links', items: [ 'Link', 'Unlink'] },
+                    // { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule'] },
+                    { name: 'tools', items: [ 'Maximize'] },
+                ]
+            });
+        </script>
+    @endpush
+
 </x-app-layout>
