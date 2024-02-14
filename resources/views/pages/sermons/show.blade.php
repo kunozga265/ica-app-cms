@@ -15,7 +15,7 @@
             <div class="flex justify-between">
                 <div>
                     <a href="{{route('sermons.edit',$sermon->slug)}}" class="p-btn">Edit</a>
-                    <button type="submit" class="p-btn">Delete</button>
+                    <button type="submit" class="p-btn error">Delete</button>
                 </div>
                 <div>
                     <a href="{{route('authors.show',['slug'=>$sermon->author->slug])}}" class="p-btn">Author</a>

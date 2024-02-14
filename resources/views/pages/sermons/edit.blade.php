@@ -76,7 +76,7 @@
 
             </div>
             <button type="submit" class="p-btn">
-                Edit
+                Update
             </button>
 
         </form>

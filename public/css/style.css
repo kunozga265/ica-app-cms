@@ -110,7 +110,16 @@ a:hover{
     border: 0;
 }
 
+.p-btn.secondary{
+    background-color: #11b766;
+}
+
+.p-btn.error{
+    background-color: #c1504f;
+}
+
 .p-btn:hover{
+    color: white;
 }
 
 .image-placeholder{
