@@ -78,5 +78,7 @@ Route::group(["prefix"=>"1.1"],function (){
     Route::group(["prefix"=>"downloads"],function (){
         Route::get('/',[\App\Http\Controllers\API\V1_1\DownloadController::class, 'index']);
     });
+
+    Route::get('/twitter',[\App\Http\Controllers\API\V1_1\TwitterController::class, 'index']);
 });
 
