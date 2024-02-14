@@ -107,6 +107,18 @@ Route::group(['middleware'=>'auth'],function (){
         Route::post('/{slug}/delete', [Web\EventController::class,'trash'])->name('events.trash');
     });
 
+    Route::group(['prefix'=>'downloads'],function(){
+
+        Route::get('/', [Web\DownloadController::class,'index'])->name('downloads.index');
+//        Route::get('/{id}/view', [Web\DownloadController::class,'show'])->name('downloads.show');
+
+        Route::get('/create', [Web\DownloadController::class,'create'])->name('downloads.create');
+        Route::post('/store', [Web\DownloadController::class,'store'])->name('downloads.store');
+        Route::get('/{slug}/edit', [Web\DownloadController::class,'edit'])->name('downloads.edit');
+        Route::post('/{slug}/update', [Web\DownloadController::class,'update'])->name('downloads.update');
+        Route::post('/{slug}/delete', [Web\DownloadController::class,'trash'])->name('downloads.trash');
+    });
+
     Route::post('/image-upload', [Web\AppController::class, 'imageUpload'])->name('images.upload');
 
 });

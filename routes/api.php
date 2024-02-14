@@ -73,5 +73,10 @@ Route::group(["prefix"=>"1.1"],function (){
     Route::group(["prefix"=>"prayers"],function (){
         Route::get('/',[\App\Http\Controllers\API\V1_1\PrayerController::class, 'index']);
     });
+
+    /* Downloads */
+    Route::group(["prefix"=>"downloads"],function (){
+        Route::get('/',[\App\Http\Controllers\API\V1_1\DownloadController::class, 'index']);
+    });
 });
 

@@ -107,6 +107,13 @@
                     </li>
 
                     <li>
+                        <a href="{{route('downloads.index')}}" class=" waves-effect">
+                            <i class="ri-calendar-line"></i>
+                            <span>Downloads</span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
                             <i class="ri-account-circle-line"></i>
                             <span>Profile</span>
