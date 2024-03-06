@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
 //            SermonTableSeeder::class,
 //            ThemeTableSeeder::class,
 //            CategoryTableSeeder::class,
-            UserTableSeeder::class
+            PageTableSeeder::class,
+//            UserTableSeeder::class
         ]);
 
 

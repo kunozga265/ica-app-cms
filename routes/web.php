@@ -119,6 +119,13 @@ Route::group(['middleware'=>'auth'],function (){
         Route::post('/{slug}/delete', [Web\DownloadController::class,'trash'])->name('downloads.trash');
     });
 
+    Route::group(['prefix'=>'pages'],function(){
+
+        Route::get('/announcements', [Web\PageController::class,'announcements'])->name('pages.announcements');
+        Route::get('/fundraising', [Web\PageController::class,'fundraising'])->name('pages.fundraising');
+        Route::post('/update', [Web\PageController::class,'store'])->name('pages.update');
+    });
+
     Route::post('/image-upload', [Web\AppController::class, 'imageUpload'])->name('images.upload');
 
 });

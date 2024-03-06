@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1_1;
 use App\Http\Controllers\Controller;
 use App\Models\Author;
 use App\Models\Event;
+use App\Models\Page;
 use App\Models\Prayer;
 use App\Models\Series;
 use App\Models\Sermon;
@@ -63,12 +64,18 @@ class AppController extends Controller
             $authors = Author::where('updated_at', '>', Carbon::createFromTimestamp($timestamp))->get();
         }
 
+        $announcements = Page::where("name","announcements")->first();
+        $fundraising = Page::where("name","fundraising")->first();
+
         return response()->json([
             'sermons'   => Resources\SermonResource::collection($sermons),
             'series'    => Resources\SeriesResource::collection($series),
             'authors'   => Resources\AuthorResource::collection($authors),
             'prayer_points'   => Resources\PrayerResource::collection($prayers),
-            'events'    => Resources\EventResource::collection($events)
+            'events'    => Resources\EventResource::collection($events),
+            'announcements'    => new Resources\PageResource($announcements),
+            'fundraising'    => new Resources\PageResource($fundraising),
+
         ]);
     }
 

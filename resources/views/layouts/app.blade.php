@@ -40,7 +40,8 @@
                     </a>
                 </div>
 
-                <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
+                <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect"
+                        id="vertical-menu-btn">
                     <i class="ri-menu-2-line align-middle"></i>
                 </button>
             </div>
@@ -65,7 +66,7 @@
                 <ul class="metismenu list-unstyled" id="side-menu">
                     <li class="menu-title">Menu</li>
 
-<!--                    <li>
+                <!--                    <li>
                         <a href="{{route('dashboard')}}" class=" waves-effect">
                             <i class="ri-dashboard-line"></i>
                             <span>Dashboard</span>
@@ -102,7 +103,7 @@
                     <li>
                         <a href="{{route('events.index')}}" class=" waves-effect">
                             <i class="ri-calendar-line"></i>
-                            <span>Announcements/Events</span>
+                            <span>Events</span>
                         </a>
                     </li>
 
@@ -115,16 +116,28 @@
 
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="ri-calendar-line"></i>
+                            <span>Pages</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="{{route('pages.announcements')}}">Announcements</a></li>
+                            <li><a href="{{route('pages.fundraising')}}">Fundraising</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
                             <i class="ri-account-circle-line"></i>
                             <span>Profile</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
-                            <form id="logout" method="post" action="{{route('logout')}}" >
+                            <form id="logout" method="post" action="{{route('logout')}}">
                                 @csrf
                                 <li><a href="{{route('register')}}">Add User</a></li>
                                 <li><a href="{{route('change.password.view')}}">Change Password</a></li>
                                 <li>
-                                    <a href="javascript:{}" onclick="document.getElementById('logout').submit();">Logout</a>
+                                    <a href="javascript:{}"
+                                       onclick="document.getElementById('logout').submit();">Logout</a>
                                 </li>
                             </form>
                         </ul>
@@ -138,7 +151,6 @@
     <!-- Left Sidebar End -->
 
 
-
     <!-- ============================================================== -->
     <!-- Start right Content here -->
     <!-- ============================================================== -->
@@ -149,25 +161,29 @@
                 <div class="row">
                     @if($message=Session::get('success'))
                         <div style="width:100%" class="alert alert-success alert-dismissible fade show" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">×</span></button>
                             <strong>Success!</strong> {{$message}}
                         </div>
                     @endif
                     @if($message=Session::get('info'))
                         <div style="width:100%" class="alert alert-info alert-dismissible fade show" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">×</span></button>
                             <strong>Information!</strong> {{$message}}
                         </div>
                     @endif
                     @if($message=Session::get('error'))
                         <div style="width:100%" class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">×</span></button>
                             <strong>Error!</strong> {{$message}}
                         </div>
                     @endif
                     @if($message=Session::get('notice'))
                         <div style="width:100%" class="alert alert-warning alert-dismissible fade show" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">×</span></button>
                             <strong>Notice box!</strong> {{$message}}
                         </div>
                     @endif
@@ -192,8 +208,8 @@
                 <!-- end page title -->
 
                 <!-- Main Section -->
-                {{$slot}}
-                <!-- End Main Section -->
+            {{$slot}}
+            <!-- End Main Section -->
 
             </div>
 
@@ -204,13 +220,14 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-6">
-                        <script>document.write(new Date().getFullYear())</script> © ICA APP
+                        <script>document.write(new Date().getFullYear())</script>
+                        © ICA APP
                     </div>
-<!--                    <div class="col-sm-6">
-                        <div class="text-sm-end d-none d-sm-block">
-                            Created with <i class="mdi mdi-heart text-danger"></i> by <a href="#" target="_blank">Kunozga Mlowoka</a>
-                        </div>
-                    </div>-->
+                    <!--                    <div class="col-sm-6">
+                                            <div class="text-sm-end d-none d-sm-block">
+                                                Created with <i class="mdi mdi-heart text-danger"></i> by <a href="#" target="_blank">Kunozga Mlowoka</a>
+                                            </div>
+                                        </div>-->
                 </div>
             </div>
         </footer>
