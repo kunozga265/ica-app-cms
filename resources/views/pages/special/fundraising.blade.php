@@ -28,6 +28,11 @@
                     <input class="form-control" type="text" id="description" name="description" placeholder="Enter description" value="{{$contents->description}}">
                 </div>
 
+                <div class="col-12 mb-8">
+                    <label class="" for="image">Image URL</label>
+                    <input class="form-control" type="text" id="image" name="image" placeholder="Enter image url" value="{{$contents->image}}">
+                </div>
+
                 <div class="col-12 col-sm-6 mb-8">
                     <label class="" for="target">Target</label>
                     <input class="form-control" type="text" id="target" name="target" placeholder="Enter target" value="{{$contents->target}}">

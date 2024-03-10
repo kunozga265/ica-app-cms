@@ -58,6 +58,7 @@ class PageController extends Controller
                 "contents" => json_encode([
                     "title" => $request->title,
                     "description" => $request->description,
+                    "image" => $request->image,
                     "collected" => floatval($request->collected),
                     "target" => floatval($request->target),
                     "activate" => intval($request->activate ? 1:0),
