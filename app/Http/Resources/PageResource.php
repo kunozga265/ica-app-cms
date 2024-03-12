@@ -17,7 +17,7 @@ class PageResource extends JsonResource
         return [
             "id"            => $this->id,
             "contents"      => json_decode($this->contents),
-            "updated_at"    => $this->updated_at,
+            "updated_at"    => intval($this->updated_at->getTimestamp()),
         ];
     }
 }
