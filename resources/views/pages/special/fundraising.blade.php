@@ -19,6 +19,11 @@
             <div class="row mb-8">
 
                 <div class="col-12 mb-8">
+                    <label class="" for="heading">Heading</label>
+                    <input class="form-control" type="text" id="heading" name="heading" required placeholder="Enter heading" value="{{$contents->heading}}">
+                </div>
+
+                <div class="col-12 mb-8">
                     <label class="" for="title">Title</label>
                     <input class="form-control" type="text" id="title" name="title" required placeholder="Enter title" value="{{$contents->title}}">
                 </div>

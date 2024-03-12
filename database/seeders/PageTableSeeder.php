@@ -26,8 +26,10 @@ class PageTableSeeder extends Seeder
             "contents" => json_encode([
                 "target" => 0,
                 "collected" => 0,
+                "heading" => "",
                 "title" => "",
                 "description" => "",
+                "image" => "",
                 "activate" => 0,
             ])
         ]);

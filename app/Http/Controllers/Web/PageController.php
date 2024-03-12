@@ -46,6 +46,7 @@ class PageController extends Controller
 
         } else if ($request->name == "fundraising") {
             Validator::make($request->all(), [
+                "heading" => "required",
                 "title" => "required",
                 "description" => "required",
                 "collected" => "required",
@@ -56,6 +57,7 @@ class PageController extends Controller
             $page = Page::where("name", $request->name)->first();
             $page->update([
                 "contents" => json_encode([
+                    "heading" => $request->heading,
                     "title" => $request->title,
                     "description" => $request->description,
                     "image" => $request->image,
