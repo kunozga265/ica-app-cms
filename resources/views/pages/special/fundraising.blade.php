@@ -34,8 +34,8 @@
                 </div>
 
                 <div class="col-12 mb-8">
-                    <label class="" for="image">Image URL</label>
-                    <input class="form-control" type="text" id="image" name="image" placeholder="Enter image url" value="{{$contents->image}}">
+                    <label class="" for="image">Image URL(s)</label>
+                    <textarea class="form-control" type="text" id="image" name="image" placeholder="Enter image url">{{$contents->image}}</textarea>
                 </div>
 
                 <div class="col-12 col-sm-6 mb-8">
