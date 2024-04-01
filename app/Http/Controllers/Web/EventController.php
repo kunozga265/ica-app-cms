@@ -199,7 +199,7 @@ class EventController extends Controller
 
         public function trash($slug)
     {
-        $event = event::where("slug", $slug)->first();
+        $event = Event::where("slug", $slug)->first();
         if (!is_object($event))
             return Redirect::back()->with('error','Event not found');
         else {
