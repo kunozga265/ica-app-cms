@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cell;
 use App\Models\Member;
 use App\Models\Ministry;
 use Carbon\Carbon;
@@ -135,14 +136,19 @@ class MemberController extends Controller
             "member_id" => "required",
         ])->validate();
 
+        $cell = Cell::findOrFail($cell_id);
+
         $member = Member::find($request->member_id);
         if (!is_object($member))
             return Redirect::back()->with('error', 'Member not found');
-        else {
+        else if($cell->members()->where('id', $request->member_id)->exists()){
+            return Redirect::back()->with('error', 'Member already part of the cell');
+        }
+        else{
             $member->update([
                 "cell_id" => $cell_id
             ]);
-            return Redirect::route("cells.show", ["id" => $cell_id]);
+            return Redirect::route("cells.show", ["id" => $cell_id])->with('success', 'Member successfully added!');
         }
     }
 
@@ -152,9 +158,11 @@ class MemberController extends Controller
             "member_id" => "required",
         ])->validate();
 
-        $member = Member::find($request->member_id);
+        $cell = Cell::findOrFail($cell_id);
+        $member = $cell->members()->where('id', $request->member_id)->first();
+
         if (!is_object($member))
-            return Redirect::back()->with('error', 'Member not found');
+            return Redirect::back()->with('error', 'Member not part of the cell');
         else {
             $member->update([
                 "cell_id" => null
