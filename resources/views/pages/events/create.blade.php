@@ -1,4 +1,11 @@
 <x-app-layout>
+    <x-slot name="title">
+
+    </x-slot>
+
+    <x-slot name="action">
+
+    </x-slot>
 
     <x-slot name="heading">
         New Announcement/Event

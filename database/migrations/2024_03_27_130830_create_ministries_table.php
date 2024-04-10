@@ -16,7 +16,8 @@ class CreateMinistriesTable extends Migration
         Schema::create('ministries', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->string("leader_id")->nullable();
+            $table->string("slug")->unique();
+            $table->string("user_id")->nullable();
             $table->string("type")->nullable();
             $table->timestamps();
         });

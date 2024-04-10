@@ -18,8 +18,10 @@ class CreateCellsTable extends Migration
             $table->string("name");
             $table->string("details")->nullable();
             $table->string("location")->nullable();
-            $table->integer("zone_id")->nullable();
-            $table->double("balance")->nullable();
+            $table->integer("zone_id");
+            $table->integer("type");
+            $table->integer("leader_id")->nullable();
+            $table->double("balance");
 
             $table->timestamps();
         });

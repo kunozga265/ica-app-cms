@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Web\Web;
+use App\Http\Controllers\Web;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
@@ -127,6 +127,30 @@ Route::group(['middleware'=>'auth'],function (){
     });
 
     Route::post('/image-upload', [Web\AppController::class, 'imageUpload'])->name('images.upload');
+
+    Route::group(['prefix'=>'members'],function(){
+
+        Route::get('/', [Web\MemberController::class,'index'])->name('members.index');
+        Route::get('/{id}/view', [Web\MemberController::class,'show'])->name('members.show');
+        Route::get('/create', [Web\MemberController::class,'create'])->name('members.create');
+        Route::post('/store', [Web\MemberController::class,'store'])->name('members.store');
+        Route::get('/{slug}/edit', [Web\MemberController::class,'edit'])->name('members.edit');
+        Route::post('/{slug}/update', [Web\MemberController::class,'update'])->name('members.update');
+        Route::post('/{slug}/delete', [Web\MemberController::class,'trash'])->name('members.trash');
+        Route::post('/add-to-cell/{cell_id}', [Web\MemberController::class,'addToCell'])->name('members.add-to-cell');
+        Route::post('/remove-from-cell/{cell_id}', [Web\MemberController::class,'removeFromCell'])->name('members.remove-from-cell');
+    });
+
+    Route::group(['prefix'=>'cells'],function(){
+
+        Route::get('/', [Web\CellController::class,'index'])->name('cells.index');
+        Route::get('/{id}/view', [Web\CellController::class,'show'])->name('cells.show');
+        Route::get('/create', [Web\CellController::class,'create'])->name('cells.create');
+        Route::post('/store', [Web\CellController::class,'store'])->name('cells.store');
+        Route::get('/{slug}/edit', [Web\CellController::class,'edit'])->name('cells.edit');
+        Route::post('/{slug}/update', [Web\CellController::class,'update'])->name('cells.update');
+        Route::post('/{slug}/delete', [Web\CellController::class,'trash'])->name('cells.trash');
+    });
 
 });
 

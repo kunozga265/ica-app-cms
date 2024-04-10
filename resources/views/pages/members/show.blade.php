@@ -7,56 +7,40 @@
 
     </x-slot>
     <x-slot name="heading">
-       Ministers
+       Series
     </x-slot>
 
     <x-slot name="breadcrumbs">
         <li class="breadcrumb-item"><a href="javascript: void(0);">ICA APP</a></li>
-        <li class="breadcrumb-item"><a href="{{route('authors.index')}}">Ministers</a></li>
-        <li class="breadcrumb-item active">{{$author->suffix}} {{$author->name}}</li>
+        <li class="breadcrumb-item active"><a href="{{route('series.index')}}">Series</a></li>
+        <li class="breadcrumb-item active">{{$series->title}}</li>
     </x-slot>
 
     <div class="mb-16">
-        <form action="{{route('authors.trash',$author->slug)}}" method="post">
+        <form action="{{route('series.trash',$series->slug)}}" method="post">
             @csrf
             <div class="flex justify-between">
                 <div>
-                    <a href="{{route('authors.edit',$author->slug)}}" class="p-btn">Edit</a>
+                    <a href="{{route('series.edit',$series->slug)}}" class="p-btn">Edit</a>
                     <button type="submit" class="p-btn">Delete</button>
                 </div>
                 <div>
                     <a href="{{route('sermons.create')}}" class="p-btn">+ New Sermon</a>
                 </div>
             </div>
-
         </form>
     </div>
 
     <div>
-        <div class="card">
+        <div class="card p-40">
             <div class="card-body">
-
-                <div class="mb-8 flex">
-                    <img style="max-width: 250px; margin:auto; " src="{{asset($author->avatar)}}" alt="">
+                <div>
+                    <span class="big-chip">{{date('M d, Y',$series->first_sermon_date)}}</span>
                 </div>
-
-                <div class="mb-8 flex">
-                    <img style="max-width: 250px; margin:auto; " src="{{asset($author->cover_image)}}" alt="">
-                </div>
-                <div class="text-xl font-bold text-center">{{$author->suffix}} {{$author->name}}</div>
-                    <div class="text-center">{{$author->title}}</div>
-                    <div class="flex justify-center">
-                        <div class="big-chip ">{{$author->sermons->count()}} {{$author->sermons->count()==1?'Sermon':'Sermons'}}</div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12 col-md-6 flex">
-
-                    </div>
-                    <div class="col-12 col-md-6">
-
-                </div>
+                <div class="text-xl font-bold">{{$series->title}}</div>
+                <div>{{$series->sermons->count()}} {{$series->sermons->count()==1?'Sermon':'Sermons'}}</div>
+                <div ></div>
+                <div class="mt-16">{!! $series->description !!}</div>
 
 
             </div>
@@ -79,7 +63,7 @@
                                         <div>{{$sermon->series->title}}</div>
                                     @endif
 
-                                    <div class="text-sm text-mute">{{$sermon->author->suffix}} {{$sermon->author->name}}</div>
+                                    <div class="text-sm text-gray-500">{{$sermon->author->suffix}} {{$sermon->author->name}}</div>
                                 </div>
                             </div>
                         </a>

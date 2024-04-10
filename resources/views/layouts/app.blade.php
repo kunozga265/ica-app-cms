@@ -5,9 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'ICA APP') }}</title>
+    <title>ICA APP - {{$title}}</title>
 
     <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+    <!-- JAVASCRIPT -->
+    <script src={{asset("js/assets/jquery.min.js")}}></script>
+    <script src={{asset("js/assets/jquery-ui.js")}}></script>
+    <script src={{asset("js/assets/bootstrap.bundle.min.js")}}></script>
 
     <!-- Bootstrap Css -->
     <link href={{asset("assets/css/bootstrap.min.css")}} id="bootstrap-style" rel="stylesheet" type="text/css"></link>
@@ -18,6 +26,8 @@
     <!-- Style Css-->
     <link href={{asset("css/style.css")}} id="app-style" rel="stylesheet" type="text/css"></link>
     <link href={{asset("css/jquery-ui.css")}} id="app-style" rel="stylesheet" type="text/css"></link>
+
+    @stack("styles")
 
 </head>
 <body>
@@ -66,7 +76,7 @@
                 <ul class="metismenu list-unstyled" id="side-menu">
                     <li class="menu-title">Menu</li>
 
-                <!--                    <li>
+                    <!--                    <li>
                         <a href="{{route('dashboard')}}" class=" waves-effect">
                             <i class="ri-dashboard-line"></i>
                             <span>Dashboard</span>
@@ -125,6 +135,7 @@
                         </ul>
                     </li>
 
+
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
                             <i class="ri-account-circle-line"></i>
@@ -141,6 +152,22 @@
                                 </li>
                             </form>
                         </ul>
+                    </li>
+
+                    <li class="menu-title">Cell System</li>
+
+                    <li>
+                        <a href="{{route('members.index')}}" class=" waves-effect">
+                            <i class="ri-calendar-line"></i>
+                            <span>Members</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{route('cells.index')}}" class=" waves-effect">
+                            <i class="ri-calendar-line"></i>
+                            <span>Cells</span>
+                        </a>
                     </li>
 
                 </ul>
@@ -194,12 +221,16 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                            <h4 class="mb-sm-0">{{$heading}}</h4>
-
-                            <div class="page-title-right">
+                            <div>
+                                <h4 class="mb-sm-0 heading-font">{{$heading}}</h4>
                                 <ol class="breadcrumb m-0">
                                     {{$breadcrumbs}}
                                 </ol>
+                            </div>
+
+
+                            <div class="page-title-right">
+                                {{$action}}
                             </div>
 
                         </div>
@@ -208,8 +239,8 @@
                 <!-- end page title -->
 
                 <!-- Main Section -->
-            {{$slot}}
-            <!-- End Main Section -->
+                {{$slot}}
+                <!-- End Main Section -->
 
             </div>
 
@@ -239,9 +270,6 @@
 <!-- END layout-wrapper -->
 
 <!-- JAVASCRIPT -->
-<script src={{asset("js/assets/jquery.min.js")}}></script>
-<script src={{asset("js/assets/jquery-ui.js")}}></script>
-<script src={{asset("js/assets/bootstrap.bundle.min.js")}}></script>
 <script src={{asset("js/assets/metisMenu.min.js")}}></script>
 <script src={{asset("js/assets/simplebar.min.js")}}></script>
 <script src={{asset("js/assets/waves.min.js")}}></script>
@@ -251,6 +279,7 @@
 
 {{--CKEditor--}}
 <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
+
 @stack('scripts')
 
 </body>

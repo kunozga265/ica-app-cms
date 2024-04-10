@@ -1,4 +1,11 @@
 <x-app-layout>
+    <x-slot name="title">
+
+    </x-slot>
+
+    <x-slot name="action">
+
+    </x-slot>
     <x-slot name="heading">
        Prayer Points
     </x-slot>
@@ -31,7 +38,7 @@
                                         <span class="chip">{{date('M d, Y',$prayer->date)}}</span>
                                     </div>
                                     <div class="text-lg font-bold">{{$prayer->title}}</div>
-                                    <div class="text-gray-500">{{$prayer->verses}}</div>
+                                    <div class="text-mute">{{$prayer->verses}}</div>
                                 </div>
                             </div>
                         </a>

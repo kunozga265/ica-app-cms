@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateZonesTable extends Migration
+class CreateMemberMinistryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateZonesTable extends Migration
      */
     public function up()
     {
-        Schema::create('zones', function (Blueprint $table) {
+        Schema::create('member_ministry', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string("leaders")->nullable();
-            $table->string("location")->nullable();
+            $table->integer("member_id");
+            $table->integer("ministry_id");
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateZonesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('zones');
+        Schema::dropIfExists('member_ministry');
     }
 }

@@ -133,6 +133,12 @@ class AppController extends Controller
 
     }
 
+    public function getTimestamp($dateTimeString)
+    {
+        $date=explode('-',$dateTimeString);
+        return  Carbon::create($date[0],$date[1],$date[2],0,0,0)->getTimestamp();
+    }
+
     public function giveSpanIds($matches)
     {
         $this->count++;

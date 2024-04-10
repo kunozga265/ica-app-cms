@@ -1,4 +1,11 @@
 <x-app-layout>
+    <x-slot name="title">
+
+    </x-slot>
+
+    <x-slot name="action">
+
+    </x-slot>
     <x-slot name="heading">
        Series
     </x-slot>
@@ -56,7 +63,7 @@
                                         <div>{{$sermon->series->title}}</div>
                                     @endif
 
-                                    <div class="text-sm text-gray-500">{{$sermon->author->suffix}} {{$sermon->author->name}}</div>
+                                    <div class="text-sm text-mute">{{$sermon->author->suffix}} {{$sermon->author->name}}</div>
                                 </div>
                             </div>
                         </a>

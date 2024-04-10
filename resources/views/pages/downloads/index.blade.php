@@ -1,4 +1,11 @@
 <x-app-layout>
+    <x-slot name="title">
+
+    </x-slot>
+
+    <x-slot name="action">
+
+    </x-slot>
     <x-slot name="heading">
         Downloads
     </x-slot>
@@ -33,8 +40,8 @@
                                         <span class="chip">{{date('M d, Y',$download->date)}}</span>
                                     </div>
                                     <div class="text-lg font-bold">{{$download->title}}</div>
-                                    <div class="text-gray-500 mb-8">{{$download->description}}</div>
-{{--                                    <div class="text-gray-500">{{$download->type}}</div>--}}
+                                    <div class="text-mute mb-8">{{$download->description}}</div>
+{{--                                    <div class="text-mute">{{$download->type}}</div>--}}
 
                                     <div>
                                         <a href="{{$download->path}}" class="p-btn" target="_blank">View</a>

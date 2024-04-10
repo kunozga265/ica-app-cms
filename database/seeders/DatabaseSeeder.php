@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Member;
+use Database\Factories\MemberFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,16 +16,21 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        $this->call([
-//            AuthorTableSeeder::class,
-//            SeriesTableSeeder::class,
-//            SermonTableSeeder::class,
-//            ThemeTableSeeder::class,
-//            CategoryTableSeeder::class,
-            PageTableSeeder::class,
-//            UserTableSeeder::class
-        ]);
 
+        Member::factory(50)->create();
+
+        $this->call([
+            AuthorTableSeeder::class,
+            SeriesTableSeeder::class,
+            SermonTableSeeder::class,
+            ThemeTableSeeder::class,
+            CategoryTableSeeder::class,
+            PageTableSeeder::class,
+            MinistryTableSeeder::class,
+            ZoneTableSeeder::class,
+            UserTableSeeder::class,
+
+        ]);
 
     }
 }

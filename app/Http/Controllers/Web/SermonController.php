@@ -291,7 +291,7 @@ class SermonController extends Controller
         }
 
         $author=$sermon->author->suffix." ".$sermon->author->name;
-        $this->pushNotification('general',$sermon->title,$author);
+//        $this->pushNotification('general',$sermon->title,$author);
 
         return Redirect::route('sermons.index');
     }

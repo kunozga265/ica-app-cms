@@ -1,4 +1,11 @@
 <x-app-layout>
+    <x-slot name="title">
+
+    </x-slot>
+
+    <x-slot name="action">
+
+    </x-slot>
     <x-slot name="heading">
       Events
     </x-slot>
@@ -31,8 +38,8 @@
                                         <span class="chip">{{date('M d, Y',$event->start_date)}}</span>
                                     </div>
                                     <div class="text-lg font-bold">{{$event->title}}</div>
-                                    <div class="text-gray-500">{{$event->venue}}</div>
-                                    <div class="text-gray-500">{{$event->time}}</div>
+                                    <div class="text-mute">{{$event->venue}}</div>
+                                    <div class="text-mute">{{$event->time}}</div>
                                 </div>
                             </div>
                         </a>
