@@ -15,6 +15,7 @@ class CreateCellsTable extends Migration
     {
         Schema::create('cells', function (Blueprint $table) {
             $table->id();
+            $table->string("code");
             $table->string("name");
             $table->string("details")->nullable();
             $table->string("location")->nullable();

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cell;
 use App\Models\Member;
 use App\Models\Zone;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
@@ -37,6 +38,7 @@ class CellController extends Controller
         ])->validate();
 
         $cell = Cell::create([
+            "code"=>(new AppController())->generateUniqueCode(),
             'name' => $request->name,
             'details' => $request->details,
             'location' => $request->location,
@@ -49,20 +51,33 @@ class CellController extends Controller
         return Redirect::route('cells.index', ['id' => $cell->id])->with('success', 'Cell created!');
     }
 
-    public function show($id)
+    public function show($code)
     {
-        $cell = Cell::find($id);
+        $cell = Cell::where("code",$code)->first();
         if (!is_object($cell))
             return Redirect::back()->with('error', 'Cell not found');
         else {
-            $members = Member::orderBy("last_name","asc")->get();
-            return view('pages.cells.show', compact('cell', 'members'));
+            $members = Member::where("cell_id",null)->orderBy("last_name","asc")->get();
+
+            $chartData = [
+                "data"=>[],
+                "labels"=>[]
+            ];
+
+            foreach ($cell->meetings()->orderBy("date","asc")->get() as $meeting){
+                $chartData["data"][] = $meeting->attendances()->count();
+                $chartData["labels"][] = date("m/d/Y", Carbon::createFromTimestamp($meeting->date)->addDay()->getTimestamp());
+            }
+
+//            dd($chartData);
+
+            return view('pages.cells.show', compact('cell', 'members','chartData'));
         }
     }
 
-    public function edit($id)
+    public function edit($code)
     {
-        $cell = Cell::find($id);
+        $cell = Cell::where("code",$code)->first();
         if (!is_object($cell))
             return Redirect::back()->with('error', 'Cell not found');
         else {
@@ -70,9 +85,9 @@ class CellController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $code)
     {
-        $cell = Cell::find($id);
+        $cell = Cell::where("code",$code)->first();
         if (!is_object($cell))
             return Redirect::back()->with('error', 'Cell not found');
         else {
@@ -94,13 +109,13 @@ class CellController extends Controller
 //                'ministry_id' => $request->ministry_id,
             ]);
 
-            return Redirect::route('cells.show', $id)->with('success', 'Cell updated!');
+            return Redirect::route('cells.show', $code)->with('success', 'Cell updated!');
         }
     }
 
-    public function trash($id)
+    public function trash($code)
     {
-        $cell = Cell::find($id);
+        $cell = Cell::where("code",$code)->first();
         if (!is_object($cell))
             return Redirect::back()->with('error', 'Cell not found');
         else {

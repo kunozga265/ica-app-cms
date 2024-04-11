@@ -20,6 +20,7 @@ class Member extends Model
     }
 
     protected $fillable = [
+        "code",
         "avatar",
         "first_name",
         "middle_name",

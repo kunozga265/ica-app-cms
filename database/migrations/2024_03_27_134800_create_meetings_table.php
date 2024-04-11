@@ -15,9 +15,11 @@ class CreateMeetingsTable extends Migration
     {
         Schema::create('meetings', function (Blueprint $table) {
             $table->id();
+            $table->string("code");
             $table->string("date");
-            $table->string("venue")->nullable();
-            $table->double("offering");
+            $table->string("venue");
+            $table->integer("cell_id");
+            $table->double("offering")->nullable();
             $table->timestamps();
         });
     }

@@ -24,6 +24,11 @@ class Cell extends Model
         return $this->hasMany(Member::class);
     }
 
+    public function meetings()
+    {
+        return $this->hasMany(Meeting::class);
+    }
+
     public function getType()
     {
         switch ($this->type){
@@ -49,7 +54,17 @@ class Cell extends Model
         }
     }
 
+    public function meetingsCount()
+    {
+        if($this->meetings()->count() == 1){
+            return $this->meetings()->count() ." Record";
+        }else{
+            return $this->meetings()->count() ." Records";
+        }
+    }
+
     protected $fillable=[
+      "code",
       "name",
       "details",
       "location",

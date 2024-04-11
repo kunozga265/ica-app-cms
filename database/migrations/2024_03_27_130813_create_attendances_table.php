@@ -18,7 +18,6 @@ class CreateAttendancesTable extends Migration
             $table->string("member_id")->nullable();
             $table->string("meeting_id")->nullable();
             $table->string("zone_id")->nullable();
-            $table->string("ministry_id")->nullable();
             $table->timestamps();
         });
     }

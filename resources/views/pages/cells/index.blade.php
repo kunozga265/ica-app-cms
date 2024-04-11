@@ -61,7 +61,7 @@
                                   <td>{{$cell->zone->name}}</td>
                                   <td>{{$cell->balance}}</td>
                                   <td>
-                                      <a href="{{route('cells.show',$cell->id)}}" class="btn btn-primary btn-sm">View</a>
+                                      <a href="{{route('cells.show',["code" => $cell->code])}}" class="btn btn-primary btn-sm">View</a>
                                       <button type="button" class="btn btn-secondary btn-sm">Edit</button>
                                       <button type="button" class="btn btn-secondary btn-sm">Delete</button>
 

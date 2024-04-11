@@ -54,6 +54,7 @@ class MemberController extends Controller
         }
 
         $member = Member::create([
+            "code" =>(new AppController())->generateUniqueCode(),
             "avatar"        =>  $avatar,
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
@@ -71,9 +72,9 @@ class MemberController extends Controller
         return Redirect::route('members.index', ['id' => $member->id])->with('success', 'Member created!');
     }
 
-    public function show($id)
+    public function show($code)
     {
-        $member = Member::find($id);
+        $member = Member::where("code",$code)->first();
         if (!is_object($member))
             return Redirect::back()->with('error', 'Member not found');
         else {
@@ -81,9 +82,9 @@ class MemberController extends Controller
         }
     }
 
-    public function edit($id)
+    public function edit($code)
     {
-        $member = Member::find($id);
+        $member = Member::where("code",$code)->first();
         if (!is_object($member))
             return Redirect::back()->with('error', 'Member not found');
         else {
@@ -91,9 +92,9 @@ class MemberController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $code)
     {
-        $member = Member::find($id);
+        $member = Member::where("code",$code)->first();
         if (!is_object($member))
             return Redirect::back()->with('error', 'Member not found');
         else {
@@ -115,13 +116,13 @@ class MemberController extends Controller
 //                'ministry_id' => $request->ministry_id,
             ]);
 
-            return Redirect::route('members.show', $id)->with('success', 'Member updated!');
+            return Redirect::route('members.show', $code)->with('success', 'Member updated!');
         }
     }
 
-    public function trash($id)
+    public function trash($code)
     {
-        $member = Member::find($id);
+        $member = Member::where("code",$code)->first();
         if (!is_object($member))
             return Redirect::back()->with('error', 'Member not found');
         else {
@@ -130,25 +131,27 @@ class MemberController extends Controller
         }
     }
 
-    public function addToCell(Request $request, $cell_id)
+    public function addToCell(Request $request, $code)
     {
         Validator::make($request->all(), [
             "member_id" => "required",
         ])->validate();
 
-        $cell = Cell::findOrFail($cell_id);
-
+        $cell = Cell::where("code",$code)->first();
         $member = Member::find($request->member_id);
-        if (!is_object($member))
+
+        if (!is_object($cell))
+            return Redirect::back()->with('error', 'Cell information not found');
+        else if (!is_object($member))
             return Redirect::back()->with('error', 'Member not found');
         else if($cell->members()->where('id', $request->member_id)->exists()){
             return Redirect::back()->with('error', 'Member already part of the cell');
         }
         else{
             $member->update([
-                "cell_id" => $cell_id
+                "cell_id" => $cell->id
             ]);
-            return Redirect::route("cells.show", ["id" => $cell_id])->with('success', 'Member successfully added!');
+            return Redirect::route("cells.show", ["code" => $cell->code])->with('success', 'Member successfully added!');
         }
     }
 

@@ -47,6 +47,52 @@
                 });
 
 
+            //     Chart
+                const chartData = {!! json_encode($chartData) !!};
+
+                options = {
+                    chart: {
+                        height: 350, type: "bar",
+                    },
+                    stroke: {width: [0, 2, 4], curve: "smooth"},
+                    plotOptions: {bar: {columnWidth: "50%",  rangeBarOverlap: false,}},
+                    colors: ["#1cbb8c", "#fcb92c", "#0f9cf3"],
+                    series: [{name: "Attendance", data: chartData.data},
+                        //     {
+                        //     name: "Team B",
+                        //     type: "area",
+                        //     data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43]
+                        // }, {name: "Team C", type: "line", data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39]}
+                    ],
+                    fill: {
+                        opacity: [.85, .25, 1],
+                        gradient: {
+                            inverseColors: !1,
+                            shade: "light",
+                            type: "vertical",
+                            opacityFrom: .85,
+                            opacityTo: .55,
+                            stops: [0, 100, 100, 100]
+                        }
+                    },
+                    dataLabels: {enabled: !1},
+                    labels: chartData.labels,
+                    markers: {size: 0},
+                    xaxis: {type: "datetime"},
+                    yaxis: {title: {text: "Members"}},
+                    // tooltip: {
+                    //     shared: !0, intersect: !1, y: {
+                    //         formatter: function (e) {
+                    //             return void 0 !== e ? e.toFixed(0) + " member(s)" : e
+                    //         }
+                    //     }
+                    // },
+                    grid: {borderColor: "#f1f1f1", padding: {bottom: 10}},
+                    legend: {offsetY: 7}
+                };
+                (chart = new ApexCharts(document.querySelector("#mixed_chart"), options)).render();
+
+
             });
         </script>
     @endpush
@@ -115,7 +161,7 @@
             <div class="col-12 col-lg-6">
                 <div class="card members p-40">
 
-                    <div class=" mb-4 flex justify-between align-items-center">
+                    <div class=" mb-8 flex justify-between align-items-center">
                         <div>
                             <h4 class="card-title m-0">Members</h4>
                             <p class="text-sm text-mute m-0">{{$cell->getParticipants()}}</p>
@@ -124,8 +170,6 @@
                         <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#addMember">
                             <i class="ri-user-add-line "></i>
                         </button>
-
-
                     </div>
 
 
@@ -200,7 +244,8 @@
                                             <div class="modal fade" id="memberDialog{{$member->id}}" tabindex="-1"
                                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
-                                                    <form method="post" action="{{route('members.remove-from-cell', ["cell_id"=>$cell->id])}}">
+                                                    <form method="post"
+                                                          action="{{route('members.remove-from-cell', ["code"=>$cell->code])}}">
                                                         @csrf
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -213,7 +258,8 @@
                                                             <div class="modal-body">
                                                                 Are you sure you want to remove {{$member->fullName()}}
                                                                 from this cell?
-                                                                <input type="hidden" name="member_id" value="{{$member->id}}">
+                                                                <input type="hidden" name="member_id"
+                                                                       value="{{$member->id}}">
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
@@ -243,7 +289,7 @@
                          aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="{{route("members.add-to-cell", ["cell_id" => $cell->id])}}" method="post">
+                                <form action="{{route("members.add-to-cell", ["code" => $cell->code])}}" method="post">
                                     @csrf
 
                                     <div class="modal-header">
@@ -316,11 +362,346 @@
             </div>
 
             <div class="col-12 col-lg-6">
-                <div class="card p-40">
-                    <div>
-                        Meetings
+                <div class="card meetings p-40">
+                    <div class=" mb-8 flex justify-between ">
+                        <div>
+                            <h4 class="card-title m-0">Meetings</h4>
+                            <p class="text-sm text-mute m-0">{{$cell->meetingsCount()}}</p>
+                        </div>
+
+                        <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#newMeeting">
+                            <i class="ri-menu-add-line "></i>
+                        </button>
+                    </div>
+
+                    <div class=" accordion" id="cell_meetings">
+                        @foreach($meetings = $cell->meetings()->orderBy("date","desc")->get() as $meeting)
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading{{$meeting->code}}">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse{{$meeting->code}}" aria-expanded="false"
+                                            aria-controls="collapseOne">
+                                        <div class="">
+                                            <div>
+                                                {{date("M d, Y", $meeting->date)}}
+                                                {{--                                                <span class="chip">{{$meeting->venue}}</span>--}}
+                                            </div>
+                                            <div class=" text-base">
+                                                {{$meeting->venue}}
+                                            </div>
+
+                                        </div>
+
+                                    </button>
+                                </h2>
+                                <div id="collapse{{$meeting->code}}" class="accordion-collapse collapse"
+                                     aria-labelledby="heading{{$meeting->code}}"
+                                     data-bs-parent="#cell_meetings">
+                                    <div class="accordion-body">
+
+                                        <div class="p-10">
+
+                                            <div class="mb-8">
+                                                <div class="text-base text-mute">Offering</div>
+                                                <div class="">MK{{number_format($meeting->offering,1)}}</div>
+                                            </div>
+
+
+                                            <div class="attendance mb-16">
+                                                <div class=" flex justify-between">
+                                                    <div class="text-base text-mute">Attendance
+                                                        ({{$meeting->attendances->count(0)}})
+                                                    </div>
+                                                    <button type="button" class="btn-icon" data-bs-toggle="modal"
+                                                            data-bs-target="#recordMemberAttendance{{$meeting->code}}">
+                                                        <i class="ri-user-add-line"></i>
+                                                    </button>
+                                                </div>
+                                                @foreach($meeting->attendances as $attendance)
+
+                                                    <div class="flex align-items-center">
+                                                        <button type="button" class="btn-text error"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#unsetMemberAttendance{{$meeting->code}}-{{$attendance->id}}">
+                                                            <i class="ri-close-circle-fill "></i>
+                                                        </button>
+
+                                                        <div class="spacer w-5"></div>
+
+                                                        {{$attendance->member->fullName()}}
+                                                    </div>
+
+
+                                                    <!-- Unset Attendance -->
+                                                    <div class="modal fade"
+                                                         id="unsetMemberAttendance{{$meeting->code}}-{{$attendance->id}}"
+                                                         tabindex="-1"
+                                                         aria-labelledby="recordMemberAttendanceLabel{{$meeting->code}}-{{$attendance->id}}"
+                                                         aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <form action="{{route('cells.unset-attendance', ['id' => $attendance->id])}}"
+                                                                      method="post">
+                                                                    @csrf
+
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title"
+                                                                            id="recordMemberAttendanceLabel{{$meeting->code}}-{{$attendance->id}}">
+                                                                            Unset Attendance</h5>
+                                                                        <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Are you sure you want to
+                                                                        remove {{$attendance->member->fullName()}}
+                                                                        from this meeting?
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Cancel
+                                                                        </button>
+                                                                        <button type="submit" class="p-btn error">
+                                                                            Unset
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+
+                                            </div>
+
+
+
+                                            <div class="flex justify-between">
+                                                <button type="button" class="btn-text link-primary"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#updateMeetingDetails{{$meeting->code}}">Update
+                                                </button>
+                                                <button type="button" class="btn-text link-danger"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#deleteMeetingDialog{{$meeting->code}}">Delete
+                                                </button>
+
+                                            </div>
+
+                                            <!-- Add Member Modal -->
+                                            <div class="modal fade" id="recordMemberAttendance{{$meeting->code}}"
+                                                 tabindex="-1"
+                                                 aria-labelledby="recordMemberAttendanceLabel{{$meeting->code}}"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <form action="{{route("cells.record-attendance", ["code" => $cell->code, "meeting_code"=>$meeting->code])}}"
+                                                              method="post">
+                                                            @csrf
+
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title"
+                                                                    id="recordMemberAttendanceLabel{{$meeting->code}}">
+                                                                    Record Attendance</h5>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="">
+
+                                                                    <label class="" for="record_member">Select
+                                                                        Member(s)</label>
+
+                                                                    <select class="form-control form-select" type="text"
+                                                                            id="record_member" name="members[]" required
+                                                                            multiple>
+                                                                        {{--                                                                        <option value="">Select Members</option>--}}
+                                                                        @foreach($members = $cell->members as $member)
+                                                                            <option value="{{$member->id}}">{{$member->fullName()}}</option>
+                                                                        @endforeach
+
+                                                                    </select>
+
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Cancel
+                                                                </button>
+                                                                <button type="submit" class="p-btn">Record</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Update Details Modal -->
+                                            <div class="modal fade" id="updateMeetingDetails{{$meeting->code}}"
+                                                 tabindex="-1"
+                                                 aria-labelledby="updateMeetingDetailsLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <form method="post"
+                                                          action="{{route('cells.update-meeting', ["code"=>$cell->code, "meeting_code"=>$meeting->code])}}">
+                                                        @csrf
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="updateMeetingDetailsLabel">
+                                                                    Update Meeting Details</h5>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col-12 col-sm-6 mb-8">
+                                                                        <label class="" for="start_date">Date</label>
+                                                                        <input value="{{date('Y-m-d',$meeting->date)}}"
+                                                                               class="form-control" type="date"
+                                                                               id="start_date" name="date" required>
+                                                                    </div>
+
+                                                                    <div class="col-12 col-sm-6 mb-8">
+                                                                        <label class="" for="time">Time</label>
+                                                                        <input value="{{date('H:s',$meeting->date)}}"
+                                                                               class="form-control" type="time"
+                                                                               id="time" name="time"
+                                                                               placeholder="Enter Time">
+                                                                    </div>
+
+                                                                    <div class="col-12 col-sm-6 mb-8">
+                                                                        <label class="" for="venue">Venue</label>
+                                                                        <input value="{{$meeting->venue}}"
+                                                                               class="form-control" type="text"
+                                                                               id="venue" name="venue"
+                                                                               placeholder="Enter venue">
+                                                                    </div>
+
+                                                                    <div class="col-12 col-sm-6 mb-8">
+                                                                        <label class="" for="offering">Offering</label>
+                                                                        <input value="{{$meeting->offering}}"
+                                                                               class="form-control" type="text"
+                                                                               id="offering" name="offering" required>
+                                                                    </div>
+
+                                                                    {{--                                                                    <div class="col-12 mb-8">--}}
+                                                                    {{--                                                                        <label class="" for="offering">Members</label>--}}
+                                                                    {{--                                                                        <select class="form-control form-select" type="text" id="zone_id" name="zone_id" required>--}}
+                                                                    {{--                                                                            <option value="">Select Zone</option>--}}
+                                                                    {{--                                                                            @foreach($zones as $zone)--}}
+                                                                    {{--                                                                                <option value="{{$zone->id}}">{{$zone->name}}</option>--}}
+                                                                    {{--                                                                            @endforeach--}}
+
+                                                                    {{--                                                                        </select>--}}
+                                                                    {{--                                                                    </div>--}}
+
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Cancel
+                                                                </button>
+                                                                <button type="submit" class="p-btn">Update
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                            <!-- Remove Meeting Modal -->
+                                            <div class="modal fade" id="deleteMeetingDialog{{$meeting->code}}" tabindex="-1"
+                                                 aria-labelledby="deleteMeetingDialog{{$meeting->code}}Label" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <form method="post"
+                                                          action="{{route('cells.trash-meeting', ["code"=>$cell->code, 'meeting_code'=>$meeting->code])}}">
+                                                        @csrf
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="deleteMeetingDialog{{$meeting->code}}">Delete
+                                                                    Meeting</h5>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Are you sure you want to permanently delete the meeting held on {{date("M d, Y")}}?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Cancel
+                                                                </button>
+                                                                <button type="submit" class="p-btn error">Delete
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+
+
+                    </div>
+
+
+                </div>
+
+                <!-- Add Member Modal -->
+                <div class="modal fade" id="newMeeting" tabindex="-1" aria-labelledby="newMeetingLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="{{route("cells.create-meeting", ["code" => $cell->code])}}" method="post">
+                                @csrf
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="newMeetingLabel">New Meeting</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+
+                                        <div class="col-12 col-sm-6 mb-8">
+                                            <label class="" for="start_date">Date</label>
+                                            <input class="form-control" type="date" id="start_date" name="date"
+                                                   required>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 mb-8">
+                                            <label class="" for="time">Time</label>
+                                            <input class="form-control" type="time" id="time" name="time"
+                                                   placeholder="Enter Time">
+                                        </div>
+
+                                        <div class="col-12 mb-8">
+                                            <label class="" for="venue">Venue</label>
+                                            <input class="form-control" type="text" id="venue" name="venue"
+                                                   placeholder="Enter venue">
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+                                    </button>
+                                    <button type="submit" class="p-btn">Create</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -328,66 +709,10 @@
     @push("scripts")
         <!-- apexcharts -->
         <script src="{{asset('js/libs/apexcharts/apexcharts.min.js')}}"></script>
-        {{--        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>--}}
 
         <!-- apexcharts init -->
         <script>
-            options = {
-                chart: {
-                    height: 350, type: "line", zoom: {
-                        enabled: true,
-                        type: 'x',
-                        autoScaleYaxis: false,
-                        zoomedArea: {
-                            fill: {
-                                color: '#90CAF9',
-                                opacity: 0.4
-                            },
-                            stroke: {
-                                color: '#0D47A1',
-                                opacity: 0.4,
-                                width: 1
-                            }
-                        }
-                    },
-                },
-                stroke: {width: [0, 2, 4], curve: "smooth"},
-                plotOptions: {bar: {columnWidth: "50%"}},
-                colors: ["#1cbb8c", "#fcb92c", "#0f9cf3"],
-                series: [{name: "Attendance", type: "column", data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30]},
-                    //     {
-                    //     name: "Team B",
-                    //     type: "area",
-                    //     data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43]
-                    // }, {name: "Team C", type: "line", data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39]}
-                ],
-                fill: {
-                    opacity: [.85, .25, 1],
-                    gradient: {
-                        inverseColors: !1,
-                        shade: "light",
-                        type: "vertical",
-                        opacityFrom: .85,
-                        opacityTo: .55,
-                        stops: [0, 100, 100, 100]
-                    }
-                },
-                dataLabels: {enabled: !1},
-                labels: ["01/21/2003", "02/11/2003", "03/06/2003", "04/01/2003", "05/01/2003", "06/01/2003", "07/01/2003", "08/01/2003", "09/01/2003", "10/01/2003", "11/01/2003"],
-                markers: {size: 0},
-                xaxis: {type: "datetime"},
-                yaxis: {title: {text: "Members"}},
-                tooltip: {
-                    shared: !0, intersect: !1, y: {
-                        formatter: function (e) {
-                            return void 0 !== e ? e.toFixed(0) + " member(s)" : e
-                        }
-                    }
-                },
-                grid: {borderColor: "#f1f1f1", padding: {bottom: 10}},
-                legend: {offsetY: 7}
-            };
-            (chart = new ApexCharts(document.querySelector("#mixed_chart"), options)).render();
+
         </script>
     @endpush
 

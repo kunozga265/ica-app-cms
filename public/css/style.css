@@ -35,6 +35,9 @@
     cursor: pointer;
 }
 
+.link-primary{
+    color: #148BDD;
+}
 
 
 a{
@@ -285,7 +288,7 @@ svg.w-5.h-5{
     padding: 6px 10px;
 }
 
-.card.members .accordion-item{
+.card.members .accordion-item, .card.meetings .accordion-item{
     border: 0;
 }
 
@@ -319,9 +322,46 @@ button.btn-text{
     margin: 0;
 }
 
+button.btn-text.error{
+    color: #c1504f;
+}
+
 ul#ui-id-1{
     z-index: 9999;
 }
 
+.row .modal{
+    position: fixed;
+}
 
+/* Attendance */
+.attendance .btn-icon{
+    font-size: 12px;
+    cursor: pointer;
+    padding: 2px 8px;
+    border-radius: 6px;
+    border: 0;
+    color: white;
+    background-color: #1cbb8c;
+}
 
+.attendance .btn-icon.error{
+    color: white;
+    background-color: #c1504f;
+}
+
+.attendance .btn-icon:hover{
+    color: white;
+    background-color: #39b793;
+    /*padding: 12px 16px;*/
+    /*font-size: 14px;*/
+    /*background-color: #ecf0f3;*/
+    border: 0;
+}
+
+.spacer.w-5{
+    width: 5px;
+}
+.spacer.w-10{
+    width: 10px;
+}
