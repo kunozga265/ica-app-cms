@@ -19,6 +19,13 @@ class Member extends Model
         return $this->first_name . " " . $this->last_name;
     }
 
+    public function cell()
+    {
+        return $this->belongsTo(Cell::class);
+    }
+
+
+
     protected $fillable = [
         "code",
         "avatar",
