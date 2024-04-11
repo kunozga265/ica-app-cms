@@ -42,8 +42,8 @@
                             <thead>
 
                                 <tr>
-                                    <th>Last Name</th>
                                     <th>First Name</th>
+                                    <th>Last Name</th>
                                     <th>Middle Name</th>
                                     <th>Gender</th>
                                     <th>Phone Number</th>
@@ -60,16 +60,16 @@
                           <tbody>
                           @foreach($members as $member)
                               <tr>
-                                  <td>{{$member->last_name}}</td>
                                   <td>{{$member->first_name}}</td>
+                                  <td>{{$member->last_name}}</td>
                                   <td>{{$member->middle_name}}</td>
                                   <td>{{$member->gender}}</td>
                                   <td>{{$member->phone_number}}</td>
                                   <td>{{$member->date_of_birth ? date("d/m/Y",$member->date_of_birth) : "-"}}</td>
-                                  <td>{{$member->cell}}</td>
-                                  <td>{{$member->zone}}</td>
+                                  <td>{{isset($member->cell) ? $member->cell->name : ""}}</td>
+                                  <td>{{isset($member->cell) ? $member->cell->zone->name : ""}}</td>
                                   <td>
-                                      <button type="button" class="btn btn-primary btn-sm">View</button>
+                                      <a href="{{route('members.show',["code" => $member->code])}}" class="btn btn-primary btn-sm">View</a>
                                       <button type="button" class="btn btn-secondary btn-sm">Edit</button>
                                       <button type="button" class="btn btn-secondary btn-sm">Delete</button>
 
