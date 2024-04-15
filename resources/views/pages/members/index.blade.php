@@ -38,7 +38,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <table id="datatable" class="table dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
 
                                 <tr>
@@ -46,8 +46,8 @@
                                     <th>Last Name</th>
                                     <th>Middle Name</th>
                                     <th>Gender</th>
-                                    <th>Phone Number</th>
-                                    <th>Date of Birth</th>
+{{--                                    <th>Phone Number</th>--}}
+{{--                                    <th>Date of Birth</th>--}}
                                     <th>Cell</th>
                                     <th>Zone</th>
                                     <th>Actions</th>
@@ -64,14 +64,25 @@
                                   <td>{{$member->last_name}}</td>
                                   <td>{{$member->middle_name}}</td>
                                   <td>{{$member->gender}}</td>
-                                  <td>{{$member->phone_number}}</td>
-                                  <td>{{$member->date_of_birth ? date("d/m/Y",$member->date_of_birth) : "-"}}</td>
+{{--                                  <td>{{$member->phone_number}}</td>--}}
+{{--                                  <td>{{$member->date_of_birth ? date("d/m/Y",$member->date_of_birth) : "-"}}</td>--}}
                                   <td>{{isset($member->cell) ? $member->cell->name : ""}}</td>
                                   <td>{{isset($member->cell) ? $member->cell->zone->name : ""}}</td>
-                                  <td>
-                                      <a href="{{route('members.show',["code" => $member->code])}}" class="btn btn-primary btn-sm">View</a>
-                                      <button type="button" class="btn btn-secondary btn-sm">Edit</button>
-                                      <button type="button" class="btn btn-secondary btn-sm">Delete</button>
+                                  <td class="flex">
+                                      <div class="flex align-items-center">
+                                          <a href="{{route('members.show',["code" => $member->code])}}" class="btn-icon sm"><i class="ri-eye-line"></i></a>
+                                      </div>
+                                      <div class="spacer w-5"></div>
+                                      <div class="flex align-items-center">
+                                          <a href="{{route('members.show',["code" => $member->code])}}" class="btn-icon sm"><i class="ri-pencil-line"></i></a>
+                                      </div>
+                                      <div class="spacer w-5"></div>
+                                      <div class="flex align-items-center">
+                                          <a href="{{route('members.show',["code" => $member->code])}}" class="btn-icon sm"><i class="ri-delete-bin-line"></i></a>
+                                      </div>
+
+{{--                                      <button type="button" class="btn btn-secondary btn-sm">Edit</button>--}}
+{{--                                      <button type="button" class="btn btn-secondary btn-sm">Delete</button>--}}
 
                                   </td>
                               </tr>

@@ -119,14 +119,14 @@
 
                     <li>
                         <a href="{{route('downloads.index')}}" class=" waves-effect">
-                            <i class="ri-calendar-line"></i>
+                            <i class="ri-download-line"></i>
                             <span>Downloads</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="ri-calendar-line"></i>
+                            <i class="ri-book-line"></i>
                             <span>Pages</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
@@ -158,14 +158,14 @@
 
                     <li>
                         <a href="{{route('members.index')}}" class=" waves-effect">
-                            <i class="ri-calendar-line"></i>
+                            <i class="ri-user-shared-line"></i>
                             <span>Members</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="{{route('cells.index')}}" class=" waves-effect">
-                            <i class="ri-calendar-line"></i>
+                            <i class="ri-home-3-line"></i>
                             <span>Cells</span>
                         </a>
                     </li>
@@ -207,11 +207,11 @@
                             <strong>Error!</strong> {{$message}}
                         </div>
                     @endif
-                    @if($message=Session::get('notice'))
+                    @if($message=Session::get('warning'))
                         <div style="width:100%" class="alert alert-warning alert-dismissible fade show" role="alert">
                             <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"><span
                                         aria-hidden="true">×</span></button>
-                            <strong>Notice box!</strong> {{$message}}
+                            <strong>Warning!</strong> {{$message}}
                         </div>
                     @endif
 

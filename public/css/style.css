@@ -4,7 +4,15 @@
 
 .table{
     /*font-size: 12px;*/
+    /*border: none;*/
 }
+
+table.dataTable thead .sorting, th.sorting_asc, th.sorting_desc{
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+
 
 .heading-font{
     font-family: "Playfair Display", serif;
@@ -45,6 +53,7 @@ a{
 }
 a:hover{
     color: #6c757d;
+    /*text-underline: #6c757d;*/
 }
 
 .sermon{
@@ -146,6 +155,10 @@ a:hover{
     margin-bottom: 8px;
 }
 
+.mr-5{
+    margin-right: 5px;
+}
+
 .mt-16{
     margin-top: 16px;
 }
@@ -155,6 +168,10 @@ a:hover{
 
 .mb-16{
     margin-bottom: 16px;
+}
+
+.fw-300{
+    font-weight: 300;
 }
 
 .p-btn{
@@ -173,7 +190,7 @@ button.p-btn{
 }
 
 .p-btn.secondary{
-    background-color: #11b766;
+    background-color: #39b793;
 }
 
 .p-btn.error{
@@ -220,6 +237,9 @@ button.p-btn{
 
 .text-center{
     text-align: center;
+}
+.text-right{
+    text-align: right;
 }
 
 .justify-center{
@@ -285,7 +305,13 @@ svg.w-5.h-5{
     /*font-weight: bold;*/
     /*font-size: 14px;*/
     min-width: 200px;
-    padding: 6px 10px;
+    padding: 10px;
+    transition: ease 0.5s;
+}
+
+.account-balance:hover{
+    color: white;
+    background-color: #148BDD;
 }
 
 .card.members .accordion-item, .card.meetings .accordion-item{
@@ -304,6 +330,12 @@ svg.w-5.h-5{
     border: 0;
     color: #6c757d;
     background-color: #e5e7eb;
+    transition: ease 0.5s;
+}
+
+.btn-icon.sm{
+    font-size: 14px;
+    padding: 4px 8px;
 }
 
 .btn-icon:hover{
@@ -364,4 +396,19 @@ ul#ui-id-1{
 }
 .spacer.w-10{
     width: 10px;
+}
+
+/* Member Profile */
+.profile .avatar{
+    height: 200px;
+    width: 200px;
+}
+
+/* Transactions */
+td.secondary{
+    color: #39b793;
+}
+
+td.error{
+    color: #c1504f;
 }

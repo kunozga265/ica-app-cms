@@ -14,6 +14,11 @@ class Attendance extends Model
         return $this->belongsTo(Member::class);
     }
 
+    public function meeting()
+    {
+        return $this->belongsTo(Meeting::class);
+    }
+
     protected $fillable=[
         "member_id",
         "meeting_id",

@@ -1,5 +1,13 @@
 <x-app-layout>
     @push("styles")
+        <!-- DataTables -->
+        <link href="{{asset('js/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('js/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('js/libs/datatables.net-select-bs4/css/select.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <!-- Responsive datatable examples -->
+        <link href="{{asset('js/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+
         <script>
             $(function () {
                 const members = {!! json_encode($members) !!};
@@ -55,7 +63,7 @@
                         height: 350, type: "bar",
                     },
                     stroke: {width: [0, 2, 4], curve: "smooth"},
-                    plotOptions: {bar: {columnWidth: "50%",  rangeBarOverlap: false,}},
+                    plotOptions: {bar: {columnWidth: "20%",  rangeBarOverlap: false,}},
                     colors: ["#1cbb8c", "#fcb92c", "#0f9cf3"],
                     series: [{name: "Attendance", data: chartData.data},
                         //     {
@@ -78,7 +86,9 @@
                     dataLabels: {enabled: !1},
                     labels: chartData.labels,
                     markers: {size: 0},
-                    xaxis: {type: "datetime"},
+                    xaxis: {type: "datetime", labels:{
+                            datetimeUTC: false,
+                        }},
                     yaxis: {title: {text: "Members"}},
                     // tooltip: {
                     //     shared: !0, intersect: !1, y: {
@@ -137,14 +147,16 @@
 
                     </div>
 
+                    <a href="{{route('cells.transactions',["code"=>$cell->code])}}">
                     <div class="account-balance flex align-items-center justify-center">
                         <div>
 
+                                <div class="heading-font text-xl text-center">MK {{number_format($cell->balance,2)}}</div>
+                                <div class="text-sm text-center">Account Balance</div>
 
-                            <div class="heading-font text-xl text-center">MK {{number_format($cell->balance,2)}}</div>
-                            <div class="text-sm text-center">Account Balance</div>
                         </div>
                     </div>
+                    </a>
                 </div>
 
                 <div class="mt-16">
@@ -234,10 +246,16 @@
                                             </div>
 
                                             <div class="col-12">
-                                                <button type="button" class="btn-text link-danger"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#memberDialog{{$member->id}}">Remove Member
-                                                </button>
+
+                                                <div class="flex justify-between">
+                                                    <a class="link-primary" href="{{route('members.show',["code" => $member->code])}}">Profile
+                                                    </a>
+                                                    <button type="button" class="btn-text link-danger"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#memberDialog{{$member->id}}">Remove Member
+                                                    </button>
+
+                                                </div>
                                             </div>
 
                                             <!-- Modal -->
@@ -488,7 +506,7 @@
 
                                             </div>
 
-                                            <!-- Add Member Modal -->
+                                            <!-- Record Member Modal -->
                                             <div class="modal fade" id="recordMemberAttendance{{$meeting->code}}"
                                                  tabindex="-1"
                                                  aria-labelledby="recordMemberAttendanceLabel{{$meeting->code}}"
@@ -513,15 +531,27 @@
                                                                     <label class="" for="record_member">Select
                                                                         Member(s)</label>
 
-                                                                    <select class="form-control form-select" type="text"
-                                                                            id="record_member" name="members[]" required
-                                                                            multiple>
-                                                                        {{--                                                                        <option value="">Select Members</option>--}}
-                                                                        @foreach($members = $cell->members as $member)
-                                                                            <option value="{{$member->id}}">{{$member->fullName()}}</option>
-                                                                        @endforeach
+                                                                    {{--                                                                        <option value="">Select Members</option>--}}
+                                                                    @foreach($members = $cell->members as $member)
+                                                                        @if(!$meeting->attendances()->where("member_id",$member->id)->exists())
+                                                                            <div class="mb-8" >
+                                                                                <input class="mr-5" type="checkbox" name="members[]" value="{{$member->id}}">{{$member->fullName()}}</input>
+                                                                            </div>
+                                                                        @endif
 
-                                                                    </select>
+                                                                    @endforeach
+
+{{--                                                                    <select class="form-control form-select" type="text"--}}
+{{--                                                                            id="record_member" name="members[]" required--}}
+{{--                                                                            multiple>--}}
+
+
+{{--                                                                        --}}{{--                                                                        <option value="">Select Members</option>--}}
+{{--                                                                        @foreach($members = $cell->members as $member)--}}
+{{--                                                                            <option value="{{$member->id}}">{{$member->fullName()}}</option>--}}
+{{--                                                                        @endforeach--}}
+
+{{--                                                                    </select>--}}
 
                                                                 </div>
 
@@ -641,7 +671,6 @@
                                                 </div>
                                             </div>
 
-
                                         </div>
 
                                     </div>
@@ -658,7 +687,7 @@
                 <!-- Add Member Modal -->
                 <div class="modal fade" id="newMeeting" tabindex="-1" aria-labelledby="newMeetingLabel"
                      aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <form action="{{route("cells.create-meeting", ["code" => $cell->code])}}" method="post">
                                 @csrf
