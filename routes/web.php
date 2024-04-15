@@ -129,9 +129,8 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('/image-upload', [Web\AppController::class, 'imageUpload'])->name('images.upload');
 
     Route::group(['prefix'=>'members'],function(){
-
         Route::get('/', [Web\MemberController::class,'index'])->name('members.index');
-        Route::get('/{id}/view', [Web\MemberController::class,'show'])->name('members.show');
+        Route::get('/{code}/view', [Web\MemberController::class,'show'])->name('members.show');
         Route::get('/create', [Web\MemberController::class,'create'])->name('members.create');
         Route::post('/store', [Web\MemberController::class,'store'])->name('members.store');
         Route::get('/{slug}/edit', [Web\MemberController::class,'edit'])->name('members.edit');
@@ -139,6 +138,9 @@ Route::group(['middleware'=>'auth'],function (){
         Route::post('/{slug}/delete', [Web\MemberController::class,'trash'])->name('members.trash');
         Route::post('/add-to-cell/{code}', [Web\MemberController::class,'addToCell'])->name('members.add-to-cell');
         Route::post('/remove-from-cell/{code}', [Web\MemberController::class,'removeFromCell'])->name('members.remove-from-cell');
+        Route::post('/transfer/{code}', [Web\MemberController::class,'transferFromCell'])->name('members.transfer');
+        Route::post('/assign-cell/{code}', [Web\MemberController::class,'assignCell'])->name('members.assign-cell');
+        Route::post('/attach-ministries/{code}', [Web\MemberController::class,'attachMinistries'])->name('members.attach-ministries');
     });
 
     Route::group(['prefix'=>'cells'],function(){
@@ -155,6 +157,9 @@ Route::group(['middleware'=>'auth'],function (){
         Route::post('/{code}/meeting/record-attendance/{meeting_code}', [Web\MeetingController::class,'recordAttendance'])->name('cells.record-attendance');
         Route::post('/unset-attendance/{id}', [Web\AttendanceController::class,'unsetAttendance'])->name('cells.unset-attendance');
         Route::post('/{code}/meeting/trash/{meeting_code}', [Web\MeetingController::class,'trash'])->name('cells.trash-meeting');
+
+        Route::get('/{code}/transactions', [Web\TransactionController::class,'index'])->name('cells.transactions');
+        Route::post('/{code}/transactions', [Web\TransactionController::class,'store'])->name('cells.store-transaction');
     });
 
 });

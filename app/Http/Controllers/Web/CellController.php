@@ -66,7 +66,7 @@ class CellController extends Controller
 
             foreach ($cell->meetings()->orderBy("date","asc")->get() as $meeting){
                 $chartData["data"][] = $meeting->attendances()->count();
-                $chartData["labels"][] = date("m/d/Y", Carbon::createFromTimestamp($meeting->date)->addDay()->getTimestamp());
+                $chartData["labels"][] = date("m/d/Y", Carbon::createFromTimestamp($meeting->date)->getTimestamp());
             }
 
 //            dd($chartData);

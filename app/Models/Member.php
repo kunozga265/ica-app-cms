@@ -24,7 +24,24 @@ class Member extends Model
         return $this->belongsTo(Cell::class);
     }
 
+    public function leadershipCell()
+    {
+        return $this->hasOne(Cell::class,"leader_id","id");
+    }
 
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function attendanceCount()
+    {
+        if($this->attendances()->count() == 1){
+            return $this->attendances()->count() ." Meeting";
+        }else{
+            return $this->attendances()->count() ." Meetings";
+        }
+    }
 
     protected $fillable = [
         "code",

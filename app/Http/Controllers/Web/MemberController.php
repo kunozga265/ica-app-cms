@@ -67,8 +67,6 @@ class MemberController extends Controller
 
         ]);
 
-
-
         return Redirect::route('members.index', ['id' => $member->id])->with('success', 'Member created!');
     }
 
@@ -78,7 +76,22 @@ class MemberController extends Controller
         if (!is_object($member))
             return Redirect::back()->with('error', 'Member not found');
         else {
-            return view('pages.members.show', compact('member'));
+
+            $chartData = [
+                "data"=>[],
+                "labels"=>[]
+            ];
+
+            foreach ($member->attendances()->get() as $attendance){
+                $chartData["data"][] = 1;
+                $chartData["labels"][] = date("m/d/Y", Carbon::createFromTimestamp($attendance->meeting->date)->getTimestamp());
+            }
+
+//            dd($chartData);
+            $ministries = Ministry::orderBy("name","asc")->get();
+            $cells = Cell::orderBy("name","asc")->get();
+
+            return view('pages.members.show', compact('member', 'chartData', 'cells','ministries'));
         }
     }
 
@@ -170,7 +183,75 @@ class MemberController extends Controller
             $member->update([
                 "cell_id" => null
             ]);
-            return Redirect::route("cells.show", ["id" => $cell_id])->with('success', 'Member successfully removed!');
+            return Redirect::route("cells.show", ["code" => $cell->code])->with('success', 'Member successfully removed!');
         }
+    }
+
+    public function transferFromCell(Request $request, $code)
+    {
+//        dd("hello");
+        Validator::make($request->all(), [
+            "cell_id" => "required",
+        ])->validate();
+
+        $cell = Cell::find($request->cell_id);
+        $member = Member::where("code",$code)->first();
+        if (!is_object($cell))
+            return Redirect::back()->with('error', 'Cell not found');
+        else if (!is_object($member))
+            return Redirect::back()->with('error', 'Member not found');
+        else if ($member->cell_id == $cell->id) {
+            return Redirect::back()->with('error', 'Member is already in this cell');
+        } else{
+            $member->update([
+                "cell_id" => $cell->id
+            ]);
+            return Redirect::back()->with('success', 'Member successfully transferred!');
+        }
+
+    }
+    public function assignCell(Request $request, $code)
+    {
+
+
+        Validator::make($request->all(), [
+            "cell_id" => "required",
+        ])->validate();
+
+
+
+        $cell = Cell::find($request->cell_id);
+        $member = Member::where("code",$code)->first();
+
+        if (!is_object($cell))
+            return Redirect::back()->with('error', 'Cell not found');
+        else if (!is_object($member))
+            return Redirect::back()->with('error', 'Member not found');
+        else{
+            $member->update([
+                "cell_id" => $cell->id
+            ]);
+            return Redirect::back()->with('success', 'Member successfully assigned!');
+        }
+
+    }
+    public function attachMinistries(Request $request, $code)
+    {
+        Validator::make($request->all(), [
+            "ministries" => "required",
+        ])->validate();
+
+        $member = Member::where("code",$code)->first();
+
+        if (!is_object($member))
+            return Redirect::back()->with('error', 'Member not found');
+        else{
+
+            $member->ministries()->detach();
+            $member->ministries()->attach($request->ministries);
+
+            return Redirect::back()->with('success', 'Ministries successfully updated!');
+        }
+
     }
 }

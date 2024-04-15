@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,6 +28,18 @@ class Cell extends Model
     public function meetings()
     {
         return $this->hasMany(Meeting::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function nextMeetingDate()
+    {
+        $now = Carbon::now();
+        $meeting = $this->meetings()->where("date",">=", $now->getTimestamp())->first();
+        return (is_object($meeting)) ? $meeting->date : null;
     }
 
     public function getType()

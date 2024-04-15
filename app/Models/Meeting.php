@@ -13,6 +13,15 @@ class Meeting extends Model
     {
         return $this->hasMany(Attendance::class);
     }
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function cell()
+    {
+        return $this->belongsTo(Cell::class);
+    }
 
     protected $fillable = [
         "code",

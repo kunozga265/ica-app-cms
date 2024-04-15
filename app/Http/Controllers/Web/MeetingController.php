@@ -7,6 +7,7 @@ use App\Models\Attendance;
 use App\Models\Cell;
 use App\Models\Meeting;
 use App\Models\Member;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -50,9 +51,53 @@ class MeetingController extends Controller
             $meeting->update([
                 'date' => (new AppController())->getTimestamp($request->date, timeString: $request->time),
                 'venue' => $request->venue,
-                'offering' => $request->offering,
-
             ]);
+
+            $transaction = $meeting->transactions()->where("meeting_id", $meeting->id)->first();
+            if(is_object($transaction)){
+                if ($meeting->cell->transactions()->where("created_at",">",$transaction->created_at)->exists()){
+                    return Redirect::back()->with('warning', 'Meeting details updated but not offering: account statement may be violated. Please add offering to next meeting.');
+                }else{
+                    $amount = $request->offering/2;
+                    $old_offering = $transaction->amount;
+                    $new_balance = $meeting->cell->balance - $old_offering + $amount;
+
+                    $meeting->update([
+                        'offering' => $request->offering,
+                    ]);
+
+                    $meeting->cell->update([
+                        "balance" => $new_balance
+                    ]);
+
+                    $transaction->update([
+                        "amount"=> $amount,
+                        "description"=> "Cell offering. K" . number_format($amount, 1) . " to be submitted to church.",
+                        "balance" => $new_balance
+                    ]);
+                }
+
+            }else{
+                $amount = $request->offering/2;
+                $new_balance = $meeting->cell->balance + $amount;
+
+                $meeting->update([
+                    'offering' => $request->offering,
+                ]);
+
+                $meeting->cell->update([
+                    "balance" => $new_balance
+                ]);
+
+                Transaction::create([
+                    "amount"=> $amount,
+                    "type"=> 0,
+                    "description"=> "Cell offering. K" . number_format($amount, 1) . " to be submitted to church.",
+                    "meeting_id"=> $meeting->id,
+                    "cell_id"=> $meeting->cell->id,
+                    "balance" => $new_balance
+                ]);
+            }
         }
 
         return Redirect::route('cells.show', ['code' => $code])->with('success', 'Meeting updated!');
