@@ -18,7 +18,7 @@
 
     <x-slot name="breadcrumbs">
         <li class="breadcrumb-item"><a href="javascript: void(0);">ICA APP</a></li>
-        <li class="breadcrumb-item"><a href="{{route('events.index')}}">Announcements/Events</a></li>
+        <li class="breadcrumb-item"><a href="{{route('events.index')}}">Events</a></li>
         <li class="breadcrumb-item active">{{$event->title}}</li>
     </x-slot>
 

@@ -15,7 +15,7 @@
 
     <x-slot name="breadcrumbs">
         <li class="breadcrumb-item"><a href="javascript: void(0);">ICA APP</a></li>
-        <li class="breadcrumb-item active">event Points</li>
+        <li class="breadcrumb-item active">Events</li>
     </x-slot>
 
 

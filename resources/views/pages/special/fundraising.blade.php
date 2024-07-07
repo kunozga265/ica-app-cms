@@ -13,7 +13,7 @@
 
     <x-slot name="breadcrumbs">
         <li class="breadcrumb-item"><a href="javascript: void(0);">ICA APP</a></li>
-        <li class="breadcrumb-item active">Fundraising Details</li>
+        <li class="breadcrumb-item active">Fundraising</li>
     </x-slot>
 
     <div class="card p-40">
