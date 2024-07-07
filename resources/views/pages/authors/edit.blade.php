@@ -69,7 +69,7 @@
 
             </div>
 
-            <button type="submit" class="p-btn">
+            <button type="submit" class="p-btn secondary">
                 Update
             </button>
 

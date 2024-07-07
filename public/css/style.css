@@ -205,6 +205,7 @@ button.p-btn{
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    background-color: #fafafa;
 }
 
 .avatar{
@@ -280,7 +281,7 @@ svg.w-5.h-5{
     padding-top: 150px;
 }
 
-.sermon-card .card-body .heading-font{
+.sermon-card .card-body .heading-font, .series-card .card-body .heading-font{
     font-size: 40px;
     color: #0a1832;
     font-weight: 400;
@@ -340,12 +341,25 @@ svg.w-5.h-5{
 
 .btn-icon:hover{
     color: white;
-    background-color: #148BDD;
     /*padding: 12px 16px;*/
     /*font-size: 14px;*/
     /*background-color: #ecf0f3;*/
     border: 0;
 }
+
+
+.btn-icon.info:hover{
+    background-color: #148BDD;
+}
+
+.btn-icon.success:hover{
+    background-color: #39b793;
+}
+
+.btn-icon.error:hover{
+    background-color: #c1504f;
+}
+
 
 button.btn-text{
     border: 0;
@@ -359,6 +373,8 @@ button.btn-text.error{
 }
 
 ul#ui-id-1{
+    z-index: 9999;
+}ul#ui-id-2{
     z-index: 9999;
 }
 

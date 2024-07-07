@@ -1,9 +1,12 @@
 <x-app-layout>
     <x-slot name="title">
-
+        Ministers
     </x-slot>
 
     <x-slot name="action">
+        <div class="mb-16">
+            <a href="{{route('authors.create')}}" class="p-btn">+ New</a>
+        </div>
 
     </x-slot>
     <x-slot name="heading">
@@ -15,9 +18,6 @@
         <li class="breadcrumb-item active">Ministers</li>
     </x-slot>
 
-    <div class="mb-16">
-        <a href="{{route('authors.create')}}" class="p-btn">+ New</a>
-    </div>
 
     <div>
         <div class="row">
@@ -30,8 +30,8 @@
                                 <div class="image-placeholder mb-8" style="background-image: url({{asset($author->avatar)}})">
                                 </div>
                                 <div class="p-10">
-                                    <div class="text-lg font-bold ">{{$author->suffix}} {{$author->name}}</div>
-                                    <div>{{$author->title}}</div>
+                                    <div class="heading-font text-lg ">{{$author->suffix}} {{$author->name}}</div>
+                                    <div class="text-base text-mute">{{$author->title}}</div>
                                 </div>
 
                             </div>

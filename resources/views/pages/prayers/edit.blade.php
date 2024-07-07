@@ -13,7 +13,7 @@
 
     <x-slot name="breadcrumbs">
         <li class="breadcrumb-item"><a href="javascript: void(0);">ICA APP</a></li>
-        <li class="breadcrumb-item active"><a href="{{route('prayers.index')}}">{Prayer Points}</a></li>
+        <li class="breadcrumb-item active"><a href="{{route('prayers.index')}}">Prayer Points</a></li>
         <li class="breadcrumb-item active">{{$prayer->title}}</li>
     </x-slot>
 

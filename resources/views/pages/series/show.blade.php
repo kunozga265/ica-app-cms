@@ -1,9 +1,21 @@
 <x-app-layout>
     <x-slot name="title">
-
+        Series - {{$series->title}}
     </x-slot>
 
     <x-slot name="action">
+        <div class="mb-16">
+            <form action="{{route('series.trash',$series->slug)}}" method="post">
+                @csrf
+                <div class="">
+                    <div>
+                        <a href="{{route('series.edit',$series->slug)}}" class="p-btn secondary">Edit</a>
+                        <button type="submit" class="p-btn error">Delete</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
 
     </x-slot>
     <x-slot name="heading">
@@ -16,33 +28,26 @@
         <li class="breadcrumb-item active">{{$series->title}}</li>
     </x-slot>
 
-    <div class="mb-16">
-        <form action="{{route('series.trash',$series->slug)}}" method="post">
-            @csrf
-            <div class="flex justify-between">
-                <div>
-                    <a href="{{route('series.edit',$series->slug)}}" class="p-btn">Edit</a>
-                    <button type="submit" class="p-btn">Delete</button>
-                </div>
-                <div>
-                    <a href="{{route('sermons.create')}}" class="p-btn">+ New Sermon</a>
-                </div>
-            </div>
-        </form>
-    </div>
+
 
     <div>
-        <div class="card p-40">
+        <div class="card series-card p-60">
             <div class="card-body">
-                <div>
-                    <span class="big-chip">{{date('M d, Y',$series->first_sermon_date)}}</span>
-                </div>
-                <div class="text-xl font-bold">{{$series->title}}</div>
-                <div>{{$series->sermons->count()}} {{$series->sermons->count()==1?'Sermon':'Sermons'}}</div>
+{{--                <div class="text-center">--}}
+{{--                    <span class="big-chip">{{date('M d, Y',$series->first_sermon_date)}}</span>--}}
+{{--                </div>--}}
+                <div class="text-center">
+                    <span class="big-chip">
+                    {{$series->sermons->count()}} {{$series->sermons->count()==1?'Sermon':'Sermons'}}
+                    </span>
+                    </div>
+                <div class="text-center heading-font font-bold">{{$series->title}}</div>
+
                 <div ></div>
-                <div class="mt-16">{!! $series->description !!}</div>
-
-
+                <div class="text-xl text-center text-mute mt-8 mb-8">{!! $series->description !!}</div>
+{{--                <div class="text-center mt-16">--}}
+{{--                    <a href="{{route('sermons.create')}}" class="p-btn">+ New Sermon</a>--}}
+{{--                </div>--}}
             </div>
         </div>
         <div class="mt-16">
@@ -50,20 +55,25 @@
                 @foreach($sermons as $sermon)
 
 
-                    <div class="sermon col-12 col-sm-6 col-xl-3">
+                    <div class="sermon col-12 col-sm-6">
                         <a href="{{route('sermons.show',$sermon->slug)}}">
                             <div class="card">
                                 <div class="card-body">
                                     <div>
                                         <span class="chip">{{date('M d, Y',$sermon->published_at)}}</span>
                                     </div>
-                                    <div class="text-lg font-bold">{{$sermon->title}}</div>
+                                    <div class="text-lg heading-font">{{$sermon->title}}</div>
 
-                                    @if($sermon->series != null)
-                                        <div>{{$sermon->series->title}}</div>
-                                    @endif
+{{--                                    @if($sermon->series != null)--}}
+{{--                                        <div  class="text-base">{{$sermon->series->title}}</div>--}}
+{{--                                    @endif--}}
+                                    <div class="text-lg text-mute mt-16 flex align-items-center">
+                                        <div class="image-placeholder avatar-sm" style="background-image: url({{asset($sermon->author->avatar)}})"></div>
+                                        <div class="ml-8">
+                                            <div class="text-sm text-mute">{{$sermon->author->suffix}} {{$sermon->author->name}}</div>
+                                        </div>
 
-                                    <div class="text-sm text-mute">{{$sermon->author->suffix}} {{$sermon->author->name}}</div>
+                                    </div>
                                 </div>
                             </div>
                         </a>

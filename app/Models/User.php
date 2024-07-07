@@ -11,13 +11,27 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    public function member()
+    {
+        return $this->belongsTo(Member::class);
+    }
+
+    public function fullName()
+    {
+        return $this->first_name . " " . $this->last_name;
+    }
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name',
+        "first_name",
+        "middle_name",
+        "other_name",
+        "last_name",
+        "member_id",
         'email',
         'password',
     ];

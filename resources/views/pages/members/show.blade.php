@@ -46,6 +46,43 @@
                     }
                 });
 
+                const users = {!! json_encode($users) !!};
+                const arr_users = [{
+                    label: "None",
+                    value: 0,
+                    object: null
+                }];
+
+                for (let x in users) {
+                    arr_users.push({
+                        label: users[x].first_name + " " + users[x].last_name,
+                        value: users[x].id,
+                        object: users[x]
+                    })
+                }
+
+                $("#user_id").val(arr_users[0].value);
+                console.log(arr_users);
+
+                $("#user").autocomplete({
+                    source: arr_users,
+                    focus: function (event, ui) {
+                        // prevent autocomplete from updating the textbox
+                        event.preventDefault();
+                        // manually update the textbox
+                        console.log(ui)
+                        $(this).val(ui.item.label);
+                    },
+                    select: function (event, ui) {
+                        // prevent autocomplete from updating the textbox
+                        event.preventDefault();
+                        // manually update the textbox and hidden field
+                        $(this).val(ui.item.label);
+                        $("#user_id").val(ui.item.value);
+                        console.log(ui)
+                    }
+                });
+
                 //     Chart
                 const chartData = {!! json_encode($chartData) !!};
 
@@ -150,6 +187,8 @@
                     </div>
                     <div class="col-12 col-md-8">
                         <div class="row">
+
+
                             <div class="col-12 col-sm-6 mb-8">
                                 <div class="text-base text-mute">First Name</div>
                                 <div class="">{{$member->first_name}}</div>
@@ -180,7 +219,7 @@
                                 <div class="">{{$member->date_of_birth ? date("d/m/Y",$member->date_of_birth) : "-"}}</div>
                             </div>
 
-                            <div class="col-12 col-sm-6 mb-8">
+                            <div class="col-12 mb-8">
                                 <div class="text-base text-mute">Email</div>
                                 <div class="">{{$member->email}}</div>
                             </div>
@@ -197,6 +236,59 @@
                                                 class="ri-add-circle-fill"></i>
                                         <div class="spacer w-5"></div>
                                         New </a>
+                                @endif
+
+                                {{--                                <div class=""></div>--}}
+                            </div>
+
+                            <div class="col-12 col-sm-6 mb-8">
+                                <div class="text-base text-mute">User Profile Link</div>
+                                @if(isset($member->user))
+                                    <a class="link-primary flex align-items-center"
+                                       href="{{route("cells.show", ["code"=>$member->user->fullName()])}}"><i
+                                                class="ri-eye-fill"></i>
+                                        <div class="spacer w-5"></div> {{$member->user->fullName()}}  </a>
+                                @else
+                                    <button class="btn-text link-primary flex align-items-center"
+                                         data-bs-toggle="modal"
+                                         data-bs-target="#assignUser"><i
+                                                class="ri-add-circle-fill"></i>
+                                        <div class="spacer w-5"></div>
+                                        Select </button>
+
+                                    <div class="modal fade" id="assignUser" tabindex="-1"
+                                         aria-labelledby="assignUserLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <form method="post"
+                                                  action="{{route('members.link-user', ['code'=>$member->code])}}">
+                                                @csrf
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="assignUserLabel">Link User</h5>
+                                                        <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                       <input class="form-control " type="search" id="user" required
+                                                               name="user"
+                                                               placeholder="Select User">
+                                                        @if($errors->has('user_id'))
+                                                            <div class="error">{{ $errors->first('user_id') }}</div>
+                                                        @endif
+                                                        <input type="hidden" id="user_id" name="user_id">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Cancel
+                                                        </button>
+                                                        <button type="submit" class="p-btn">Proceed
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 @endif
 
                                 {{--                                <div class=""></div>--}}
@@ -243,7 +335,7 @@
                             @if(isset($member->cell))
                                 <div class="modal fade" id="transferMember" tabindex="-1"
                                      aria-labelledby="transferMemberLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-dialog">
                                         <form method="post"
                                               action="{{route('members.transfer', ['code'=>$member->code])}}">
                                             @csrf

@@ -105,10 +105,10 @@ class AppController extends Controller
         $body = json_decode(str_replace('<br \/>\r\n\t', '<br \/>', json_encode($body)));
         $body = json_decode(str_replace('<br \/>\t', '<br \/>', json_encode($body)));
 
-        $body = json_decode(str_replace('<p>', '<p><span>', json_encode($body)));
-        $body = json_decode(str_replace('<\/p>', '<\/span><\/p>', json_encode($body)));
-        $body = json_decode(str_replace('<li>', '<li><span>', json_encode($body)));
-        $body = json_decode(str_replace('<\/li>', '<\/span><\/li>', json_encode($body)));
+        $body = json_decode(str_replace('<p>', '<p><span><data>', json_encode($body)));
+        $body = json_decode(str_replace('<\/p>', '<\/data><\/span><\/p>', json_encode($body)));
+        $body = json_decode(str_replace('<li>', '<li><span><data>', json_encode($body)));
+        $body = json_decode(str_replace('<\/li>', '<\/data><\/span><\/li>', json_encode($body)));
 
 //        //splits sentences and adds spans
 //        $body = json_decode(preg_replace_callback('/ (\w+)\. (\w+)/', array($this, 'splitSenteces'), json_encode($body)));

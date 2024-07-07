@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="title">
-
+        Register User
     </x-slot>
 
     <x-slot name="action">
@@ -28,8 +28,18 @@
             <div class="row mb-8">
                 <!-- Name -->
                 <div class="col-12 mb-8">
-                    <label class="" for="name">Name</label>
-                    <input class="form-control" type="text" id="name" name="name" required placeholder="Enter name" :value="old('name')" autofocus>
+                    <label class="" for="first_name">First Name</label>
+                    <input class="form-control" type="text" id="first_name" name="first_name" required placeholder="Enter First Name" :value="old('first_name')" autofocus>
+                </div>
+                <!-- Name -->
+                <div class="col-12 mb-8">
+                    <label class="" for="middle_name">Middle Name</label>
+                    <input class="form-control" type="text" id="middle_name" name="middle_name" placeholder="Enter Middle Name" :value="old('middle_name')" autofocus>
+                </div>
+                <!-- Name -->
+                <div class="col-12 mb-8">
+                    <label class="" for="last_name">Last Name</label>
+                    <input class="form-control" type="text" id="last_name" name="last_name" required placeholder="Enter Last Name" :value="old('last_name')" autofocus>
                 </div>
 
                 <!-- Email Address -->

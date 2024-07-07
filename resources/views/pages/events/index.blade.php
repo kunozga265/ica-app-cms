@@ -1,9 +1,12 @@
 <x-app-layout>
     <x-slot name="title">
-
+        Events
     </x-slot>
 
     <x-slot name="action">
+        <div class="mb-16">
+            <a href="{{route('events.create')}}" class="p-btn">+ New</a>
+        </div>
 
     </x-slot>
     <x-slot name="heading">
@@ -15,16 +18,14 @@
         <li class="breadcrumb-item active">event Points</li>
     </x-slot>
 
-    <div class="mb-16">
-        <a href="{{route('events.create')}}" class="p-btn">+ New</a>
-    </div>
+
 
     <div>
 
 
         @foreach($events_compound as $event_compound)
 
-            <div class="text-lg mb-8">{{$event_compound['month']}} {{$event_compound['year']}} </div>
+            <div class="heading-font text mb-8">{{$event_compound['month']}} {{$event_compound['year']}} </div>
 
             <div class="row">
                 @foreach($events = $event_compound['events'] as $event)
@@ -35,11 +36,11 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div>
-                                        <span class="chip">{{date('M d, Y',$event->start_date)}}</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <span class="chip">{{date('M d, Y',$event->start_date)}}</span>
                                     </div>
-                                    <div class="text-lg font-bold">{{$event->title}}</div>
-                                    <div class="text-mute">{{$event->venue}}</div>
-                                    <div class="text-mute">{{$event->time}}</div>
+                                    <div class="text-lg heading-font">{{$event->title}}</div>
+                                    <div class="text-base mb-2">{{$event->venue}}</div>
+                                    <div class="text-base">{{$event->time}}</div>
                                 </div>
                             </div>
                         </a>

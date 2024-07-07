@@ -1,10 +1,12 @@
 <x-app-layout>
     <x-slot name="title">
-
+        Prayer Points
     </x-slot>
 
     <x-slot name="action">
-
+        <div class="mb-16">
+            <a href="{{route('prayers.create')}}" class="p-btn">+ New</a>
+        </div>
     </x-slot>
     <x-slot name="heading">
        Prayer Points
@@ -15,16 +17,14 @@
         <li class="breadcrumb-item active">Prayer Points</li>
     </x-slot>
 
-    <div class="mb-16">
-        <a href="{{route('prayers.create')}}" class="p-btn">+ New</a>
-    </div>
+
 
     <div>
 
 
         @foreach($prayers_compound as $prayer_compound)
 
-            <div class="text-lg mb-8">{{$prayer_compound['month']}} {{$prayer_compound['year']}} </div>
+            <div class="heading-font mb-8">{{$prayer_compound['month']}} {{$prayer_compound['year']}} </div>
 
             <div class="row">
                 @foreach($prayers = $prayer_compound['points'] as $prayer)
@@ -37,8 +37,8 @@
                                     <div>
                                         <span class="chip">{{date('M d, Y',$prayer->date)}}</span>
                                     </div>
-                                    <div class="text-lg font-bold">{{$prayer->title}}</div>
-                                    <div class="text-mute">{{$prayer->verses}}</div>
+                                    <div class="text-lg heading-font">{{$prayer->title}}</div>
+                                    <div class="text-mute text-base">{{$prayer->verses}}</div>
                                 </div>
                             </div>
                         </a>

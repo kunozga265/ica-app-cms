@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cell;
 use App\Models\Member;
 use App\Models\Ministry;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -90,8 +91,9 @@ class MemberController extends Controller
 //            dd($chartData);
             $ministries = Ministry::orderBy("name","asc")->get();
             $cells = Cell::orderBy("name","asc")->get();
+            $users = User::where("member_id", null)->orderBy("last_name","asc")->get();
 
-            return view('pages.members.show', compact('member', 'chartData', 'cells','ministries'));
+            return view('pages.members.show', compact('member', 'chartData', 'cells','ministries','users'));
         }
     }
 
@@ -251,6 +253,29 @@ class MemberController extends Controller
             $member->ministries()->attach($request->ministries);
 
             return Redirect::back()->with('success', 'Ministries successfully updated!');
+        }
+
+    }
+    public function linkUser(Request $request, $code)
+    {
+        Validator::make($request->all(), [
+            "user_id" => "required",
+        ])->validate();
+
+        $user = User::find($request->user_id);
+        $member = Member::where("code",$code)->first();
+
+        if (!is_object($user)){
+            return Redirect::back()->with('error', 'User not found');
+        }else if (isset($user->member_id)){
+            return Redirect::back()->with('error', 'User already linked to a profile');
+        }else if (!is_object($member))
+            return Redirect::back()->with('error', 'Member not found');
+        else{
+            $user->update([
+                "member_id" => $member->id
+            ]);
+            return Redirect::back()->with('success', 'Member successfully linked to user profile!');
         }
 
     }

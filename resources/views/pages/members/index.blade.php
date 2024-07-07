@@ -70,15 +70,15 @@
                                   <td>{{isset($member->cell) ? $member->cell->zone->name : ""}}</td>
                                   <td class="flex">
                                       <div class="flex align-items-center">
-                                          <a href="{{route('members.show',["code" => $member->code])}}" class="btn-icon sm"><i class="ri-eye-line"></i></a>
+                                          <a href="{{route('members.show',["code" => $member->code])}}" class="btn-icon info sm"><i class="ri-eye-line"></i></a>
                                       </div>
                                       <div class="spacer w-5"></div>
                                       <div class="flex align-items-center">
-                                          <a href="{{route('members.show',["code" => $member->code])}}" class="btn-icon sm"><i class="ri-pencil-line"></i></a>
+                                          <a href="{{route('members.show',["code" => $member->code])}}" class="btn-icon success sm"><i class="ri-pencil-line"></i></a>
                                       </div>
                                       <div class="spacer w-5"></div>
                                       <div class="flex align-items-center">
-                                          <a href="{{route('members.show',["code" => $member->code])}}" class="btn-icon sm"><i class="ri-delete-bin-line"></i></a>
+                                          <a href="{{route('members.show',["code" => $member->code])}}" class="btn-icon error sm"><i class="ri-delete-bin-line"></i></a>
                                       </div>
 
 {{--                                      <button type="button" class="btn btn-secondary btn-sm">Edit</button>--}}

@@ -14,6 +14,11 @@ class Member extends Model
         return $this->belongsToMany(Ministry::class, "member_ministry");
     }
 
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
+
     public function fullName()
     {
         return $this->first_name . " " . $this->last_name;
