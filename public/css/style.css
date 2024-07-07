@@ -428,3 +428,7 @@ td.secondary{
 td.error{
     color: #c1504f;
 }
+
+ .card.no-cursor:hover{
+    cursor: default;
+}

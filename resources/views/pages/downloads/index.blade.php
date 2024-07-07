@@ -31,11 +31,11 @@
                 @foreach($downloads = $download_compound['downloads'] as $download)
 
 
-                    <div class="sermon col-12 col-sm-6 col-xl-3">
+                    <div class="sermon col-12 col-sm-6 ">
                         <form action="{{route('downloads.trash',$download->slug)}}" method="post">
                             @csrf
 {{--                        <a href="{{route('downloads.show',$download->slug)}}">--}}
-                            <div class="card">
+                            <div class="card no-cursor">
                                 <div class="card-body">
                                     <div>
                                         <span class="chip">{{date('M d, Y',$download->date)}}</span>
@@ -56,10 +56,6 @@
                                         <div class="flex align-items-center">
                                             <button type="submit" class="btn-icon error sm"><i class="ri-delete-bin-line"></i></button>
                                         </div>
-
-                                        {{--                                      <button type="button" class="btn btn-secondary btn-sm">Edit</button>--}}
-                                        {{--                                      <button type="button" class="btn btn-secondary btn-sm">Delete</button>--}}
-
                                     </div>
                                 </div>
                             </div>
