@@ -133,7 +133,7 @@ class SeriesController extends Controller
         if (!is_object($series))
             return Redirect::back()->with('error','Series not found');
         else {
-            $sermons=$series->sermons()->orderBy("published_at","desc")->get();
+            $sermons=$series->sermons()->orderBy("published_at","asc")->get();
             return view('pages.series.show',compact('series','sermons'));
         }
     }

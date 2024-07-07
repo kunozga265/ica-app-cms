@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="title">
-
+        Announcements
     </x-slot>
 
     <x-slot name="action">
