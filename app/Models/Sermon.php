@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Web\AppController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -33,6 +34,11 @@ class Sermon extends Model
 
     public function searchableAs(){
       return "sermons_index";
+    }
+
+    public function refactorBody()
+    {
+        return (new AppController())->generateHighlightLinks($this->body);
     }
 
     protected $fillable=[

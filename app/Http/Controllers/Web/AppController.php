@@ -105,16 +105,12 @@ class AppController extends Controller
         $body = json_decode(str_replace('<br \/>\r\n\t', '<br \/>', json_encode($body)));
         $body = json_decode(str_replace('<br \/>\t', '<br \/>', json_encode($body)));
 
-        $body = json_decode(str_replace('<p>', '<p><span><data>', json_encode($body)));
-        $body = json_decode(str_replace('<\/p>', '<\/data><\/span><\/p>', json_encode($body)));
-        $body = json_decode(str_replace('<li>', '<li><span><data>', json_encode($body)));
-        $body = json_decode(str_replace('<\/li>', '<\/data><\/span><\/li>', json_encode($body)));
 
 //        //splits sentences and adds spans
 //        $body = json_decode(preg_replace_callback('/ (\w+)\. (\w+)/', array($this, 'splitSenteces'), json_encode($body)));
-
-        //gives spans ids
-        $body = json_decode(preg_replace_callback('/<(span+)(?![^>]*\/>)[^>]*>/', array($this, 'giveSpanIds'), json_encode($body)));
+//
+//        //gives spans ids
+//        $body = json_decode(preg_replace_callback('/<(span+)(?![^>]*\/>)[^>]*>/', array($this, 'giveSpanIds'), json_encode($body)));
 
 //        //For highlighting
 //        if($initial_entry){
@@ -175,13 +171,29 @@ class AppController extends Controller
         return $code;
     }
 
+    public function generateHighlightLinks($body)
+    {
+        $body = json_decode(str_replace('<p>', '<p><span>', json_encode($body)));
+        $body = json_decode(str_replace('<\/p>', '<\/a><\/span><\/p>', json_encode($body)));
+        $body = json_decode(str_replace('<li>', '<li><span>', json_encode($body)));
+        $body = json_decode(str_replace('<\/li>', '<\/a><\/span><\/li>', json_encode($body)));
+
+        //splits sentences and adds spans
+        $body = json_decode(preg_replace_callback('/ (\w+)\. (\w+)/', array($this, 'splitSenteces'), json_encode($body)));
+
+        //gives spans ids
+        $body = json_decode(preg_replace_callback('/<(span+)(?![^>]*\/>)[^>]*>/', array($this, 'giveSpanIds'), json_encode($body)));
+
+        return $body;
+    }
+
     public function giveSpanIds($matches)
     {
         $this->count++;
-        return "<span id='" . $this->count . "'>";
+        return "<span><a href='" . $this->count . "' class='data'>";
     }
     public function splitSenteces($matches)
     {
-        return " $matches[1]<\/span>. <span>$matches[2]";
+        return " $matches[1]<\/a><\/span>. <span>$matches[2]";
     }
 }
