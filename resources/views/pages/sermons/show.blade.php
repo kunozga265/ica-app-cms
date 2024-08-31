@@ -63,7 +63,7 @@
 
 {{--                </div>--}}
 
-                <div class="mt-60 text-body">{!! $sermon->body !!}</div>
+                <div class="mt-60 text-body">{!! $sermon->refactorBody() !!}</div>
             </div>
         </div>
 

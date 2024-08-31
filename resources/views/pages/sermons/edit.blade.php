@@ -96,13 +96,22 @@
                 filebrowserUploadUrl: "{{route('images.upload', ['_token' => csrf_token() ])}}",
                 filebrowserUploadMethod: 'form',
                 toolbar:[
-                    { name: 'styles', items: [ 'FontSize' ] },
+                    { name: 'styles', items: [ 'styles','Format' ] },
                     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline',] },
-                    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'] },
+                    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'heading','NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'] },
                     { name: 'links', items: [ 'Link', 'Unlink'] },
                     { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule'] },
                     { name: 'tools', items: [ 'Maximize'] },
-                ]
+                ],
+                heading:{
+                    options:[
+                        {
+                            model: 'heading1',
+                            title: 'Heading 1',
+                            view: 'h1'
+                        }
+                    ]
+                }
             });
         </script>
 

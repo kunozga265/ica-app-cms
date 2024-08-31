@@ -105,7 +105,6 @@ class AppController extends Controller
         $body = json_decode(str_replace('<br \/>\r\n\t', '<br \/>', json_encode($body)));
         $body = json_decode(str_replace('<br \/>\t', '<br \/>', json_encode($body)));
 
-
 //        //splits sentences and adds spans
 //        $body = json_decode(preg_replace_callback('/ (\w+)\. (\w+)/', array($this, 'splitSenteces'), json_encode($body)));
 //
@@ -178,8 +177,12 @@ class AppController extends Controller
         $body = json_decode(str_replace('<li>', '<li><span>', json_encode($body)));
         $body = json_decode(str_replace('<\/li>', '<\/a><\/span><\/li>', json_encode($body)));
 
+        // correct list spans
+        $body = json_decode(str_replace('\r\n\t<ul>', '\r\n\t<\/a><\/span><ul>', json_encode($body)));
+        $body = json_decode(str_replace('<\/ul><\/a><\/span><\/li>', '<\/ul><\/li>', json_encode($body)));
+
         //splits sentences and adds spans
-        $body = json_decode(preg_replace_callback('/ (\w+)\. (\w+)/', array($this, 'splitSenteces'), json_encode($body)));
+        $body = json_decode(preg_replace_callback('/ (\w+|\d+|\S+)\. (\w+|\d+)/', array($this, 'splitSenteces'), json_encode($body)));
 
         //gives spans ids
         $body = json_decode(preg_replace_callback('/<(span+)(?![^>]*\/>)[^>]*>/', array($this, 'giveSpanIds'), json_encode($body)));
@@ -190,7 +193,7 @@ class AppController extends Controller
     public function giveSpanIds($matches)
     {
         $this->count++;
-        return "<span><a href='" . $this->count . "' class='data'>";
+        return "<span id='" . $this->count . "' class='data'><a href='" . $this->count . "' class='data'>";
     }
     public function splitSenteces($matches)
     {

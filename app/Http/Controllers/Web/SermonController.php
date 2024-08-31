@@ -318,6 +318,8 @@ class SermonController extends Controller
 //            else
 //                $sermonSeries=[];
 
+//            dd($sermon->refactorBody());
+
             return view('pages.sermons.show',compact('sermon'));
 
         }

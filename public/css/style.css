@@ -2,6 +2,12 @@
     font-family: "Inter", sans-serif;
 }
 
+@media (max-width:500px) {
+    .page-content {
+        padding: calc(90px + 12px) calc(24px) 88px calc(24px)
+    }
+}
+
 .table{
     /*font-size: 12px;*/
     /*border: none;*/
@@ -41,6 +47,24 @@ table.dataTable thead .sorting, th.sorting_asc, th.sorting_desc{
 .text-body a{
     color: #148BDD;
     cursor: pointer;
+}
+
+.text-body *, .text-body a.data{
+    color: #0a1832;
+    font-size: 14.4px;
+}
+
+.text-body a.data:hover, .text-body a.data *:hover{
+    color: #148BDD;
+    cursor: pointer;
+}
+
+.text-body li > ul, .text-body li > ol{
+    margin-top: 16px;
+}
+
+.text-body li {
+   margin-bottom: 16px;
 }
 
 .link-primary{
@@ -144,6 +168,12 @@ a:hover{
 }
 .p-60{
     padding: 60px;
+}
+
+@media (max-width:500px) {
+    .p-60{
+        padding: 20px;
+    }
 }
 
 /* Margin */
@@ -432,3 +462,8 @@ td.error{
  .card.no-cursor:hover{
     cursor: default;
 }
+
+ .page-title-right{
+     margin: 20px 0;
+ }
+
