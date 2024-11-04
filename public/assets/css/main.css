@@ -5397,7 +5397,7 @@ input[type=color] {
   color: var(--tg-sermon-body-color);
 }
 .blog-details-content strong {
-  font-weight: var(--tg-fw-bold);
+  font-weight: var(--tg-fw-semi-bold);
 }
 .blog-details-content li {
   margin-bottom: 15px;
