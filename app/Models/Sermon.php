@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\Web\AppController;
+use App\Http\Controllers\Web\Admin\AppController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,6 +17,11 @@ class Sermon extends Model
     public function author()
     {
         return $this->belongsTo("App\Models\Author");
+    }
+
+    public function authorName()
+    {
+        return $this->author->suffix. " " . $this->author->name;
     }
     public function series()
     {

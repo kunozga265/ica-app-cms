@@ -1,139 +1,329 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <title>ICA APP - {{$title}}</title>
-
-        <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="{{asset('/favicon.png')}}">
+<!doctype html>
+<html class="no-js" lang="en">
 
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<!-- Mirrored from themegenix.net/html/sarsa-html/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 03 Nov 2024 13:40:26 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="Sarsa - News & Magazine HTML Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Bootstrap Css -->
-        <link href={{asset("assets/css/bootstrap.min.css")}} id="bootstrap-style" rel="stylesheet" type="text/css"></link>
-        <!-- Icons Css -->
-        <link href={{asset("assets/css/icons.min.css")}} rel="stylesheet" type="text/css"></link>
-        <!-- Swiper Css-->
-        <link href={{asset("assets/css/swiper.min.css")}} id="app-style" rel="stylesheet" type="text/css"></link>
-        <!-- Line Awesome Css-->
-        <link href={{asset("assets/css/line-awesome.css")}} id="app-style" rel="stylesheet" type="text/css"></link>
-        <!-- MDI Css-->
-        <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
-        <link href={{asset("assets/css/icons.min.css")}} rel="stylesheet" type="text/css"></link>
-        <!-- Main Css-->
-        <link href={{asset("assets/css/main.css")}} id="app-style" rel="stylesheet" type="text/css"></link>
-        <!-- Style Css-->
-        <link href={{asset("assets/css/style.css")}} id="app-style" rel="stylesheet" type="text/css"></link>
+    <title>ICA APP - {{$title}}</title>
 
-    </head>
-    <body>
-    <!-- navbar -->
-    <div id="navbar" class="navbar navbar-expand-lg justify-content-center">
-        <div class="container">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                {{--                <a href="#" class="navbar-brand"><img src="images/logo-main.png" alt=""></a>--}}
-                <ul class="navbar-nav nav">
-                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-{{--                    <li class="nav-item"><a class="nav-link" href="#download">Download</a></li>--}}
-                    <li class="nav-item"><a class="nav-link" href="#">Sermons</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Prayer Points</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#">Give</a></li>
-                </ul>
-            </div>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{asset('/favicon.png')}}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="la la-bars"></i>
-            </button>
-            <ul class="button-navbar">
-                {{--                <li><button class="button"><i class="lab la-app-store"></i>App Store</button></li>--}}
-                {{--                <li><button class="button"><i class="lab la-google-play"></i>Google Play</button></li>--}}
-                {{--                <li><button class="button"><i class="mdi mdi-download"></i>Download</button></li>--}}
-                @if(\Illuminate\Support\Facades\Auth::check())
-                    <li><a href="{{route('dashboard')}}" class="button login"><i class="mdi mdi-monitor-dashboard"></i>Dashboard</a></li>
-                @else
-                    <li><a href="{{route('login')}}" class="button login"><i class="mdi mdi-arrow-right-circle"></i>Login</a></li>
-                @endif
-            </ul>
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/animate.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/magnific-popup.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/fontawesome-all.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/imageRevealHover.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/swiper-bundle.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/flaticon.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/slick.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/spacing.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
+</head>
+
+<body>
+
+<!-- preloader -->
+<div id="preloader">
+    <div id="loading-center">
+        <div id="loading-center-absolute">
+            <div class="object" id="object_one"></div>
+            <div class="object" id="object_two"></div>
+            <div class="object" id="object_three"></div>
         </div>
     </div>
-    <!-- end navbar -->
+</div>
+<!-- preloader-end -->
 
-    {{ $slot }}
+<!-- Scroll-top -->
+<button class="scroll__top scroll-to-target" data-target="html">
+    <i class="fas fa-angle-up"></i>
+</button>
+<!-- Scroll-top-end-->
 
-        <!-- footer -->
-        <footer>
-            <div class="content">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md">
-                            <img src="images/logo-main.png" alt="">
-                            <p>The official app for International Christian Assembly. Keep up to date with our sermons, prayer points, announcements and events. Get connected today!</p>
-                        </div>
-                        <div class="col-md">
-                            <h6>Contact us</h6>
-                            <ul>
-                                <li><i class="la la-phone"></i>  +265 99 774 85 84 </li>
-                                <li><i class="la la-envelope"></i>contact@ica-app.com </li>
-                                <li><i class="la la-map"></i>ICA, Chirambula Road, Lilongwe Malawi  </li>
-                            </ul>
-                        </div>
-                        <div class="col-md">
-                            <h6>Social Media</h6>
-                            <ul>
-                                <li><a href="https://web.facebook.com/ICALilongwe/" target="_blank"><i class="la la-facebook"></i> Facebook</a></li>
-                                <li><a href="https://www.youtube.com/@icalilongwe6311" target="_blank"><i class="la la-youtube"></i> Youtube</a></li>
-                                <li><a href="https://www.instagram.com/icalilongwe/" target="_blank"><i class="la la-instagram"></i> Instagram</a></li>
-                                <li><a href="https://icamalawi.com" target="_blank"><i class="la la-github"></i> Church Website</a></li>
-                            </ul>
-                        </div>
-{{--                        <div class="col-md">--}}
-{{--                            <h6>Usefull Link</h6>--}}
-{{--                            <ul>--}}
-{{--                                <li><a href=""><i class="la la-user"></i> About</a></li>--}}
-{{--                                <li><a href=""><i class="la la-rocket"></i> Features</a></li>--}}
-{{--                                <li><a href=""><i class="la la-dollar"></i> Pricing</a></li>--}}
-{{--                                <li><a href=""><i class="la la-envelope"></i> Contact</a></li>--}}
-{{--                            </ul>--}}
-{{--                        </div>--}}
+<!-- header-area -->
+<header>
+    <div class="header__top">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-4 col-md-6 col-sm-6 order-2 order-lg-0">
+                    <div class="header__top-search">
+                        <form action="#">
+                            <input type="text" placeholder="Search here...">
+                        </form>
                     </div>
                 </div>
-            </div>
-        </footer>
-        <!-- end footer -->
-
-        <!-- footer copyright -->
-        <div class="footer-cp">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md col-12">
-                        Copyright © All Right Reserved
+                <div class="col-lg-4 col-md-3 order-0 order-lg-2 d-none d-md-block">
+                    <div class="header__top-logo logo text-lg-center">
+                        <a href="{{route('home')}}" class="logo-dark"><img src="{{asset('images/logo-main.png')}}" alt="Logo"></a>
+                        <a href="{{route('home')}}" class="logo-light"><img src="{{asset('images/logo-main.png')}}" alt="Logo"></a>
                     </div>
-                    <div class="col-md col-12">
-{{--                        <ul>--}}
-{{--                            <li><a href="">Help & Center</a></li>--}}
-{{--                            <li><a href="">Refund Request</a></li>--}}
-{{--                        </ul>--}}
+                </div>
+                <div class="col-lg-4 col-md-3 col-sm-6 order-3 d-none d-sm-block">
+                    <div class="header__top-right">
+                        <ul class="list-wrap">
+                            <li class="news-btn"><a href="#" class="btn">
+                                    <span
+                                            class="btn-text">Download</span>
+                                    <i class="fas fa-download"></i>
+                                </a></li>
+{{--                            <li class="lang">--}}
+{{--                                <div class="dropdown">--}}
+{{--                                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton1"--}}
+{{--                                            data-bs-toggle="dropdown" aria-expanded="false">--}}
+{{--                                        ENG--}}
+{{--                                    </button>--}}
+{{--                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">--}}
+{{--                                        <li><a class="dropdown-item" href="#">SPA</a></li>--}}
+{{--                                        <li><a class="dropdown-item" href="#">GRE</a></li>--}}
+{{--                                        <li><a class="dropdown-item" href="#">CIN</a></li>--}}
+{{--                                        <li><a class="dropdown-item" href="#">CIN</a></li>--}}
+{{--                                    </ul>--}}
+{{--                                </div>--}}
+{{--                            </li>--}}
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- end footer copyright -->
+    </div>
+    <div id="header-fixed-height"></div>
+    <div id="sticky-header" class="tg-header__area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="tgmenu__wrap">
+                        <nav class="tgmenu__nav">
+                            <div class="logo d-block d-md-none">
+                                <a href="{{route('home')}}" class="logo-dark"><img src="{{asset('images/logo-main.png')}}" alt="Logo"></a>
+                                <a href="{{route('home')}}" class="logo-light"><img src="{{asset('images/logo-main.png')}}"
+                                                                               alt="Logo"></a>
+                            </div>
+                            <div class="mobile-nav-toggler"><i class="flaticon-menu-bar"></i></div>
+{{--                            <div class="offcanvas-toggle">--}}
+{{--                                <a href="#"><i class="flaticon-menu-bar"></i></a>--}}
+{{--                            </div>--}}
+                            <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex">
+                                <ul class="navigation">
+                                    <li class="active "><a href="{{route('home')}}">Home</a>
+                                    </li>
+                                    <li><a href="{{route('home')}}">Sermons</a></li>
+                                    <li><a href="{{route('home')}}">Prayer Points</a></li>
+                                    <li><a href="{{route('home')}}">Give</a></li>
+                                </ul>
+                            </div>
+                            <div class="tgmenu__action">
+                                <ul class="list-wrap">
+                                    <li class="mode-switcher">
+                                        <nav class="switcher__tab">
+                                            <span class="switcher__btn light-mode"><i class="flaticon-sun"></i></span>
+                                            <span class="switcher__mode"></span>
+                                            <span class="switcher__btn dark-mode"><i class="flaticon-moon"></i></span>
+                                        </nav>
+                                    </li>
+                                    <li class="user"><a href="#"><i class="far fa-user"></i></a></li>
+{{--                                    <li class="header-cart"><a href="#"><i class="far fa-shopping-basket"></i></a></li>--}}
+                                </ul>
+                            </div>
+                        </nav>
 
-        <!-- JAVASCRIPT -->
-        <script src={{asset("js/assets/jquery.min.js")}}></script>
-        <script src={{asset("js/assets/bootstrap.bundle.min.js")}}></script>
-        <script src={{asset("js/assets/metisMenu.min.js")}}></script>
-        <script src={{asset("js/assets/simplebar.min.js")}}></script>
-        <script src={{asset("js/assets/waves.min.js")}}></script>
+                    </div>
+                    <!-- Mobile Menu  -->
+                    <div class="tgmobile__menu">
+                        <nav class="tgmobile__menu-box">
+                            <div class="close-btn"><i class="fas fa-times"></i></div>
+                            <div class="nav-logo">
+                                <a href="{{route('home')}}" class="logo-dark"><img src="{{asset('images/logo-main.png')}}" alt="Logo"></a>
+                                <a href="{{route('home')}}" class="logo-light"><img src="{{asset('images/logo-main.png')}}"
+                                                                               alt="Logo"></a>
+                            </div>
+                            <div class="tgmobile__search">
+                                <form action="#">
+                                    <input type="text" placeholder="Search here...">
+                                    <button><i class="far fa-search"></i></button>
+                                </form>
+                            </div>
+                            <div class="tgmobile__menu-outer">
+                                <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
+                            </div>
+                            <div class="social-links">
+                                <ul class="list-wrap">
+                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="tgmobile__menu-backdrop"></div>
+                    <!-- End Mobile Menu -->
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <!-- App js -->
-        <script src={{asset("js/assets/app.js")}}></script>
-    </body>
+    <!-- offCanvas-area -->
+    <div class="offCanvas__wrap">
+        <div class="offCanvas__body">
+            <div class="offCanvas__toggle"><i class="flaticon-addition"></i></div>
+            <div class="offCanvas__content">
+                <div class="offCanvas__logo logo">
+                    <a href="{{route('home')}}" class="logo-dark"><img src="{{asset('images/logo-main.png')}}" alt="Logo"></a>
+                    <a href="{{route('home')}}" class="logo-light"><img src="{{asset('images/logo-main.png')}}" alt="Logo"></a>
+                </div>
+                <p>Change how the world works with Biotellus, made for ecology.</p>
+                <ul class="offCanvas__instagram list-wrap">
+                    <li><a href="{{asset('assets/img/blog/blog01.jpg')}}" class="popup-image"><img src="{{asset('assets/img/blog/blog01.jpg')}}"
+                                                                                      alt="img"></a></li>
+                    <li><a href="{{asset('assets/img/blog/blog02.jpg')}}" class="popup-image"><img src="{{asset('assets/img/blog/blog02.jpg')}}"
+                                                                                      alt="img"></a></li>
+                    <li><a href="{{asset('assets/img/blog/blog03.jpg')}}" class="popup-image"><img src="{{asset('assets/img/blog/blog03.jpg')}}"
+                                                                                      alt="img"></a></li>
+                    <li><a href="{{asset('assets/img/blog/blog04.jpg')}}" class="popup-image"><img src="{{asset('assets/img/blog/blog04.jpg')}}"
+                                                                                      alt="img"></a></li>
+                    <li><a href="{{asset('assets/img/blog/blog05.jpg')}}" class="popup-image"><img src="{{asset('assets/img/blog/blog05.jpg')}}"
+                                                                                      alt="img"></a></li>
+                    <li><a href="{{asset('assets/img/blog/blog06.jpg')}}" class="popup-image"><img src="{{asset('assets/img/blog/blog06.jpg')}}"
+                                                                                      alt="img"></a></li>
+                </ul>
+            </div>
+            <div class="offCanvas__contact">
+                <h4 class="title">Get In Touch</h4>
+                <ul class="offCanvas__contact-list list-wrap">
+                    <li><i class="fas fa-envelope-open"></i><a href="mailto:info@webmail.com">info@webmail.com</a></li>
+                    <li><i class="fas fa-phone"></i><a href="tel:88899988877">888 999 888 77</a></li>
+                    <li><i class="fas fa-map-marker-alt"></i> 12/A, New Booston, NYC</li>
+                </ul>
+                <ul class="offCanvas__social list-wrap">
+                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="offCanvas__overlay"></div>
+    <!-- offCanvas-area-end -->
+
+</header>
+<!-- header-area-end -->
+
+<!-- main-area -->
+<main>
+{{ $slot }}
+
+<!-- newsletter-area -->
+<section class="newsletter-style-two style-three white-bg pt-80 pb-80">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xxl-6 col-xl-7 col-lg-8">
+                <div class="newsletter__title text-center mb-35">
+                    <div class="newsletter__title-icon">
+                        <i class="fas fa-envelope-open-text"></i>
+                    </div>
+                    <span class="sub-title">newsletter</span>
+                    <h4 class="title">Receive all communication directly in your mail!</h4>
+                </div>
+                <div class="newsletter__form-wrap text-center">
+                    <form action="#" class="newsletter__form">
+                        <div class="newsletter__form-grp">
+                            <input type="email" placeholder="Email address" required>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    I agree to having my email collected and stored.
+                                </label>
+                            </div>
+                        </div>
+                        <button class="btn" type="submit">
+                            <span class="text">Subscribe</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- newsletter-area-end -->
+
+
+</main>
+<!-- main-area-end -->
+
+<!-- footer-area -->
+<footer class="footer-area footer-style-three white-bg">
+    <div class="container">
+        <div class="footer__logo-wrap">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4">
+                    <div class="footer__logo logo">
+                        <a href="{{route('home')}}" class="logo-dark"><img src="{{asset('images/logo-main.png')}}" alt="Logo"></a>
+                        <a href="{{route('home')}}" class="logo-light"><img src="{{asset('images/logo-main.png')}}" alt="Logo"></a>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="footer__social">
+                        <ul class="list-wrap">
+                            <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+                            <li><a href="#"><i class="fab fa-twitter"></i> Twitter </a></li>
+                            <li><a href="#"><i class="fab fa-youtube"></i> Youtube </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer__copyright">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="copyright__text">
+                        <p>Copyright <span>ICA</span> - <script>document.write(new Date().getFullYear())</script>. All Rights Reserved</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="copyright__menu">
+                        <ul class="list-wrap">
+                            <li><a href="#">Contact Us</a></li>
+{{--                            <li><a href="#">Terms of Use</a></li>--}}
+{{--                            <li><a href="#">Advertise</a></li>--}}
+{{--                            <li><a href="#">Store</a></li>--}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- footer-area-end -->
+
+
+<!-- JS here -->
+<script src="{{asset('assets/js/vendor/jquery-3.6.0.min.js')}}"></script>
+<script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('assets/js/isotope.pkgd.min.js')}}"></script>
+<script src="{{asset('assets/js/imagesloaded.pkgd.min.js')}}"></script>
+<script src="{{asset('assets/js/jquery.magnific-popup.min.js')}}"></script>
+<script src="{{asset('assets/js/jquery.marquee.min.js')}}"></script>
+<script src="{{asset('assets/js/imageRevealHover.js')}}"></script>
+<script src="{{asset('assets/js/swiper-bundle.js')}}"></script>
+<script src="{{asset('assets/js/TweenMax.min.js')}}"></script>
+<script src="{{asset('assets/js/slick.min.js')}}"></script>
+<script src="{{asset('assets/js/ajax-form.js')}}"></script>
+<script src="{{asset('assets/js/wow.min.js')}}"></script>
+<script src="{{asset('assets/js/main.js')}}"></script>
+</body>
+
+
+<!-- Mirrored from themegenix.net/html/sarsa-html/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 03 Nov 2024 13:40:26 GMT -->
 </html>

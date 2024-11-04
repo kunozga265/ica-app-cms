@@ -16,9 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('guest.home');
-})->name('home');
+Route::get('/', [Web\Guest\PageController::class,"home",])->name('home');
+Route::get('/sermons/{slug}', [Web\Guest\PageController::class,"sermon",])->name('sermon');
 
 
 Route::group(['middleware'=>'auth'],function (){

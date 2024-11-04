@@ -80,7 +80,7 @@
 
     @push('scripts')
         <!-- Datatable init js -->
-        <script src="{{asset('js/assets/datatables.init.js')}}"></script>
+        <script src="{{asset('js/assets_1/datatables.init.js')}}"></script>
 
         <!-- Required datatable js -->
         <script src="{{asset('js/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
