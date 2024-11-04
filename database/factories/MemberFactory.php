@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Http\Controllers\Web\Admin\AppController;
+use App\Http\Controllers\Web\AppController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
