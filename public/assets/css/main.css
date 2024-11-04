@@ -6631,6 +6631,9 @@ blockquote .blockquote-cite .info span {
 [tg-theme=dark] .sticky-menu {
   background-color: var(--tg-dark-color-1);
 }
+[tg-theme=dark] .sermons .sermon {
+  background-color: var(--tg-dark-color-1);
+}
 [tg-theme=dark] .btn::before {
   background: var(--tg-dark-color-1);
 }
