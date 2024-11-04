@@ -17,9 +17,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
     <!-- JAVASCRIPT -->
-    <script src={{asset("js/assets_1/jquery.min.js")}}></script>
-    <script src={{asset("js/assets_1/jquery-ui.js")}}></script>
-    <script src={{asset("js/assets_1/bootstrap.bundle.min.js")}}></script>
+    <script src={{asset("js/assets/jquery.min.js")}}></script>
+    <script src={{asset("js/assets/jquery-ui.js")}}></script>
+    <script src={{asset("js/assets/bootstrap.bundle.min.js")}}></script>
 
     <!-- Bootstrap Css -->
     <link href={{asset("assets_1/css/bootstrap.min.css")}} id="bootstrap-style" rel="stylesheet" type="text/css"></link>
@@ -274,12 +274,12 @@
 <!-- END layout-wrapper -->
 
 <!-- JAVASCRIPT -->
-<script src={{asset("js/assets_1/metisMenu.min.js")}}></script>
-<script src={{asset("js/assets_1/simplebar.min.js")}}></script>
-<script src={{asset("js/assets_1/waves.min.js")}}></script>
+<script src={{asset("js/assets/metisMenu.min.js")}}></script>
+<script src={{asset("js/assets/simplebar.min.js")}}></script>
+<script src={{asset("js/assets/waves.min.js")}}></script>
 
 <!-- App js -->
-<script src={{asset("js/assets_1/app.js")}}></script>
+<script src={{asset("js/assets/app.js")}}></script>
 
 {{--CKEditor--}}
 <script src="{{asset('ckeditor/ckeditor.js')}}"></script>

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\Web\Admin\AppController;
+use App\Http\Controllers\Web\AppController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

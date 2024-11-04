@@ -53,6 +53,7 @@
   --tg-common-color-gray: #f5f5f5;
   --tg-common-color-black: #000;
   --tg-body-color: #777777;
+  --tg-sermon-body-color: #000;
   --tg-heading-color: #111111;
   --tg-theme-primary: #148bdd;
   --tg-theme-secondary: #111111;
@@ -5393,17 +5394,19 @@ input[type=color] {
 }
 .blog-details-content p {
   margin-bottom: 15px;
+  color: var(--tg-sermon-body-color);
 }
 .blog-details-content strong {
   font-weight: var(--tg-fw-bold);
 }
 .blog-details-content li {
   margin-bottom: 15px;
+  color: var(--tg-sermon-body-color);
 }
 
 @media (max-width: 768px) {
   .blog-details-content li {
-    margin-bottom: 8px;
+    /*margin-bottom: 8px;*/
   }
 }
 
@@ -6616,6 +6619,7 @@ blockquote .blockquote-cite .info span {
   --tg-common-color-gray: #f5f5f5;
   --tg-common-color-black: #000;
   --tg-body-color: #aeaeae;
+  --tg-sermon-body-color: #aeaeae;
   --tg-heading-color: #fff;
   --tg-border-1: #222;
   --tg-dark-color-1: #181818;
