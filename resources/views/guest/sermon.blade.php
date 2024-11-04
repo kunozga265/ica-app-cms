@@ -1,7 +1,7 @@
 <x-guest-layout>
 
     <x-slot name="title">
-        Sermons - {{$sermon->title}}
+        Sermons // {{$sermon->title}}
     </x-slot>
 
 
