@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AppController extends Controller
 {
-    public $paginate = 20;
+    public $paginate = 30;
     private int $count = 0;
 
     public function dashboard()

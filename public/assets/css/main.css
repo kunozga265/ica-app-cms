@@ -2929,7 +2929,7 @@ input[type=color] {
 .slider__img-wrap .avatar {
   width: 200px;
   height: 300px;
-  border-radius: 15px;
+  /*border-radius: 15px;*/
 }
 @media (max-width: 991.98px) {
   .slider__img-wrap .avatar {
@@ -6803,3 +6803,24 @@ blockquote .blockquote-cite .info span {
 }
 
 /*# sourceMappingURL=main.css.map */
+
+
+/* Sermons Page */
+.sermons .sermon{
+  background: var(--tg-common-color-white);
+  padding: 36px;
+  margin-bottom: 30px;
+}
+.sermons .sermon .title{
+  font-size: 18px;
+  font-weight: var(--tg-fw-regular);
+}
+.sermons .sermon .category{
+  /*color: var(--tg-theme-primary);*/
+}
+.sermons .sermon .avatar{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 12px;
+}

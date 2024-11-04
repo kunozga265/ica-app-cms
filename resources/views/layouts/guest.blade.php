@@ -115,7 +115,7 @@
                                 <ul class="navigation">
                                     <li class="active "><a href="{{route('home')}}">Home</a>
                                     </li>
-                                    <li><a href="{{route('home')}}">Sermons</a></li>
+                                    <li><a href="{{route('sermons')}}">Sermons</a></li>
                                     <li><a href="{{route('home')}}">Prayer Points</a></li>
                                     <li><a href="{{route('home')}}">Give</a></li>
                                 </ul>

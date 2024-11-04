@@ -17,10 +17,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [Web\Guest\PageController::class,"home",])->name('home');
+Route::get('/sermons/', [Web\Guest\PageController::class,"sermons",])->name('sermons');
 Route::get('/sermons/{slug}', [Web\Guest\PageController::class,"sermon",])->name('sermon');
 
 
-Route::group(['middleware'=>'auth'],function (){
+Route::group(['middleware'=>'auth',"prefix" => "/admin"],function (){
 
     Route::get('/dashboard', function () {
         return Redirect::route('sermons.index');
