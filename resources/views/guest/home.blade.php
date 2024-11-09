@@ -1,7 +1,7 @@
 <x-guest-layout>
 
     <x-slot name="title">
-        Home
+        ICA APP - Home
     </x-slot>
 
 

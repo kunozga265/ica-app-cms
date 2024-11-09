@@ -1,7 +1,7 @@
 <x-guest-layout>
 
     <x-slot name="title">
-        Sermons // {{$sermon->title}}
+        Sermons // {{$sermon->title}} // {{date('M d, Y',$sermon->published_at)}}
     </x-slot>
 
 
@@ -47,6 +47,9 @@
                                 <li>0 comments</li>
                             </ul>
                             <h2 class="title">{{$sermon->title}}</h2>
+                            @if($sermon->series != null)
+                                <div class="sub-title">{{$sermon->series->title}}</div>
+                            @endif
 
                             <div class="blog-details-content">
                                 {!! $sermon->body !!}
