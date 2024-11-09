@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [Web\Guest\PageController::class,"home",])->name('home');
 Route::get('/sermons/', [Web\Guest\PageController::class,"sermons",])->name('sermons');
 Route::get('/sermons/{slug}', [Web\Guest\PageController::class,"sermon",])->name('sermon');
+Route::get('/prayer-points/', [Web\Guest\PageController::class,"prayers",])->name('prayer-points');
+Route::get('/prayer-points/{id}', [Web\Guest\PageController::class,"prayer",])->name('prayer');
+Route::get('/give/', [Web\Guest\PageController::class,"give",])->name('give');
 
 
 Route::group(['middleware'=>'auth',"prefix" => "/admin"],function (){

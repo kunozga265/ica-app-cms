@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Guest;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Web\AppController;
 use App\Models\Page;
+use App\Models\Prayer;
 use App\Models\Sermon;
 use App\Models\View;
 use Carbon\Carbon;
@@ -64,7 +65,7 @@ class PageController extends Controller
         $sermons_compound = $sorted;
         $sermons_unsorted = $unsorted;
 
-        return view("guest.sermons", compact("sermons_compound"));
+        return view("guest.sermons", compact("sermons_compound","unsorted"));
     }
 
     public function sermon($slug)
@@ -92,6 +93,76 @@ class PageController extends Controller
 
         }
     }
+
+    public function prayers()
+    {
+        $unsorted=Prayer::orderBy('date','desc')->paginate((new AppController())->paginate);
+        $sorted=[];
+
+        if ($unsorted->count()!==0){
+            $currentMonth=date('F',$unsorted[0]->date);
+            $currentYear=date('Y',$unsorted[0]->date);
+
+            $item=0;
+            $index=0;
+
+
+            foreach ($unsorted as $sermon){
+
+                if ($item==0){
+                    $sorted[0]=[
+                        'month'         => $currentMonth,
+                        'year'          => $currentYear,
+                        'points'       => [$sermon]
+                    ];
+                }else{
+                    $month=date('F',$unsorted[$item]->date);
+                    $year=date('Y',$unsorted[$item]->date);
+
+                    if ($currentMonth===$month && $currentYear===$year){
+                        $sorted[$index]['points'][]=$sermon;
+                    }else{
+                        $index+=1;
+                        $currentMonth=date('F',$unsorted[$item]->date);
+                        $currentYear=date('Y',$unsorted[$item]->date);
+
+                        $sorted[$index]=[
+                            'month'         => $currentMonth,
+                            'year'          => $currentYear,
+                            'points'        => [$sermon]
+                        ];
+                    }
+                }
+                $item+=1;
+            }
+        }
+        $prayers_compound=$sorted;
+
+        return view('guest.prayers',compact("prayers_compound","unsorted"));
+    }
+
+    public function prayer($id)
+    {
+        $prayer = Prayer::find($id);
+        if (!is_object($prayer))
+            return Redirect::back()->with('error','Prayer points not found');
+        else {
+
+            $now = Carbon::now();
+            $prev = Prayer::where("date", "<=", $now->getTimestamp())->where("date", "<", $prayer->date)->orderBy("date", "desc")->first();
+            $next = Prayer::where("date", "<=", $now->getTimestamp())->where("date", ">", $prayer->date)->orderBy("date", "asc")->first();
+
+
+            return view('guest.prayer',compact('prayer', 'prev','next'));
+        }
+    }
+
+    public function give()
+    {
+        return view('guest.give');
+    }
+
+
 
 
 }

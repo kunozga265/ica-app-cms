@@ -116,8 +116,8 @@
                                     <li class="active "><a href="{{route('home')}}">Home</a>
                                     </li>
                                     <li><a href="{{route('sermons')}}">Sermons</a></li>
-                                    <li><a href="{{route('home')}}">Prayer Points</a></li>
-                                    <li><a href="{{route('home')}}">Give</a></li>
+                                    <li><a href="{{route('prayer-points')}}">Prayer Points</a></li>
+                                    <li><a href="{{route('give')}}">Give</a></li>
                                 </ul>
                             </div>
                             <div class="tgmenu__action">

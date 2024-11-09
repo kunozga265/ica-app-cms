@@ -20,15 +20,16 @@ class DatabaseSeeder extends Seeder
         Member::factory(50)->create();
 
         $this->call([
-            AuthorTableSeeder::class,
-            SeriesTableSeeder::class,
-            SermonTableSeeder::class,
-            ThemeTableSeeder::class,
-            CategoryTableSeeder::class,
-            PageTableSeeder::class,
-            MinistryTableSeeder::class,
-            ZoneTableSeeder::class,
-            UserTableSeeder::class,
+//            AuthorTableSeeder::class,
+//            SeriesTableSeeder::class,
+//            SermonTableSeeder::class,
+//            ThemeTableSeeder::class,
+//            CategoryTableSeeder::class,
+//            PageTableSeeder::class,
+//            MinistryTableSeeder::class,
+//            ZoneTableSeeder::class,
+//            UserTableSeeder::class,
+            PrayersTableSeeder::class,
 
         ]);
 
