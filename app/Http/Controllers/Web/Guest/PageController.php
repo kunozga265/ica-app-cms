@@ -96,7 +96,8 @@ class PageController extends Controller
 
     public function prayers()
     {
-        $unsorted=Prayer::orderBy('date','desc')->paginate((new AppController())->paginate);
+        $now = Carbon::now();
+        $unsorted=Prayer::where("date","<=",$now->getTimestamp())->orderBy('date','desc')->paginate((new AppController())->paginate);
         $sorted=[];
 
         if ($unsorted->count()!==0){
