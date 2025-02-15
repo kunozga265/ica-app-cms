@@ -90,5 +90,11 @@ Route::group(["prefix"=>"1.2"],function (){
     Route::get('/dashboard/{timestamp}',[API\V1_2\AppController::class, 'dashboard']);
     Route::get('/search/{query}', [API\V1_1\AppController::class, 'search']);
 
+    Route::post('/users/login', [API\V1_2\UserController::class, 'login']);
+
+    Route::group(["prefix"=>"cells", "middleware"=>"auth:sanctum"], function (){
+        Route::get('/{code}/get', [API\V1_2\CellController::class, 'show']);
+    });
+
 });
 

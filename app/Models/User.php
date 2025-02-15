@@ -6,10 +6,16 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class,'user_role','user_id','role_id');
+    }
 
     public function member()
     {
@@ -20,6 +26,13 @@ class User extends Authenticatable
     {
         return $this->first_name . " " . $this->last_name;
     }
+
+    public function cell()
+    {
+        return $this->hasOne(Cell::class);
+    }
+
+
 
     /**
      * The attributes that are mass assignable.

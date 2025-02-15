@@ -23,7 +23,9 @@ class CreateMembersTable extends Migration
             $table->string("gender");
             $table->double("date_of_birth")->nullable();
             $table->integer("cell_id")->nullable();
-            $table->string("phone_number")->nullable();
+            $table->string("phone_number_airtel")->nullable();
+            $table->string("phone_number_tnm")->nullable();
+            $table->string("phone_number_international")->nullable();
             $table->string("email")->nullable();
             $table->timestamps();
         });

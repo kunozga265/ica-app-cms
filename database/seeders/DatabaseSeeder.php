@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Member;
+use App\Models\Role;
+use App\Models\User;
 use Database\Factories\MemberFactory;
 use Illuminate\Database\Seeder;
 
@@ -29,9 +31,16 @@ class DatabaseSeeder extends Seeder
 //            MinistryTableSeeder::class,
 //            ZoneTableSeeder::class,
 //            UserTableSeeder::class,
-            PrayersTableSeeder::class,
+//            PrayersTableSeeder::class,
+//            RoleTableSeeder::class,
 
         ]);
+
+//        $users = User::all();
+//        foreach ($users as $user){
+//            $role = Role::where("name","super")->first();
+//            $user->roles()->attach($role);
+//        }
 
     }
 }

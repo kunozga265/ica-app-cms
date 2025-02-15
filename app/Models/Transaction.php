@@ -9,6 +9,16 @@ class Transaction extends Model
 {
     use HasFactory;
 
+    public function getType()
+    {
+        return $this->type ?  "Expense" : "Deposit";
+    }
+
+    public function cell()
+    {
+        return $this->belongsTo(Cell::class);
+    }
+
     protected $fillable=[
         "amount",
         "code",

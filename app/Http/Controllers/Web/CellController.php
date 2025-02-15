@@ -35,6 +35,7 @@ class CellController extends Controller
             "zone_id" => "required",
             "balance" => "required",
             "type" => "required",
+            "user_id" => "required",
         ])->validate();
 
         $cell = Cell::create([
@@ -45,7 +46,8 @@ class CellController extends Controller
             'zone_id' => $request->zone_id,
             'balance' => $request->balance,
             'type' => $request->type,
-            'leader_id' => $request->leader_id != "None" && $request->leader_id != "0" ? $request->leader_id : null,
+            'user_id' => $request->user_id,
+//            'leader_id' => $request->leader_id != "None" && $request->leader_id != "0" ? $request->leader_id : null,
         ]);
 
         return Redirect::route('cells.index', ['id' => $cell->id])->with('success', 'Cell created!');

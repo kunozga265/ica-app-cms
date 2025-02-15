@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Member extends Model
 {
     use HasFactory;
@@ -57,7 +58,9 @@ class Member extends Model
         "gender",
         "cell_id",
         "date_of_birth",
-        "phone_number",
+        "phone_number_airtel",
+        "phone_number_tnm",
+        "phone_number_international",
         "email",
     ];
 

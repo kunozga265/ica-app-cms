@@ -10,6 +10,10 @@ class Cell extends Model
 {
     use HasFactory;
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     public function leader()
     {
         return $this->hasOne(Member::class, "id", "leader_id");
@@ -39,7 +43,7 @@ class Cell extends Model
     {
         $now = Carbon::now();
         $meeting = $this->meetings()->where("date",">=", $now->getTimestamp())->first();
-        return (is_object($meeting)) ? $meeting->date : null;
+        return (is_object($meeting)) ? intval($meeting->date) : null;
     }
 
     public function getType()
@@ -83,7 +87,7 @@ class Cell extends Model
       "location",
       "zone_id",
       "type",
-      "leader_id",
+      "user_id",
       "balance",
     ];
 }

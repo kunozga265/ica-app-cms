@@ -62,7 +62,9 @@ class MemberController extends Controller
             'other_name' => $request->other_name,
             'last_name' => $request->last_name,
             'gender' => $request->gender,
-            'phone_number' => $request->phone_number,
+            'phone_number_airtel' => $request->phone_number_airtel,
+            'phone_number_tnm' => $request->phone_number_tnm,
+            'phone_number_international' => $request->phone_number_international,
             'email' => $request->email,
             "date_of_birth"  =>  isset($request->date_of_birth) ? (new AppController())->getTimestamp($request->date_of_birth) : null
 
