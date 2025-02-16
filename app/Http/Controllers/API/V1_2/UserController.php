@@ -46,7 +46,7 @@ class UserController extends Controller
                 'first_name' => $splitNames[0],
                 'last_name' => $first_name != $last_name ? $last_name : null,
                 'email' => $request->email,
-                'password' => Hash::make($request->uid),
+                'password' => Hash::make($request->password),
             ]);
 
             $role = Role::where("name","normal")->first();
