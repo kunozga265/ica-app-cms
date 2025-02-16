@@ -17,7 +17,7 @@ class UserController extends Controller
 
         $request->validate([
             "email" => ["required"],
-            "uid" => ["required"],
+            "password" => ["required"],
             "device_name" => ["required"],
         ]);
 
@@ -26,7 +26,7 @@ class UserController extends Controller
 
         if(is_object($user)) {
 
-            if (!$user || !Hash::check($request->uid, $user->password)) {
+            if (!$user || !Hash::check($request->password, $user->password)) {
                 throw ValidationException::withMessages([
                     'email' => ['The provided credentials are incorrect.'],
                 ]);
