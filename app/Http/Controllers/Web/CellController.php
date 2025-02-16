@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Cell;
 use App\Models\Member;
+use App\Models\User;
 use App\Models\Zone;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
@@ -24,7 +25,8 @@ class CellController extends Controller
     {
         $zones = Zone::orderBy("name", "asc")->get();
         $members = Member::orderBy("last_name", "asc")->get();
-        return view('pages.cells.create', compact("zones", "members"));
+        $users = User::orderBy("last_name", "asc")->get();
+        return view('pages.cells.create', compact("zones", "members","users"));
     }
 
     public function store(\Illuminate\Http\Request $request)

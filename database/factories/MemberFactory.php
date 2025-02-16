@@ -23,7 +23,7 @@ class MemberFactory extends Factory
             "last_name"=>$this->faker->lastName,
             "gender"=>$this->faker->boolean ? "Male" : "Female",
             "date_of_birth"=>Carbon::createFromTimestamp($this->faker->numberBetween(910093600, 1712737755))->getTimestamp(),
-            "phone_number"=>"+265997748584",
+            "phone_number_airtel"=>"+265997748584",
             "email"=>$this->faker->email,
         ];
     }

@@ -10,20 +10,20 @@
     @push("styles")
         <script>
             $(function () {
-                const members = {!! json_encode($members) !!};
+                const users = {!! json_encode($users) !!};
                 const leaders = [{
                     label: "None",
                     value: 0
                 }];
 
-                for (let x in members) {
+                for (let x in users) {
                     leaders.push({
-                        label: members[x].last_name + " " + members[x].first_name,
-                        value: members[x].id
+                        label: users[x].last_name + " " + users[x].first_name,
+                        value: users[x].id
                     })
                 }
 
-                $("#leader_id").val(leaders[0].value);
+                $("#user_id").val(leaders[0].value);
 
                 $("#leader").autocomplete({
                     source: leaders,
@@ -38,7 +38,7 @@
                         event.preventDefault();
                         // manually update the textbox and hidden field
                         $(this).val(ui.item.label);
-                        $("#leader_id").val(ui.item.value);
+                        $("#user_id").val(ui.item.value);
                     }
                 });
 
@@ -76,10 +76,10 @@
                 <div class="col-12 col-sm-6 mb-8">
                     <label class="" for="leader">Leader</label>
                     <input class="form-control" type="search" id="leader" name="leader" placeholder="Select Leader">
-                    @if($errors->has('leader_id'))
-                        <div class="error">{{ $errors->first('leader_id') }}</div>
+                    @if($errors->has('user_id'))
+                        <div class="error">{{ $errors->first('user_id') }}</div>
                     @endif
-                    <input type="hidden" id="leader_id" name="leader_id">
+                    <input type="hidden" id="user_id" name="user_id">
                 </div>
 
                 <div class="col-12 col-sm-6 mb-8">
