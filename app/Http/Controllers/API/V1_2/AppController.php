@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1_2;
 
 use App\Http\Controllers\Controller;
 use App\Models\Author;
+use App\Models\Cell;
 use App\Models\Event;
 use App\Models\Page;
 use App\Models\Prayer;
@@ -19,12 +20,20 @@ class AppController extends Controller
     public $paginate=20;
 
 
-    public function dashboard($timestamp)
+    public function dashboard(Request $request, $timestamp)
     {
         if(!isset($timestamp)){
             return response()->json([
                 "message" => "Timestamp is required."
             ],400);
+        }
+
+        $next_meeting_date = null;
+        if($request->query("code") !== null){
+            $cell = Cell::where("code",$request->query("code"))->first();
+            if(is_object($cell)){
+                $next_meeting_date = $cell->nextMeetingDate();
+            }
         }
 
         //get prayer points
@@ -56,6 +65,7 @@ class AppController extends Controller
             'events'    => Resources\EventResource::collection($events),
             'announcements'    => new Resources\PageResource($announcements),
             'fundraising'    => new Resources\PageResource($fundraising),
+            'next_meeting_date'    => $next_meeting_date,
 
         ]);
     }
