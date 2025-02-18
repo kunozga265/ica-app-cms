@@ -94,6 +94,7 @@ Route::group(["prefix"=>"1.2"],function (){
 
     Route::group(["prefix"=>"cells", "middleware"=>"auth:sanctum"], function (){
         Route::get('/{code}/get', [API\V1_2\CellController::class, 'show']);
+        Route::post('/', [\App\Http\Controllers\Web\CellController::class, 'store']);
     });
 
 });

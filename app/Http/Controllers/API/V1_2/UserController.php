@@ -42,7 +42,7 @@ class UserController extends Controller
             $last_name = end($splitNames);
 
             $user = User::create([
-                'avatar' => $request->avatar,
+                'avatar' => isset($request->avatar) ? $request->avatar : "images/avatar.png",
                 'first_name' => $splitNames[0],
                 'last_name' => $first_name != $last_name ? $last_name : null,
                 'email' => $request->email,

@@ -199,4 +199,12 @@ class AppController extends Controller
     {
         return " $matches[1]<\/a><\/span>. <span>$matches[2]";
     }
+
+    public function isApi(Request $request)
+    {
+        //get cookie object
+        $CSRF_TOKEN = $request->cookie();
+        return count($CSRF_TOKEN) == 0;
+    }
 }
+

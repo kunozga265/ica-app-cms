@@ -52,7 +52,14 @@ class CellController extends Controller
 //            'leader_id' => $request->leader_id != "None" && $request->leader_id != "0" ? $request->leader_id : null,
         ]);
 
+        if((new AppController())->isApi($request)){
+            return response()->json([
+                "code" => $cell->code
+            ]);
+        }else{
+
         return Redirect::route('cells.index', ['id' => $cell->id])->with('success', 'Cell created!');
+    }
     }
 
     public function show($code)
