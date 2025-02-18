@@ -21,6 +21,7 @@ class TranscationResource extends JsonResource
             "type" => $this->getType(),
             "description" => $this->description,
             "cell" => $this->cell->name,
+            "date" => $this->created_at->getTimestamp(),
         ];
     }
 }

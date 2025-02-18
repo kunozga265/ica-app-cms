@@ -25,7 +25,7 @@ class CellResource extends JsonResource
             "balance"           => floatval($this->balance),
             "members"           => MemberResource::collection($this->members),
             "meetings"          => MeetingResource::collection($this->meetings),
-            "transactions"      => TranscationResource::collection($this->transactions),
+            "transactions"      => TranscationResource::collection($this->transactions()->latest()->get()),
             "next_meeting_date" => $this->nextMeetingDate(),
         ];
     }
