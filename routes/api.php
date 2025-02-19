@@ -95,7 +95,12 @@ Route::group(["prefix"=>"1.2"],function (){
     Route::group(["prefix"=>"cells", "middleware"=>"auth:sanctum"], function (){
         Route::get('/{code}/get', [API\V1_2\CellController::class, 'show']);
         Route::post('/', [\App\Http\Controllers\Web\CellController::class, 'store']);
+        Route::post('/meetings', [\App\Http\Controllers\Web\MeetingController::class, 'store']);
     });
 
+    Route::group(["prefix"=>"meetings", "middleware"=>"auth:sanctum"], function (){
+        Route::post('/', [\App\Http\Controllers\Web\MeetingController::class, 'store']);
+        Route::post('/{code}', [API\V1_2\MeetingController::class, 'update']);
+    });
 });
 
