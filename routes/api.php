@@ -102,5 +102,18 @@ Route::group(["prefix"=>"1.2"],function (){
         Route::post('/', [\App\Http\Controllers\Web\MeetingController::class, 'store']);
         Route::post('/{code}', [API\V1_2\MeetingController::class, 'update']);
     });
+
+    Route::group(["prefix"=>"meetings", "middleware"=>"auth:sanctum"], function (){
+        Route::post('/', [\App\Http\Controllers\Web\MeetingController::class, 'store']);
+        Route::post('/{code}', [API\V1_2\MeetingController::class, 'update']);
+    });
+
+    Route::group(["prefix"=>"members", "middleware"=>"auth:sanctum"], function (){
+        Route::post('/', [API\V1_2\MemberController::class, 'store']);
+    });
+
+    Route::group(["prefix"=>"transactions", "middleware"=>"auth:sanctum"], function (){
+        Route::post('/', [API\V1_2\TransactionController::class, 'store']);
+    });
 });
 
