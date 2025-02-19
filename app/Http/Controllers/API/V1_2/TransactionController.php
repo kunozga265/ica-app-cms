@@ -13,13 +13,13 @@ class TransactionController extends Controller
     {
 
         $request->validate([
-            "cell_id" => "required",
+            "cell_code" => "required",
             "amount" => "required",
             "description" => "required",
             "type" => "required",
         ]);
 
-        $cell = Cell::find($request->cell_id);
+        $cell = Cell::where("code", $request->cell_code)->first();
         $current_balance = $cell->balance;
 
         if ($request->type == 0) {
@@ -36,7 +36,7 @@ class TransactionController extends Controller
             "amount" => $request->amount,
             "type" => $request->type,
             "description" => $request->description,
-            "cell_id" => $cell->id,
+            'cell_id' => $cell->id,
             'balance' => $new_balance
         ]);
 

@@ -20,14 +20,16 @@ class MeetingController extends Controller
         Validator::make($request->all(), [
             "date" => "required",
             "venue" => "required",
-            "cell_id" => "required",
+            "cell_code" => "required",
         ])->validate();
+
+        $cell = Cell::where("code", $request->cell_code)->first();
 
         $meeting = Meeting::create([
             "code" => (new AppController())->generateUniqueCode(),
             'date' => $request->date,
             'venue' => $request->venue,
-            'cell_id' => $request->cell_id,
+            'cell_id' => $cell->id,
         ]);
 
         return response()->json([
@@ -41,10 +43,10 @@ class MeetingController extends Controller
             "date" => "required",
             "venue" => "required",
             "offering" => "required",
-            "cell_id" => "required",
+            "cell_code" => "required",
         ])->validate();
 
-        $cell = Cell::find($request->cell_id);
+        $cell = Cell::where("code", $request->cell_code)->first();
         $meeting = $cell->meetings()->where("code", $meeting_code)->first();
 
         if (!is_object($cell))
