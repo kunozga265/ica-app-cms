@@ -50,9 +50,9 @@ class MeetingController extends Controller
         $meeting = $cell->meetings()->where("code", $meeting_code)->first();
 
         if (!is_object($cell))
-            return response()->json(['error' => 'Cell not found'], 404);
+            return response()->json(['message' => 'Cell not found'], 404);
         else if (!is_object($meeting))
-            return response()->json(['error' => 'Meeting not found'], 404);
+            return response()->json(['message' => 'Meeting not found'], 404);
         else {
             $meeting->update([
                 'date' => $request->date,
@@ -79,7 +79,7 @@ class MeetingController extends Controller
                 $transaction = $meeting->transactions()->where("meeting_id", $meeting->id)->first();
                 if (is_object($transaction)) {
                     if ($meeting->cell->transactions()->where("created_at", ">", $transaction->created_at)->exists()) {
-                        return response()->json(['error' => 'Offering not updated! Account Statement may be violated. Please add offering to next meeting.'], 400);
+                        return response()->json(['message' => 'Offering not updated! Account Statement may be violated. Please add offering to next meeting.'], 400);
                     } else {
                         $amount = $request->offering;
                         $old_offering = $transaction->amount;

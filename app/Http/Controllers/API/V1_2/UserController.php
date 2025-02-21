@@ -24,18 +24,19 @@ class UserController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if(is_object($user)) {
-
-            if (!$user || !Hash::check($request->password, $user->password)) {
-                throw ValidationException::withMessages([
-                    'email' => ['The provided credentials are incorrect.'],
-                ]);
+        if (is_object($user)) {
+            if (!Hash::check($request->password, $user->password)) {
+                return response()->json(["message", "Incorrect password"], 400);
+//                    throw ValidationException::withMessages([
+//                        'email' => ['The provided credentials are incorrect.'],
+//                    ]);
             }
 
-        }else{
-            $request->validate([
-                "name" => ["required"],
-            ]);
+
+        } else {
+            if (!isset($request->name)) {
+                return response()->json(["message", "Please sign up with profile name"], 404);
+            }
 
             $splitNames = explode(" ", $request->name);
             $first_name = $splitNames[0];
@@ -49,15 +50,15 @@ class UserController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            $role = Role::where("name","normal")->first();
+            $role = Role::where("name", "normal")->first();
             $user->roles()->attach($role);
         }
 
         $token = $user->createToken($request->device_name)->plainTextToken;
 
         return response()->json([
-            'user'  =>  new UserResource($user),
-            'token' =>  $token
+            'user' => new UserResource($user),
+            'token' => $token
         ]);
 
     }
