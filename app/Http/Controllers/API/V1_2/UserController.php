@@ -60,6 +60,5 @@ class UserController extends Controller
             'user' => new UserResource($user),
             'token' => $token
         ]);
-
     }
 }
