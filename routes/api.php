@@ -116,9 +116,15 @@ Route::group(["prefix"=>"1.2"],function (){
         Route::post('/', [API\V1_2\TransactionController::class, 'store']);
     });
 
+    Route::group(["prefix"=>"highlights", "middleware"=>"auth:sanctum"], function (){
+        Route::post('/', [API\V1_2\HighlightController::class, 'store']);
+    });
+
     /* Downloads */
     Route::group(["prefix"=>"downloads"],function (){
         Route::get('/',[API\V1_1\DownloadController::class, 'index']);
     });
+
+
 });
 

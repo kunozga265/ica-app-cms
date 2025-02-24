@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1_2;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\HighlightResource;
 use App\Models\Author;
 use App\Models\Cell;
 use App\Models\Event;
@@ -10,9 +11,11 @@ use App\Models\Page;
 use App\Models\Prayer;
 use App\Models\Series;
 use App\Models\Sermon;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Resources;
+use Illuminate\Support\Facades\Auth;
 
 class AppController extends Controller
 {
@@ -68,5 +71,15 @@ class AppController extends Controller
             'next_meeting_date'    => $next_meeting_date,
 
         ]);
+    }
+
+    public function authData(Request $request)
+    {
+        $user = User::find(Auth::id());
+        return response()->json([
+            "highlights" => HighlightResource::collection($user->highlights),
+            "bookmarks" => []
+        ]);
+
     }
 }
