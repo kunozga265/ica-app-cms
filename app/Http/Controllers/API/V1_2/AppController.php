@@ -116,7 +116,7 @@ class AppController extends Controller
         foreach ($request->bookmarks as $bookmark){
             Bookmark::create([
                 "sermon_id" => $bookmark["sermon_id"],
-                "text" => $bookmark["text"],
+                "text" => $bookmark["caption"],
                 "date" => $bookmark["date"],
                 "comment" => $bookmark["comment"],
                 "user_id" => Auth::id(),

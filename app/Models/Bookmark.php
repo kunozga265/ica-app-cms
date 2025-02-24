@@ -13,6 +13,6 @@ class Bookmark extends Model
         "date",
         "user_id",
         "sermon_id",
-        "text",
+        "caption",
         "comment",];
 }

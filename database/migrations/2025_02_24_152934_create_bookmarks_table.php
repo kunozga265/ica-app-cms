@@ -17,7 +17,7 @@ class CreateBookmarksTable extends Migration
             $table->id();
             $table->integer("sermon_id");
             $table->integer("user_id");
-            $table->text("text");
+            $table->text("caption");
             $table->text("comment")->nullable();
             $table->double("date");
             $table->timestamps();
