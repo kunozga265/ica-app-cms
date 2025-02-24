@@ -5,8 +5,11 @@ namespace App\Http\Controllers\API\V1_2;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\HighlightResource;
 use App\Models\Author;
+use App\Models\Bookmark;
 use App\Models\Cell;
 use App\Models\Event;
+use App\Models\Highlight;
+use App\Models\Note;
 use App\Models\Page;
 use App\Models\Prayer;
 use App\Models\Series;
@@ -81,5 +84,55 @@ class AppController extends Controller
             "bookmarks" => []
         ]);
 
+    }
+
+    public function syncData(Request $request)
+    {
+        $request->validate([
+
+        ]);
+
+
+        //highlights
+        foreach ($request->highlights["latest"] as $highlight){
+            if(!Highlight::where("sermon_id",$highlight["sermon_id"])->where("highlight_id", $highlight["highlight_id"])->exists()){
+                Highlight::create([
+                    "sermon_id" => $highlight["sermon_id"],
+                    "highlight_id" => $highlight["highlight_id"],
+                    "date" => $highlight["date"],
+                    "user_id" => Auth::id(),
+                ]);
+            }
+        }
+
+        foreach ($request->highlights["trashed"] as $highlight){
+            $highlight = Highlight::where("sermon_id",$highlight["sermon_id"])->where("highlight_id", $highlight["highlight_id"])->first();
+            if(is_object($highlight)){
+                $highlight->delete();
+            }
+        }
+
+        //bookmarks
+        foreach ($request->bookmarks as $bookmark){
+            Bookmark::create([
+                "sermon_id" => $bookmark["sermon_id"],
+                "text" => $bookmark["text"],
+                "date" => $bookmark["date"],
+                "comment" => $bookmark["comment"],
+                "user_id" => Auth::id(),
+            ]);
+        }
+
+        //notes
+        foreach ($request->notes as $note){
+            Note::create([
+                "sermon_id" => $note["sermon_id"],
+                "body" => $note["body"],
+                "date" => $note["date"],
+                "user_id" => Auth::id(),
+            ]);
+        }
+
+        return response()->json(["message"=>"Successfully synced data"]);
     }
 }

@@ -120,6 +120,10 @@ Route::group(["prefix"=>"1.2"],function (){
         Route::post('/', [API\V1_2\HighlightController::class, 'store']);
     });
 
+    Route::group(["prefix"=>"data", "middleware"=>"auth:sanctum"], function (){
+        Route::post('/', [API\V1_2\AppController::class, 'syncData']);
+    });
+
     /* Downloads */
     Route::group(["prefix"=>"downloads"],function (){
         Route::get('/',[API\V1_1\DownloadController::class, 'index']);
