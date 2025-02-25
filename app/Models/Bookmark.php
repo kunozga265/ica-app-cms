@@ -15,4 +15,9 @@ class Bookmark extends Model
         "sermon_id",
         "caption",
         "comment",];
+
+    protected $hidden=[
+        "created_at",
+        "updated_at",
+    ];
 }

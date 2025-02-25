@@ -58,7 +58,10 @@ class UserController extends Controller
 
         return response()->json([
             'user' => new UserResource($user),
-            'token' => $token
+            'token' => $token,
+            "highlights" => $user->highlights,
+            "bookmarks" => $user->bookmarks,
+            "notes" => $user->notes,
         ]);
     }
 }

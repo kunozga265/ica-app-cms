@@ -15,4 +15,9 @@ class Highlight extends Model
         "date",
         "user_id",
     ];
+
+    protected $hidden=[
+        "created_at",
+        "updated_at",
+    ];
 }

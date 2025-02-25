@@ -80,8 +80,9 @@ class AppController extends Controller
     {
         $user = User::find(Auth::id());
         return response()->json([
-            "highlights" => HighlightResource::collection($user->highlights),
-            "bookmarks" => []
+            "highlights" => $user->highlights,
+            "bookmarks" => $user->bookmarks,
+            "notes" => $user->notes,
         ]);
 
     }

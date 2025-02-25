@@ -32,6 +32,19 @@ class User extends Authenticatable
         return $this->hasOne(Cell::class);
     }
 
+    public function highlights()
+    {
+        return $this->hasMany(Highlight::class);
+    }
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
+
 
 
     /**

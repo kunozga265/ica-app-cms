@@ -121,6 +121,7 @@ Route::group(["prefix"=>"1.2"],function (){
     });
 
     Route::group(["prefix"=>"data", "middleware"=>"auth:sanctum"], function (){
+//        Route::get('/', [API\V1_2\AppController::class, 'authData']);
         Route::post('/', [API\V1_2\AppController::class, 'syncData']);
     });
 
