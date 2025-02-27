@@ -139,6 +139,8 @@ Route::group(["prefix"=>"1.2"],function (){
         Route::get('/',[API\V1_1\DownloadController::class, 'index']);
     });
 
+//    Route::post('/notification',[\App\Http\Controllers\Web\NotificationController::class, 'pushNotification']);
+
 
 });
 
