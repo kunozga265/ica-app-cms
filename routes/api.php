@@ -90,6 +90,14 @@ Route::group(["prefix"=>"1.2"],function (){
     Route::get('/dashboard/{timestamp}',[API\V1_2\AppController::class, 'dashboard']);
     Route::get('/search/{query}', [API\V1_1\AppController::class, 'search']);
 
+    /* Sermons */
+    Route::group(["prefix"=>"sermons"],function () {
+        Route::get('/', [API\V1_1\SermonController::class, 'index']);
+        Route::get('/get/{timestamp}', [API\V1_1\SermonController::class, 'getSermons']);
+        Route::get('/series/{slug}', [API\V1_1\SermonController::class, 'bySeries']);
+        Route::get('/authors/{slug}', [API\V1_1\SermonController::class, 'getSermonsByAuthor']);
+    });
+
     Route::post('/users/login', [API\V1_2\UserController::class, 'login']);
 
     Route::group(["prefix"=>"cells", "middleware"=>"auth:sanctum"], function (){
