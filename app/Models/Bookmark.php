@@ -14,6 +14,7 @@ class Bookmark extends Model
         "user_id",
         "sermon_id",
         "caption",
+        "caption_id",
         "comment",];
 
     protected $hidden=[

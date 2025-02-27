@@ -118,6 +118,7 @@ class AppController extends Controller
             Bookmark::create([
                 "sermon_id" => $bookmark["sermon_id"],
                 "caption" => $bookmark["caption"],
+                "caption_id" => $bookmark["caption_id"],
                 "date" => $bookmark["date"],
                 "comment" => $bookmark["comment"],
                 "user_id" => Auth::id(),
