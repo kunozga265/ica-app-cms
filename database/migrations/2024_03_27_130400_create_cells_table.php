@@ -23,6 +23,7 @@ class CreateCellsTable extends Migration
             $table->integer("type");
             $table->integer("user_id");
             $table->double("balance");
+            $table->boolean("verified");
             $table->timestamps();
         });
     }

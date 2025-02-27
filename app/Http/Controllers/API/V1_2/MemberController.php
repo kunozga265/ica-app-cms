@@ -22,6 +22,11 @@ class MemberController extends Controller
             "cell_code" => "required",
         ]);
 
+        $cell = Cell::where("code", $request->cell_code)->first();
+        if(!$cell->verified){
+            return response()->json(["message" => "Cell not verified. Please contact system administrator."], 400);
+        }
+
         if (!isset($request->phone_number_airtel) && !isset($request->phone_number_tnm) && !isset($request->phone_number_international)) {
             return response()->json(["message" => "Please enter at least one phone number"], 400);
         } else if (isset($request->phone_number_airtel) && Member::where("phone_number_airtel", $request->phone_number_airtel)->exists()) {
@@ -59,7 +64,7 @@ class MemberController extends Controller
                 //catch file exception
             }
         }
-        $cell = Cell::where("code", $request->cell_code)->first();
+
         $member = Member::create([
             "code" => (new \App\Http\Controllers\Web\AppController())->generateUniqueCode(),
             "avatar" => $avatar,

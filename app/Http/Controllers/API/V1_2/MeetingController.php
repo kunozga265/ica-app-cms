@@ -47,6 +47,10 @@ class MeetingController extends Controller
         ])->validate();
 
         $cell = Cell::where("code", $request->cell_code)->first();
+        if(!$cell->verified){
+            return response()->json(["message" => "Cell not verified. Please contact system administrator."], 400);
+        }
+
         $meeting = $cell->meetings()->where("code", $meeting_code)->first();
 
         if (!is_object($cell))

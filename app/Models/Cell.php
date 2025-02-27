@@ -89,5 +89,6 @@ class Cell extends Model
       "type",
       "user_id",
       "balance",
+      "verified",
     ];
 }

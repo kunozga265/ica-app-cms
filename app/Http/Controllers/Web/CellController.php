@@ -49,6 +49,8 @@ class CellController extends Controller
             'balance' => $request->balance,
             'type' => $request->type,
             'user_id' => $request->user_id,
+            'verified' => false,
+
 //            'leader_id' => $request->leader_id != "None" && $request->leader_id != "0" ? $request->leader_id : null,
         ]);
 
@@ -117,6 +119,25 @@ class CellController extends Controller
                 'gender' => $request->gender,
 //            'cell_id' => $request->cell_id,
 //                'ministry_id' => $request->ministry_id,
+            ]);
+
+            return Redirect::route('cells.show', $code)->with('success', 'Cell updated!');
+        }
+    }
+
+    public function verify(Request $request)
+    {
+        Validator::make($request->all(), [
+            "code" => "required",
+        ])->validate();
+
+        $cell = Cell::where("code", $request->code)->first();
+        if (!is_object($cell))
+            return Redirect::back()->with('error', 'Cell not found');
+        else {
+
+            $cell->update([
+                'verify' => true,
             ]);
 
             return Redirect::route('cells.show', $code)->with('success', 'Cell updated!');

@@ -20,6 +20,10 @@ class TransactionController extends Controller
         ]);
 
         $cell = Cell::where("code", $request->cell_code)->first();
+        if(!$cell->verified){
+            return response()->json(["message" => "Cell not verified. Please contact system administrator."], 400);
+        }
+
         $current_balance = $cell->balance;
 
         if ($request->type == 0) {
