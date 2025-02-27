@@ -129,7 +129,7 @@
                                             <span class="switcher__btn dark-mode"><i class="flaticon-moon"></i></span>
                                         </nav>
                                     </li>
-                                    <li class="user"><a href="#"><i class="far fa-user"></i></a></li>
+                                    <li class="user"><a href="{{route("login")}}"><i class="far fa-user"></i></a></li>
 {{--                                    <li class="header-cart"><a href="#"><i class="far fa-shopping-basket"></i></a></li>--}}
                                 </ul>
                             </div>
