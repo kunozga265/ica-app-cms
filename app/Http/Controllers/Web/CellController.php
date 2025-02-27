@@ -125,11 +125,11 @@ class CellController extends Controller
         }
     }
 
-    public function verify(Request $request)
+    public function verify(\Illuminate\Http\Request $request)
     {
-        Validator::make($request->all(), [
+        $request->validate([
             "code" => "required",
-        ])->validate();
+        ]);
 
         $cell = Cell::where("code", $request->code)->first();
         if (!is_object($cell))
@@ -140,7 +140,14 @@ class CellController extends Controller
                 'verify' => true,
             ]);
 
-            return Redirect::route('cells.show', $code)->with('success', 'Cell updated!');
+            if ((new AppController())->isApi($request)) {
+                return response()->json([
+                    "message" => "Successfully verified!"
+                ]);
+            } else {
+                return Redirect::route('cells.show', $cell->code)->with('success', 'Cell verified!');
+            }
+
         }
     }
 
