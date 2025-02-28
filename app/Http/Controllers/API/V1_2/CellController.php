@@ -22,4 +22,10 @@ class CellController extends Controller
             ], 404);
         }
     }
+
+    public function unverified(Request $request)
+    {
+        $cells = Cell::where("verified",0)->get();
+        return response()->json(CellResource::collection($cells));
+    }
 }

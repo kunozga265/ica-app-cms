@@ -102,6 +102,7 @@ Route::group(["prefix"=>"1.2"],function (){
 
     Route::group(["prefix"=>"cells", "middleware"=>"auth:sanctum"], function (){
         Route::get('/{code}/get', [API\V1_2\CellController::class, 'show']);
+        Route::get('/unverified', [API\V1_2\CellController::class, 'unverified']);
         Route::post('/', [\App\Http\Controllers\Web\CellController::class, 'store']);
         Route::post('/verify', [\App\Http\Controllers\Web\CellController::class, 'verify']);
         Route::post('/meetings', [\App\Http\Controllers\Web\MeetingController::class, 'store']);
