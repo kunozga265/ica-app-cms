@@ -16,6 +16,7 @@ class CellResource extends JsonResource
     {
         return [
             "id"                => intval($this->id),
+            "code"              => $this->code,
             "name"              => $this->name,
             "details"           => $this->details,
             "location"          => $this->location,
@@ -23,9 +24,9 @@ class CellResource extends JsonResource
             "type"              => $this->getType(),
             "leader"            => $this->user->fullName(),
             "balance"           => floatval($this->balance),
-            "members"           => MemberResource::collection($this->members),
-            "meetings"          => MeetingResource::collection($this->meetings),
-            "transactions"      => TranscationResource::collection($this->transactions()->latest()->get()),
+            "members"           => $this->members != null ? MemberResource::collection($this->members) : [],
+            "meetings"          => $this->meetings != null ? MeetingResource::collection($this->meetings) : [],
+            "transactions"      => $this->transactions != null ? TranscationResource::collection($this->transactions()->latest()->get()) : [],
             "next_meeting_date" => $this->nextMeetingDate(),
         ];
     }
