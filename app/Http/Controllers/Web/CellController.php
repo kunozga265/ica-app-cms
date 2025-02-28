@@ -137,7 +137,7 @@ class CellController extends Controller
         else {
 
             $cell->update([
-                'verify' => true,
+                'verified' => true,
             ]);
 
             if ((new AppController())->isApi($request)) {
