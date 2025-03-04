@@ -14,6 +14,14 @@ class BookmarkResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "id" => $this->id,
+            "date" => $this->date,
+            "user_id" => $this->user_id,
+            "sermon_id" => $this->sermon_id,
+            "caption" => $this->caption,
+            "caption_id" => $this->caption_id,
+            "comment" => $this->comment ?? ""
+        ];
     }
 }
