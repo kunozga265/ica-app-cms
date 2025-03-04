@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1_2;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\BookmarkResource;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -60,7 +61,7 @@ class UserController extends Controller
             'user' => new UserResource($user),
             'token' => $token,
             "highlights" => $user->highlights,
-            "bookmarks" => $user->bookmarks,
+            "bookmarks" => BookmarkResource::collection( $user->bookmarks),
             "notes" => $user->notes,
         ]);
     }
