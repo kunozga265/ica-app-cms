@@ -44,6 +44,86 @@
         </section>
         <!-- slider-area-end -->
 
+    <!-- newsletter-area -->
+    <section class="newsletter-style-two style-three white-bg pt-80 pb-80">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xxl-6 col-xl-7 col-lg-8">
+                    <div class="newsletter__title text-center mb-35">
+                        <div class="newsletter__title-icon">
+                            <i class="fas fa-envelope-open-text"></i>
+                        </div>
+                        <span class="sub-title">newsletter</span>
+                        <h4 class="title">Receive all communication directly in your mail!</h4>
+                    </div>
+                    <div class="newsletter__form-wrap text-center">
+                        <form action="#" class="newsletter__form">
+                            <div class="newsletter__form-grp">
+                                <input type="email" placeholder="Email address" required>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        I agree to having my email collected and stored.
+                                    </label>
+                                </div>
+                            </div>
+                            <button class="btn" type="submit">
+                                <span class="text">Subscribe</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- newsletter-area-end -->
+
+    <!-- footer-area -->
+    <footer class="footer-area footer-style-three white-bg">
+        <div class="container">
+            <div class="footer__logo-wrap">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4">
+                        <div class="footer__logo logo">
+                            <a href="{{route('home')}}" class="logo-dark"><img src="{{asset('images/logo-main.png')}}" alt="Logo"></a>
+                            <a href="{{route('home')}}" class="logo-light"><img src="{{asset('images/logo-main.png')}}" alt="Logo"></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8">
+                        <div class="footer__social">
+                            <ul class="list-wrap">
+                                <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i> Twitter </a></li>
+                                <li><a href="#"><i class="fab fa-youtube"></i> Youtube </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__copyright">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="copyright__text">
+                            <p>Copyright <span>ICA</span> - <script>document.write(new Date().getFullYear())</script>. All Rights Reserved</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="copyright__menu">
+                            <ul class="list-wrap">
+                                <li><a href="#">Contact Us</a></li>
+                                {{--                            <li><a href="#">Terms of Use</a></li>--}}
+                                {{--                            <li><a href="#">Advertise</a></li>--}}
+                                {{--                            <li><a href="#">Store</a></li>--}}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer-area-end -->
+
 
 
 </x-guest-layout>

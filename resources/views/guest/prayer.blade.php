@@ -114,6 +114,51 @@
         </section>
         <!-- blog-details-area-end -->
 
+    <!-- footer-area -->
+    <footer class="footer-area footer-style-three white-bg">
+        <div class="container">
+            <div class="footer__logo-wrap">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4">
+                        <div class="footer__logo logo">
+                            <a href="{{route('home')}}" class="logo-dark"><img src="{{asset('images/logo-main.png')}}" alt="Logo"></a>
+                            <a href="{{route('home')}}" class="logo-light"><img src="{{asset('images/logo-main.png')}}" alt="Logo"></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8">
+                        <div class="footer__social">
+                            <ul class="list-wrap">
+                                <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i> Twitter </a></li>
+                                <li><a href="#"><i class="fab fa-youtube"></i> Youtube </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__copyright">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="copyright__text">
+                            <p>Copyright <span>ICA</span> - <script>document.write(new Date().getFullYear())</script>. All Rights Reserved</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="copyright__menu">
+                            <ul class="list-wrap">
+                                <li><a href="#">Contact Us</a></li>
+                                {{--                            <li><a href="#">Terms of Use</a></li>--}}
+                                {{--                            <li><a href="#">Advertise</a></li>--}}
+                                {{--                            <li><a href="#">Store</a></li>--}}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer-area-end -->
+
 
 
 

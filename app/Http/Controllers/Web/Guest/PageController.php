@@ -163,6 +163,11 @@ class PageController extends Controller
         return view('guest.give');
     }
 
+    public function deactivateAccount()
+    {
+        return view('guest.deactivate-account');
+    }
+
 
 
 
