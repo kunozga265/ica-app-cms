@@ -76,7 +76,7 @@ Route::group(["prefix"=>"1.1"],function (){
     });
 
     /* Downloads */
-    Route::group(["prefix"=>"downloads"],function (){
+    Route::group(["prefix"=>"downloads", "middleware"=>"auth:sanctum"],function (){
         Route::get('/',[API\V1_1\DownloadController::class, 'index']);
     });
 
