@@ -176,13 +176,19 @@ class AppController extends Controller
         $body = json_decode(str_replace('<\/p>', '<\/a><\/span><\/p>', json_encode($body)));
         $body = json_decode(str_replace('<li>', '<li><span>', json_encode($body)));
         $body = json_decode(str_replace('<\/li>', '<\/a><\/span><\/li>', json_encode($body)));
+        $body = json_decode(str_replace("<strong> <\/strong>", ' ', json_encode($body)));
+        $body = json_decode(str_replace(".<\/strong>", '<\/strong>.', json_encode($body)));
+        $body = json_decode(str_replace("&nbsp;", " ", json_encode($body)));
 
         // correct list spans
         $body = json_decode(str_replace('\r\n\t<ul>', '\r\n\t<\/a><\/span><ul>', json_encode($body)));
         $body = json_decode(str_replace('<\/ul><\/a><\/span><\/li>', '<\/ul><\/li>', json_encode($body)));
 
         //splits sentences and adds spans
-        $body = json_decode(preg_replace_callback('/ (\w+|\d+|\S+)\. (\w+|\d+)/', array($this, 'splitSenteces'), json_encode($body)));
+        //those with periods
+        $body = json_decode(preg_replace_callback('/ (\w+|\d+|\S+)\. (\w+|\d+|\S+)/', array($this, 'splitSenteces'), json_encode($body)));
+        //those with colon
+        $body = json_decode(preg_replace_callback('/ (\w+|\d+|\S+)\; (\w+|\d+|\S+)/', array($this, 'splitSentecesWithColon'), json_encode($body)));
 
         //gives spans ids
         $body = json_decode(preg_replace_callback('/<(span+)(?![^>]*\/>)[^>]*>/', array($this, 'giveSpanIds'), json_encode($body)));
@@ -198,6 +204,10 @@ class AppController extends Controller
     public function splitSenteces($matches)
     {
         return " $matches[1]<\/a><\/span>. <span>$matches[2]";
+    }
+    public function splitSentecesWithColon($matches)
+    {
+        return " $matches[1]<\/a><\/span>; <span>$matches[2]";
     }
 
     public function isApi(Request $request)
