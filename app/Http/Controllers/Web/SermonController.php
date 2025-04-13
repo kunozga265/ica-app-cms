@@ -290,7 +290,9 @@ class SermonController extends Controller
         }
 
         $author = $sermon->author->suffix . " " . $sermon->author->name;
-        (new NotificationController())->pushNotification('general', $sermon->title, $author);
+
+        if(isset($request->notify)){
+        (new NotificationController())->pushNotification('general', $sermon->title, $author);}
 
         return Redirect::route('sermons.index');
     }
@@ -317,7 +319,7 @@ class SermonController extends Controller
 //            else
 //                $sermonSeries=[];
 
-//            dd($sermon->refactorBody());
+        //    dump($sermon->refactorBody());
 
             return view('pages.sermons.show', compact('sermon'));
 

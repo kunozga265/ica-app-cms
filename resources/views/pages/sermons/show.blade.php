@@ -5,8 +5,13 @@
 
     <x-slot name="action">
         <div>
-            <a href="{{route('sermons.edit',$sermon->slug)}}" class="p-btn secondary">Edit</a>
-            <button type="submit" class="p-btn error">Delete</button>
+           
+            <form action="{{route('sermons.trash', ['slug' => $sermon->slug])}}" method="post">
+                @csrf
+                <a href="{{route('sermons.edit',$sermon->slug)}}" class="p-btn secondary">Edit</a>
+                <button type="submit" class="p-btn error">Delete</button>
+            </form>
+            
         </div>
 
     </x-slot>

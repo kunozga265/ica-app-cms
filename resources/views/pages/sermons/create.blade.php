@@ -64,10 +64,16 @@
                     <input class="form-control" type="text" id="title" name="video_url" placeholder="Enter Youtube Video ID">
                 </div>
 
-                <div class="col-12">
+                <div class="col-12 mb-8">
                     <label class="" for="body">Body</label>
                     <textarea class="form-control" id="body" name="body" rows="10" required></textarea>
                 </div>
+
+                <div class="col-12">
+                    <label class="" for="notify">Send Notification</label>
+                    <input type="checkbox" id="notify" name="notify" checked>
+                </div>
+
 
             </div>
             <button type="submit" class="p-btn">
