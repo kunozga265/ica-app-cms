@@ -72,4 +72,31 @@ class SermonController extends Controller
         $sermons = Sermon::where("published_at","<",$timestamp)->orderby("published_at","desc")->get();
         return response()->json(Resources\V1_2\SermonResource::collection($sermons),200);
     }
+
+     /**
+     * Display the specified resource.
+     *
+     * @param  string $slug
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($slug)
+    {
+        $sermon = Sermon::where('slug','=',$slug)->first();
+        if (!is_object($sermon))
+            return response()->json(["response"=>false],404);
+        else {
+            /* We will use this elsewhere
+            $view=View::where("sermon_id",$sermon->id)->first();
+            $view->update([
+                "count"=>($view->count)+1
+            ]);*/
+
+//            if ($sermon->series_id!=null)
+//                $sermonSeries=Sermon::where("series_id","=",$sermon->series_id)->where("id","!=",$sermon->id)->orderBy("published_at","desc")->get();
+//            else
+//                $sermonSeries=[];
+
+            return response()->json(new Resources\SermonResource($sermon), 200);
+        }
+    }
 }

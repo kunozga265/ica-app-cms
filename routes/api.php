@@ -94,6 +94,7 @@ Route::group(["prefix"=>"1.2"],function (){
     Route::group(["prefix"=>"sermons"],function () {
         Route::get('/', [API\V1_2\SermonController::class, 'index']);
         Route::get('/get/{timestamp}', [API\V1_2\SermonController::class, 'getSermons']);
+        Route::get('/view/{slug}', [API\V1_2\SermonController::class, 'show']);
         Route::get('/series/{slug}', [API\V1_2\SermonController::class, 'bySeries']);
         Route::get('/authors/{slug}', [API\V1_2\SermonController::class, 'getSermonsByAuthor']);
     });
