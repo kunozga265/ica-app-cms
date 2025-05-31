@@ -19,16 +19,17 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        Member::factory(50)->create();
+//        Member::factory(50)->create();
 
         $this->call([
+//            UserTableSeeder::class,
 //            AuthorTableSeeder::class,
 //            SeriesTableSeeder::class,
 //            SermonTableSeeder::class,
 //            ThemeTableSeeder::class,
 //            CategoryTableSeeder::class,
 //            PageTableSeeder::class,
-//            MinistryTableSeeder::class,
+            MinistryTableSeeder::class,
 //            ZoneTableSeeder::class,
 //            UserTableSeeder::class,
 //            PrayersTableSeeder::class,

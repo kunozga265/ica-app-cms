@@ -16,6 +16,11 @@ class MinistryTableSeeder extends Seeder
     public function run()
     {
         Ministry::create([
+            "name" => "Main Church",
+            "slug" => Str::slug("Main Church"),
+        ]);
+
+        Ministry::create([
             "name" => "Men's Ministry",
             "slug" => Str::slug("Men's Ministry"),
         ]);

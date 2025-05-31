@@ -26,9 +26,6 @@ class MemberResource extends JsonResource
             "phone_number_airtel" => $this->phone_number_airtel,
             "phone_number_tnm" => $this->phone_number_tnm,
             "phone_number_international" => $this->phone_number_international,
-
-
-
         ];
     }
 }

@@ -62,6 +62,9 @@ class User extends Authenticatable
         "member_id",
         'email',
         'password',
+        'phone_number_airtel',
+        'phone_number_tnm',
+        'phone_number_international',
     ];
 
     /**

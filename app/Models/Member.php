@@ -40,6 +40,11 @@ class Member extends Model
         return $this->hasMany(Attendance::class);
     }
 
+    public function registers()
+    {
+        return $this->belongsToMany(Role::class,'member_register','member_id','register_id');
+    }
+
     public function attendanceCount()
     {
         if($this->attendances()->count() == 1){
