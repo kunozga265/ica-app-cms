@@ -15,12 +15,12 @@ class BookmarkResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "id" => $this->id,
-            "date" => $this->date,
-            "user_id" => $this->user_id,
-            "sermon_id" => $this->sermon_id,
+            "id" => intval($this->id),
+            "date" => intval($this->date),
+            "user_id" => intval($this->user_id),
+            "sermon_id" => intval($this->sermon_id),
             "caption" => $this->caption,
-            "caption_id" => $this->caption_id,
+            "caption_id" => intval($this->caption_id),
             "comment" => $this->comment ?? ""
         ];
     }

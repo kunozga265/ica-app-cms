@@ -14,6 +14,12 @@ class HighlightResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "id" => intval($this->id),
+            "sermon_id" => intval($this->sermon_id),
+            "user_id" => intval($this->user_id),
+            "highlight_id" => intval($this->highlight_id),
+            "date" => intval($this->date),
+        ];
     }
 }
