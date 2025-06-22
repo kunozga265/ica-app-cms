@@ -16,8 +16,8 @@ class NoteResource extends JsonResource
     {
          return [
             "id" => intval($this->id),
-            "sermon_id" => intval($this->sermon_id),
-            "user_id" => intval($this->user_id),
+            "sermonId" => intval($this->sermon_id),
+            "userId" => intval($this->user_id),
             "body" => $this->body,
             "date" => intval($this->date),
         ];

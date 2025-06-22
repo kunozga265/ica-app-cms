@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\V1_3;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class HighlightResource extends JsonResource
+class BookmarkResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,12 +14,14 @@ class HighlightResource extends JsonResource
      */
     public function toArray($request)
     {
-         return [
+        return [
             "id" => intval($this->id),
-            "sermonId" => intval($this->sermon_id),
-            "userId" => intval($this->user_id),
-            "highlightId" => intval($this->highlight_id),
             "date" => intval($this->date),
+            "userId" => intval($this->user_id),
+            "sermonId" => intval($this->sermon_id),
+            "caption" => $this->caption,
+            "captionId" => intval($this->caption_id),
+            "comment" => $this->comment ?? ""
         ];
     }
 }
