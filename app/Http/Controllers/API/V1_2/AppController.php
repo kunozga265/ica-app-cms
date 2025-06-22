@@ -126,13 +126,23 @@ class AppController extends Controller
         }
 
         //notes
-        foreach ($request->notes as $note){
-            Note::create([
-                "sermon_id" => $note["sermon_id"],
-                "body" => $note["body"],
-                "date" => $note["date"],
-                "user_id" => Auth::id(),
-            ]);
+       foreach ($request->notes as $note) {
+            $_note = Note::where("sermon_id", $note["sermonId"])->where("user_id", Auth::id())->first();
+            if (is_object($_note)) {
+                $_note->update([
+                    "sermon_id" => $note["sermonId"],
+                    "body" => $note["body"],
+                    "date" => $note["date"],
+                    "user_id" => Auth::id(),
+                ]);
+            } else {
+                Note::create([
+                    "sermon_id" => $note["sermonId"],
+                    "body" => $note["body"],
+                    "date" => $note["date"],
+                    "user_id" => Auth::id(),
+                ]);
+            }
         }
 
         return response()->json(["message"=>"Successfully synced data"]);
