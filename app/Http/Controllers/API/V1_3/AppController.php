@@ -165,10 +165,13 @@ class AppController extends Controller
 
     public function deleteData(Request $request)
     {
+        $request->validate([
+            "sermon_id" => "required"
+        ]);
         $user = User::find(Auth::id());
 
         if (isset($request->note_id)) {
-            $note = $user->notes()->where("id", $request->note_id)->first();
+            $note = $user->notes()->where("sermon_id", $request->sermon_id)->first();
 
             if (is_object($note)) {
                 $note->delete();
@@ -179,8 +182,11 @@ class AppController extends Controller
             }
         }
 
-        if (isset($request->bookmark_id)) {
-            $bookmark = $user->bookmarks()->where("id", $request->bookmark_id)->first();
+        if (isset($request->caption_id)) {
+            $bookmark = $user->bookmarks()
+                ->where("sermon_id", $request->sermon_id)
+                ->where("caption_id", $request->caption_id)
+                ->first();
 
             if (is_object($bookmark)) {
                 $bookmark->delete();
