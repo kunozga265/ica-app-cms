@@ -121,7 +121,7 @@ class AppController extends Controller
 
             if (is_object($bookmark)) {
                 $bookmark->update([
-                     "sermon_id" => $bookmark["sermonId"],
+                    "sermon_id" => $bookmark["sermonId"],
                     "caption" => $bookmark["caption"],
                     "caption_id" => $bookmark["captionId"],
                     "date" => $bookmark["date"],
@@ -161,5 +161,34 @@ class AppController extends Controller
         }
 
         return response()->json(["message" => "Successfully synced data"]);
+    }
+
+    public function deleteData(Request $request)
+    {
+        $user = User::find(Auth::id());
+
+        if (isset($request->note_id)) {
+            $note = $user->notes()->where("id", $request->note_id)->first();
+
+            if (is_object($note)) {
+                $note->delete();
+                return response()->json(["message" => "Successfully deleted!"], 200);
+            } else {
+                //if not found
+                return response()->json(["message" => "Note not found!"], 404);
+            }
+        }
+
+        if (isset($request->bookmark_id)) {
+            $bookmark = $user->bookmarks()->where("id", $request->bookmark_id)->first();
+
+            if (is_object($bookmark)) {
+                $bookmark->delete();
+                return response()->json(["message" => "Successfully deleted!"], 200);
+            } else {
+                //if not found
+                return response()->json(["message" => "Bookmark not found!"], 404);
+            }
+        }
     }
 }

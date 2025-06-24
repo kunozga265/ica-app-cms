@@ -196,6 +196,7 @@ Route::group(["prefix"=>"1.3"],function (){
 
     Route::group(["prefix"=>"data", "middleware"=>"auth:sanctum"], function (){
         Route::post('/', [API\V1_3\AppController::class, 'syncData']);
+        Route::post('/delete', [API\V1_3\AppController::class, 'deleteData']);
     });
 
     /* Downloads */
