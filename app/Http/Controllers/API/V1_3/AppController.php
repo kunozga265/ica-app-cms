@@ -26,6 +26,7 @@ class AppController extends Controller
 {
 
     public $paginate = 20;
+    private int $count = 0;
 
 
     public function dashboard(Request $request, $timestamp)
@@ -64,8 +65,21 @@ class AppController extends Controller
         $announcements = Page::where("name", "announcements")->first();
         $fundraising = Page::where("name", "fundraising")->first();
 
+        if ($request->query("version") !== null) {
+            switch ($request->query("version")) {
+                case 1:
+                case "1":
+                    $sermons_collection = Resources\V1_3\SermonResource::collection($sermons);
+                    break;
+                default:
+                    $sermons_collection = Resources\V1_2\SermonResource::collection($sermons);
+            }
+        } else {
+            $sermons_collection = Resources\V1_2\SermonResource::collection($sermons);
+        }
+
         return response()->json([
-            'sermons'   => Resources\V1_2\SermonResource::collection($sermons),
+            'sermons'   => $sermons_collection,
             'series'    => Resources\SeriesResource::collection($series),
             'authors'   => Resources\AuthorResource::collection($authors),
             'prayer_points'   => Resources\PrayerResource::collection($prayers),
@@ -196,5 +210,45 @@ class AppController extends Controller
                 return response()->json(["message" => "Bookmark not found!"], 404);
             }
         }
+    }
+
+    public function generateHighlightLinks($body)
+    {
+        $body = json_decode(str_replace('<p>', '<p><span>', json_encode($body)));
+        $body = json_decode(str_replace('<\/p>', '<\/a><\/span><\/p>', json_encode($body)));
+        $body = json_decode(str_replace('<li>', '<li><span>', json_encode($body)));
+        $body = json_decode(str_replace('<\/li>', '<\/a><\/span><\/li>', json_encode($body)));
+        $body = json_decode(str_replace("<strong> <\/strong>", ' ', json_encode($body)));
+        $body = json_decode(str_replace(".<\/strong>", '<\/strong>.', json_encode($body)));
+        $body = json_decode(str_replace("&nbsp;", " ", json_encode($body)));
+
+        // correct list spans
+        $body = json_decode(str_replace('\r\n\t<ul>', '\r\n\t<\/a><\/span><ul>', json_encode($body)));
+        $body = json_decode(str_replace('<\/ul><\/a><\/span><\/li>', '<\/ul><\/li>', json_encode($body)));
+
+        //splits sentences and adds spans
+        //those with periods
+        $body = json_decode(preg_replace_callback('/ (\w+|\d+|\S+)\. (\w+|\d+|\S+)/', array($this, 'splitSenteces'), json_encode($body)));
+        //those with colon
+        $body = json_decode(preg_replace_callback('/ (\w+|\d+|\S+)\; (\w+|\d+|\S+)/', array($this, 'splitSentecesWithColon'), json_encode($body)));
+
+        //gives spans ids
+        $body = json_decode(preg_replace_callback('/<(span+)(?![^>]*\/>)[^>]*>/', array($this, 'giveSpanIds'), json_encode($body)));
+
+        return $body;
+    }
+
+    public function giveSpanIds($matches)
+    {
+        $this->count++;
+        return "<span id='" . $this->count . "' class='data'>";
+    }
+    public function splitSenteces($matches)
+    {
+        return " $matches[1]<\/span>. <span>$matches[2]";
+    }
+    public function splitSentecesWithColon($matches)
+    {
+        return " $matches[1]<\/span>; <span>$matches[2]";
     }
 }

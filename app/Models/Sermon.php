@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\Web\AppController;
+use App\Http\Controllers\Web;
+use App\Http\Controllers\API\V1_3;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,7 +22,7 @@ class Sermon extends Model
 
     public function authorName()
     {
-        return $this->author->suffix. " " . $this->author->name;
+        return $this->author->suffix . " " . $this->author->name;
     }
     public function series()
     {
@@ -33,20 +34,27 @@ class Sermon extends Model
         return $this->belongsTo("App\Models\Category");
     }
 
-    public function views(){
-        return $this->belongsTo("App\Models\View","sermon_id");
-    }
-
-    public function searchableAs(){
-      return "sermons_index";
-    }
-
-    public function refactorBody()
+    public function views()
     {
-        return (new AppController())->generateHighlightLinks($this->body);
+        return $this->belongsTo("App\Models\View", "sermon_id");
     }
 
-    protected $fillable=[
+    public function searchableAs()
+    {
+        return "sermons_index";
+    }
+
+    public function refactorBody($version = 0)
+    {
+        if ($version == 0) {
+            return (new Web\AppController())->generateHighlightLinks($this->body);
+        } else {
+            return (new V1_3\AppController())->generateHighlightLinks($this->body);
+
+        }
+    }
+
+    protected $fillable = [
         "title",
         "slug",
         "subtitle",

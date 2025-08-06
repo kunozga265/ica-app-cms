@@ -150,7 +150,7 @@ Route::group(["prefix"=>"1.3"],function (){
 
     /* Home Page */
     Route::get('/initiate',[API\V1_1\AppController::class, 'initiate']);
-    Route::get('/dashboard/{timestamp}',[API\V1_2\AppController::class, 'dashboard']);
+    Route::get('/dashboard/{timestamp}',[API\V1_3\AppController::class, 'dashboard']);
     Route::get('/search/{query}', [API\V1_1\AppController::class, 'search']);
 
     /* Sermons */

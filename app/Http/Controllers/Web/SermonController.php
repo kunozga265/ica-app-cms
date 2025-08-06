@@ -48,11 +48,11 @@ class SermonController extends Controller
     public function search($query)
     {
         $sermons = Sermon::where('title', 'like', '%' . $query . '%')->orderBy('title', 'asc')->paginate((new AppController())->paginate);
-//     $series=Series::search($query)->get();
-//     return response()->json([
-//       "sermons" => Resources\SermonResource::collection($sermons),
-//       "series" => Resources\SeriesSearchResource::collection($series)
-//     ],200);
+        //     $series=Series::search($query)->get();
+        //     return response()->json([
+        //       "sermons" => Resources\SermonResource::collection($sermons),
+        //       "series" => Resources\SeriesSearchResource::collection($series)
+        //     ],200);
         return response()->json(new Resources\SermonCollection($sermons), 200);
     }
 
@@ -67,8 +67,8 @@ class SermonController extends Controller
         //if timestamp is zero get the latest sermon
         if ($timestamp == 0) {
             $sermons = Sermon::where("published_at", "<=", Carbon::now()->getTimestamp())->orderBy("published_at", "desc")->limit(1)->get();
-//            $sermons = Sermon::all();
-//            dd($sermons);
+            //            $sermons = Sermon::all();
+            //            dd($sermons);
         } //else query from the last updated timestamp
         else {
             //formatting timestamp to query db
@@ -160,7 +160,6 @@ class SermonController extends Controller
                 default:
                     $sermons = [];
             }
-
         } else {
             switch ($sort) {
                 case "TITLE_ASC":
@@ -225,16 +224,16 @@ class SermonController extends Controller
         $sermons = Sermon::where("published_at", ">", Carbon::now()->getTimestamp())->orderBy("published_at", "asc")->get();
         return response()->json(Resources\SermonResource::collection($sermons), 200);
     }
-//    /**
-//     * Display a listing of the resource.
-//     *
-//     * @return \Illuminate\Http\JsonResponse
-//     */
-//    public function getViews()
-//    {
-//        $views=View::orderBy("count","desc")->paginate(2);
-//        return response()->json(new Resources\ViewCollection($views),200);
-//    }
+    //    /**
+    //     * Display a listing of the resource.
+    //     *
+    //     * @return \Illuminate\Http\JsonResponse
+    //     */
+    //    public function getViews()
+    //    {
+    //        $views=View::orderBy("count","desc")->paginate(2);
+    //        return response()->json(new Resources\ViewCollection($views),200);
+    //    }
 
     public function create()
     {
@@ -291,8 +290,10 @@ class SermonController extends Controller
 
         $author = $sermon->author->suffix . " " . $sermon->author->name;
 
-        if(isset($request->notify)){
-        (new NotificationController())->pushNotification('general', $sermon->title, $author);}
+        if (isset($request->notify)) {
+            // (new NotificationController())->pushNotification('general', $sermon->title, $author, slug:$sermon->slug);}
+            (new NotificationController())->pushNotification('test-mode', $sermon->title, $author, slug: "our-passover-lamb-2024-03-31");
+        }
 
         return Redirect::route('sermons.index');
     }
@@ -314,15 +315,16 @@ class SermonController extends Controller
                 "count"=>($view->count)+1
             ]);*/
 
-//            if ($sermon->series_id!=null)
-//                $sermonSeries=Sermon::where("series_id","=",$sermon->series_id)->where("id","!=",$sermon->id)->orderBy("published_at","desc")->get();
-//            else
-//                $sermonSeries=[];
+            //            if ($sermon->series_id!=null)
+            //                $sermonSeries=Sermon::where("series_id","=",$sermon->series_id)->where("id","!=",$sermon->id)->orderBy("published_at","desc")->get();
+            //            else
+            //                $sermonSeries=[];
 
-        //    dump($sermon->refactorBody());
+
+            dump($sermon->body);
+            dump($sermon->refactorBody());
 
             return view('pages.sermons.show', compact('sermon'));
-
         }
     }
 
@@ -343,16 +345,15 @@ class SermonController extends Controller
                 "count"=>($view->count)+1
             ]);*/
 
-//            if ($sermon->series_id!=null)
-//                $sermonSeries=Sermon::where("series_id","=",$sermon->series_id)->where("id","!=",$sermon->id)->orderBy("published_at","desc")->get();
-//            else
-//                $sermonSeries=[];
+            //            if ($sermon->series_id!=null)
+            //                $sermonSeries=Sermon::where("series_id","=",$sermon->series_id)->where("id","!=",$sermon->id)->orderBy("published_at","desc")->get();
+            //            else
+            //                $sermonSeries=[];
 
             $authors = Author::all();
             $series = Series::orderBy('title', 'asc')->get();
 
             return view('pages.sermons.edit', compact('sermon', 'authors', 'series'));
-
         }
     }
 
@@ -392,29 +393,30 @@ class SermonController extends Controller
                 $this->setSeriesFirstSermonDate($request->series_id);
             }
 
-//
-//            if($sermon->series !==null) {
-//                $series = Series::find($sermon->series->id);
-//
-//                if ($series->first_sermon_date == null || $series->first_sermon_date > $sermon->published_at) {
-//                    $series->update([
-//                        "first_sermon_date" => $sermon->published_at
-//                    ]);
-//                }
-//            }elseif ($sermon->series == null && $existentSeries!=null){
-//                $series = Series::find($existentSeries);
-//                if ($series->count()==0){
-//                    $series->update([
-//                        "first_sermon_date" => 0
-//                    ]);
-//                }else{
-//                    $sermons=$series->sermons()->orderBy("published_at","asc")->limit(1)->get();
-//                    $series->update([
-//                        "first_sermon_date" =>$sermons->published_at
-//                    ]);
-//                }
-//            }
+            //
+            //            if($sermon->series !==null) {
+            //                $series = Series::find($sermon->series->id);
+            //
+            //                if ($series->first_sermon_date == null || $series->first_sermon_date > $sermon->published_at) {
+            //                    $series->update([
+            //                        "first_sermon_date" => $sermon->published_at
+            //                    ]);
+            //                }
+            //            }elseif ($sermon->series == null && $existentSeries!=null){
+            //                $series = Series::find($existentSeries);
+            //                if ($series->count()==0){
+            //                    $series->update([
+            //                        "first_sermon_date" => 0
+            //                    ]);
+            //                }else{
+            //                    $sermons=$series->sermons()->orderBy("published_at","asc")->limit(1)->get();
+            //                    $series->update([
+            //                        "first_sermon_date" =>$sermons->published_at
+            //                    ]);
+            //                }
+            //            }
 
+            (new NotificationController())->pushNotification('test-mode', $sermon->title, $sermon->author->name, slug: "jesus-our-high-priest-2025-06-20");
             return Redirect::route('sermons.show', $sermon->slug);
         }
     }
@@ -495,16 +497,15 @@ class SermonController extends Controller
     {
 
         try {
-//            $request->validate([
-//                'image'=>'mimes:jpeg,png'
-//            ]);
+            //            $request->validate([
+            //                'image'=>'mimes:jpeg,png'
+            //            ]);
 
             $extension = $request->image->extension();
             $filename = uniqid() . "." . $extension;
             $request->image->move(public_path("images/sermons"), $filename);
 
             return response()->json(['url' => "https://ica.ovationadagency.com/images/sermons/$filename"], 200);
-
         } catch (\RuntimeException $e) {
             return response()->json([
                 'error' => "The image upload failed",
@@ -537,8 +538,6 @@ class SermonController extends Controller
             // Develop a use for this
             if ($notificationRequest->getStatusCode() == 200) {
             }
-
-
         } catch (\GuzzleHttp\Exception\GuzzleException $e) {
             //Log information
         }
