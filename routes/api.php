@@ -208,7 +208,7 @@ Route::group(["prefix"=>"1.3"],function (){
     Route::group(["prefix"=>"registers", "middleware"=>"auth:sanctum"], function (){
         Route::get('/', [API\V1_3\RegisterController::class, 'index']);
         Route::post('/', [API\V1_3\RegisterController::class, 'store']);
-        Route::get('/attendance', [API\V1_3\RegisterController::class, 'attendance']);
+        Route::get('/{code}/attendance', [API\V1_3\RegisterController::class, 'attendance']);
         Route::post('/attendance', [API\V1_3\RegisterController::class, 'recordAttendance']);
     });
 
