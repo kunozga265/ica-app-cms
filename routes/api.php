@@ -183,7 +183,7 @@ Route::group(["prefix"=>"1.3"],function (){
     });
 
     Route::group(["prefix"=>"members", "middleware"=>"auth:sanctum"], function (){
-        Route::post('/', [API\V1_2\MemberController::class, 'store']);
+        Route::post('/', [API\V1_3\MemberController::class, 'store']);
     });
 
     Route::group(["prefix"=>"transactions", "middleware"=>"auth:sanctum"], function (){
