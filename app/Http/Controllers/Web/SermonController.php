@@ -291,8 +291,8 @@ class SermonController extends Controller
         $author = $sermon->author->suffix . " " . $sermon->author->name;
 
         if (isset($request->notify)) {
-            // (new NotificationController())->pushNotification('general', $sermon->title, $author, slug:$sermon->slug);}
-            (new NotificationController())->pushNotification('test-mode', $sermon->title, $author, slug: "our-passover-lamb-2024-03-31");
+            (new NotificationController())->pushNotification('general', $sermon->title, $author, slug:$sermon->slug);
+            // (new NotificationController())->pushNotification('test-mode', $sermon->title, $author, slug: "our-passover-lamb-2024-03-31");
         }
 
         return Redirect::route('sermons.index');
@@ -415,8 +415,11 @@ class SermonController extends Controller
             //                    ]);
             //                }
             //            }
-
-            (new NotificationController())->pushNotification('test-mode', $sermon->title, $sermon->author->name, slug: "jesus-our-high-priest-2025-06-20");
+            
+            
+            // (new NotificationController())->pushNotification('general', $sermon->title, $sermon->author->name, $sermon->slug);
+            // (new NotificationController())->pushNotification('test-mode', $sermon->title, $sermon->author->name,  "jesus-our-high-priest-2025-06-20");
+            
             return Redirect::route('sermons.show', $sermon->slug);
         }
     }

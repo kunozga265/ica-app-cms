@@ -204,6 +204,14 @@ Route::group(["prefix"=>"1.3"],function (){
         Route::get('/',[API\V1_1\DownloadController::class, 'index']);
     });
 
+
+    Route::group(["prefix"=>"registers", "middleware"=>"auth:sanctum"], function (){
+        Route::get('/', [API\V1_3\RegisterController::class, 'index']);
+        Route::post('/', [API\V1_3\RegisterController::class, 'store']);
+        Route::get('/attendance', [API\V1_3\RegisterController::class, 'attendance']);
+        Route::post('/attendance', [API\V1_3\RegisterController::class, 'recordAttendance']);
+    });
+
 //    Route::post('/notification',[\App\Http\Controllers\Web\NotificationController::class, 'pushNotification']);
 
 

@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Http\Controllers\API\V1_3;
+
+use App\Http\Controllers\Controller;
+use App\Http\Resources\MemberResource;
+use App\Http\Resources\RegisterResource;
+use App\Models\Member;
+use App\Models\Register;
+use Google\Service\AlertCenter\RequestInfo;
+use Illuminate\Http\Request;
+
+class RegisterController extends Controller
+{
+    public function index()
+    {
+        $registers = Register::orderBy('date', 'desc')->paginate((new AppController())->paginate);
+        return response()->json(RegisterResource::collection($registers));
+    }
+
+    public function attendance(Request $request,$code)
+    {
+          $register = Register::where('code', $code)->first();
+        return response()->json(MemberResource::collection($register->members));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            "ministry_id" => "required",
+            "date" => "required",
+        ]);
+
+        Register::create([
+            "code" => (new AppController())->generateUniqueCode(),
+            "name" => $request->name,
+            "ministry_id" => $request->ministry_id,
+            "date" => (new AppController())->getTimestamp($request->date),
+        ]);
+
+        return response()->json(["message"=>"Successfully create service"]);
+    }
+
+    public function recordAttendance(Request $request)
+    {
+
+        $request->validate([
+            "attendees" => "required",
+        ]);
+
+        foreach ($request->attendees as $attendee) {
+
+            $register = Register::where('code', $attendee['register_code'])->first();
+            $member = Member::where('code', $attendee['member_code'])->first();
+
+
+            if ($attendee["checked"] || $attendee == '1' || $attendee == 1) {
+                $register?->members()->attach($member);
+            } else {
+                $register->members()->detach($member);
+            }
+        }
+
+        return response()->json();
+    }
+
+  
+}
