@@ -18,9 +18,9 @@ class RegisterController extends Controller
         return response()->json(RegisterResource::collection($registers));
     }
 
-    public function attendance(Request $request,$code)
+    public function attendance(Request $request, $code)
     {
-          $register = Register::where('code', $code)->first();
+        $register = Register::where('code', $code)->first();
         return response()->json(MemberResource::collection($register->members));
     }
 
@@ -38,7 +38,7 @@ class RegisterController extends Controller
             "date" => (new AppController())->getTimestamp($request->date),
         ]);
 
-        return response()->json(["message"=>"Successfully create service"]);
+        return response()->json(["message" => "Successfully create service"]);
     }
 
     public function recordAttendance(Request $request)
@@ -63,6 +63,4 @@ class RegisterController extends Controller
 
         return response()->json();
     }
-
-  
 }

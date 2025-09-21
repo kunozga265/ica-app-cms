@@ -11,7 +11,7 @@ class Register extends Model
 
     public function members()
     {
-        return $this->belongsToMany(Role::class,'member_register','register_id','member_id');
+        return $this->belongsToMany(Member::class,'member_register','register_id','member_id');
     }
 
     protected $fillable = [
