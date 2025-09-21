@@ -15,7 +15,7 @@ class Register extends Model
     }
 
     public function ministry(){
-        return $this->belongs(Ministry::class);
+        return $this->belongsTo(Ministry::class);
     }
 
     protected $fillable = [
