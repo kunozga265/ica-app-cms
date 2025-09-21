@@ -22,7 +22,7 @@ class MemberResource extends JsonResource
             "email" => $this->email,
             "gender" => $this->gender,
             "date_of_birth" => intval($this->date_of_birth),
-            "cell" => $this->cell->name,
+            "cell" => $this->cell?->name,
             "phone_number_airtel" => $this->phone_number_airtel,
             "phone_number_tnm" => $this->phone_number_tnm,
             "phone_number_international" => $this->phone_number_international,
