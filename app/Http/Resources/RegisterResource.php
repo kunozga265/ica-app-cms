@@ -20,7 +20,7 @@ class RegisterResource extends JsonResource
             "code"            => $this->code,
             "name"            => $this->name,
             "ministry"         => $this->ministry,
-            "date"            => $this->date,
+            "date"            => intval($this->date),
             "active"            => Carbon::createFromTimestamp($this->date)->isToday(),
             // "attendees"         => MemberResource::collection($this->members),
         ];

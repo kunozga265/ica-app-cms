@@ -78,6 +78,8 @@ class AppController extends Controller
             $sermons_collection = Resources\V1_2\SermonResource::collection($sermons);
         }
 
+        //get new user profile information
+
         return response()->json([
             'sermons'   => $sermons_collection,
             'series'    => Resources\SeriesResource::collection($series),
