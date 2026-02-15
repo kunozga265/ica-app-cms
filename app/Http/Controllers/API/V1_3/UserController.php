@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\V1_3\BookmarkResource;
 use App\Http\Resources\HighlightResource;
+use App\Http\Resources\MemberResource;
 use App\Http\Resources\NoteResource;
 use App\Models\Role;
 use App\Models\User;
@@ -72,7 +73,11 @@ class UserController extends Controller
 
             if (is_object($member)) {
 
-                return response()->json(["message", "Please confirm if this is your member profile", "member" => $member], 406);
+                return response()->json([
+                    "message" => "Please confirm if this is your member profile",
+                    "member" => new MemberResource($member),
+                    "user" => new UserResource($user)
+                ], 406);
                 // $user->update([
                 //     "member_id" => $member->id
                 // ]);
@@ -83,6 +88,7 @@ class UserController extends Controller
                     'first_name' => $splitNames[0],
                     'last_name' => $first_name != $last_name ? $last_name : null,
                     'gender' => $request->gender,
+                    'date_of_birth' => $request->date_of_birth,
                     'phone_number_airtel' => $request->phone_number_airtel,
                     'phone_number_tnm' => $request->phone_number_tnm,
                     'phone_number_international' => $request->phone_number_international,
@@ -105,17 +111,43 @@ class UserController extends Controller
     {
 
         $request->validate([
+            "type" => ["required"],
             "email" => ["required"],
+            "gender" => ["required"],
             "member_id" => ["required"],
             "device_name" => ["required"],
         ]);
 
+
         $user = User::where('email', $request->email)->first();
 
         if (is_object($user)) {
-            $user->update([
-                "member_id" => $request->member_id
-            ]);
+
+            if ($request->type == "EXISTING") {
+                $user->update([
+                    "member_id" => $request->member_id
+                ]);
+            } else if ($request->type == "NEW") {
+
+                $member = Member::where("id", $request->member_id)->first();
+
+                $new_member = Member::create([
+                    "code" => (new \App\Http\Controllers\Web\AppController())->generateUniqueCode(),
+                    'avatar' => $user->avatar,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'email' => $request->email,
+                    'gender' => $request->gender,
+                    'date_of_birth' => $request->date_of_birth,
+                    'phone_number_airtel' => $request->phone_number_airtel != $member->phone_number_airtel ? $request->phone_number_airtel : null,
+                    'phone_number_tnm' => $request->phone_number_tnm != $member->phone_number_tnm ? $request->phone_number_tnm : null,
+                    'phone_number_international' => $request->phone_number_international != $member->phone_number_international ? $request->phone_number_international : null,
+                ]);
+
+                $user->update([
+                    "member_id" => $new_member->id
+                ]);
+            }
         } else {
             return response()->json(["message", "An error occurred while confirming member profile"], 404);
         }
