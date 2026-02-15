@@ -129,6 +129,12 @@ class UserController extends Controller
                 ]);
             } else if ($request->type == "NEW") {
 
+                if ((!isset($request->phone_number_airtel) && !isset($request->phone_number_tnm) && !isset($request->phone_number_international))) {
+                    return response()->json(["message", "Please sign up with at least one phone number"], 404);
+                } else if (!isset($request->gender)) {
+                    return response()->json(["message", "Please enter your gender"], 404);
+                }
+
                 $member = Member::where("id", $request->member_id)->first();
 
                 $new_member = Member::create([
@@ -136,7 +142,7 @@ class UserController extends Controller
                     'avatar' => $user->avatar,
                     'first_name' => $user->first_name,
                     'last_name' => $user->last_name,
-                    'email' => $request->email,
+                    'email' => $user->email,
                     'gender' => $request->gender,
                     'date_of_birth' => $request->date_of_birth,
                     'phone_number_airtel' => $request->phone_number_airtel != $member->phone_number_airtel ? $request->phone_number_airtel : null,
