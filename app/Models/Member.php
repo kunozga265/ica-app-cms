@@ -19,6 +19,10 @@ class Member extends Model
     {
         return $this->hasOne(User::class);
     }
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 
     public function fullName()
     {

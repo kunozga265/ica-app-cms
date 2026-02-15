@@ -39,12 +39,11 @@ class UserController extends Controller
         } else {
             if (!isset($request->name)) {
                 return response()->json(["message", "Please sign up with profile name"], 404);
-            } 
-            // else if ((!isset($request->phone_number_airtel) && !isset($request->phone_number_tnm) && !isset($request->phone_number_international))) {
-            //     return response()->json(["message", "Please sign up with at least one phone number"], 404);
-            // } else if (!isset($request->gender)) {
-            //     return response()->json(["message", "Please enter your gender"], 404);
-            // }
+            } else if ((!isset($request->phone_number_airtel) && !isset($request->phone_number_tnm) && !isset($request->phone_number_international))) {
+                return response()->json(["message", "Please sign up with at least one phone number"], 404);
+            } else if (!isset($request->gender)) {
+                return response()->json(["message", "Please enter your gender"], 404);
+            }
 
             $splitNames = explode(" ", $request->name);
             $first_name = $splitNames[0];
@@ -65,27 +64,60 @@ class UserController extends Controller
             $user->roles()->attach($role);
 
             //check and attach a member
-            // $member = Member::where("phone_number_airtel", $request->phone_number_airtel)
-            //     ->orWhere("phone_number_tnm", $request->phone_number_tnm)
-            //     ->orWhere("phone_number_international", $request->phone_number_international)
-            //     ->first();
+            $member = Member::where("phone_number_airtel", $request->phone_number_airtel)
+                ->orWhere("phone_number_tnm", $request->phone_number_tnm)
+                ->orWhere("phone_number_international", $request->phone_number_international)
+                ->orWhere("email", $request->email)
+                ->first();
 
-            // if (is_object($member)) {
-            //     $user->update([
-            //         "member_id" => $member->id
-            //     ]);
-            // } else {
-            //     Member::create([
-            //         "code" => (new \App\Http\Controllers\Web\AppController())->generateUniqueCode(),
-            //         'avatar' => $request->avatar ?? env('APP_URL') . "images/avatar.png",
-            //         'first_name' => $splitNames[0],
-            //         'last_name' => $first_name != $last_name ? $last_name : null,
-            //         'gender' => $request->gender,
-            //         'phone_number_airtel' => $request->phone_number_airtel,
-            //         'phone_number_tnm' => $request->phone_number_tnm,
-            //         'phone_number_international' => $request->phone_number_international,
-            //     ]);
-            // }
+            if (is_object($member)) {
+
+                return response()->json(["message", "Please confirm if this is your member profile", "member" => $member], 406);
+                // $user->update([
+                //     "member_id" => $member->id
+                // ]);
+            } else {
+                Member::create([
+                    "code" => (new \App\Http\Controllers\Web\AppController())->generateUniqueCode(),
+                    'avatar' => $request->avatar ?? env('APP_URL') . "images/avatar.png",
+                    'first_name' => $splitNames[0],
+                    'last_name' => $first_name != $last_name ? $last_name : null,
+                    'gender' => $request->gender,
+                    'phone_number_airtel' => $request->phone_number_airtel,
+                    'phone_number_tnm' => $request->phone_number_tnm,
+                    'phone_number_international' => $request->phone_number_international,
+                    'email' => $request->email,
+                ]);
+            }
+        }
+
+        $token = $user->createToken($request->device_name)->plainTextToken;
+
+        return response()->json([
+            'user' => new UserResource($user),
+            'token' => $token,
+            "highlights" => HighlightResource::collection($user->highlights),
+            "bookmarks" => BookmarkResource::collection($user->bookmarks),
+            "notes" => NoteResource::collection($user->notes),
+        ]);
+    }
+    public function confirm(Request $request)
+    {
+
+        $request->validate([
+            "email" => ["required"],
+            "member_id" => ["required"],
+            "device_name" => ["required"],
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (is_object($user)) {
+            $user->update([
+                "member_id" => $request->member_id
+            ]);
+        } else {
+            return response()->json(["message", "An error occurred while confirming member profile"], 404);
         }
 
         $token = $user->createToken($request->device_name)->plainTextToken;
