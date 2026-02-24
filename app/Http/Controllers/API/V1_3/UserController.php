@@ -30,45 +30,56 @@ class UserController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (is_object($user)) {
+        if (is_object($user) && $user?->member_id != null) {
             if (!Hash::check($request->password, $user->password)) {
-                return response()->json(["message", "Incorrect password"], 400);
+                return response()->json(["message" => "Incorrect password"], 400);
                 //                    throw ValidationException::withMessages([
                 //                        'email' => ['The provided credentials are incorrect.'],
                 //                    ]);
             }
         } else {
             if (!isset($request->name)) {
-                return response()->json(["message", "Please sign up with profile name"], 404);
+                return response()->json(["message" => "Please sign up with profile name"], 404);
             } else if ((!isset($request->phone_number_airtel) && !isset($request->phone_number_tnm) && !isset($request->phone_number_international))) {
-                return response()->json(["message", "Please sign up with at least one phone number"], 404);
+                return response()->json(["message" => "Please sign up with at least one phone number"], 404);
             } else if (!isset($request->gender)) {
-                return response()->json(["message", "Please enter your gender"], 404);
+                return response()->json(["message" => "Please enter your gender"], 404);
             }
 
             $splitNames = explode(" ", $request->name);
             $first_name = $splitNames[0];
             $last_name = end($splitNames);
 
-            $user = User::create([
-                'avatar' => $request->avatar ?? env('APP_URL') . "images/avatar.png",
-                'first_name' => $splitNames[0],
-                'last_name' => $first_name != $last_name ? $last_name : null,
-                'email' => $request->email,
-                'phone_number_airtel' => $request->phone_number_airtel,
-                'phone_number_tnm' => $request->phone_number_tnm,
-                'phone_number_international' => $request->phone_number_international,
-                'password' => Hash::make($request->password),
-            ]);
+            $user = User::updateOrCreate(
+                ['email' => $request->email], // lookup condition
+                [
+                    'avatar' => $request->avatar ?? env('APP_URL') . 'images/avatar.png',
+                    'first_name' => $first_name,
+                    'last_name' => $first_name !== $last_name ? $last_name : null,
+                    'phone_number_airtel' => $request->phone_number_airtel,
+                    'phone_number_tnm' => $request->phone_number_tnm,
+                    'phone_number_international' => $request->phone_number_international,
+                    'password' => Hash::make($request->password),
+                ]
+            );
 
             $role = Role::where("name", "normal")->first();
             $user->roles()->attach($role);
 
             //check and attach a member
-            $member = Member::where("phone_number_airtel", $request->phone_number_airtel)
-                ->orWhere("phone_number_tnm", $request->phone_number_tnm)
-                ->orWhere("phone_number_international", $request->phone_number_international)
-                ->orWhere("email", $request->email)
+            $member = Member::query()
+                ->when($request->filled('phone_number_airtel'), function ($q) use ($request) {
+                    $q->orWhere('phone_number_airtel', $request->phone_number_airtel);
+                })
+                ->when($request->filled('phone_number_tnm'), function ($q) use ($request) {
+                    $q->orWhere('phone_number_tnm', $request->phone_number_tnm);
+                })
+                ->when($request->filled('phone_number_international'), function ($q) use ($request) {
+                    $q->orWhere('phone_number_international', $request->phone_number_international);
+                })
+                ->when($request->filled('email'), function ($q) use ($request) {
+                    $q->orWhere('email', $request->email);
+                })
                 ->first();
 
             if (is_object($member)) {
@@ -130,9 +141,9 @@ class UserController extends Controller
             } else if ($request->type == "NEW") {
 
                 if ((!isset($request->phone_number_airtel) && !isset($request->phone_number_tnm) && !isset($request->phone_number_international))) {
-                    return response()->json(["message", "Please sign up with at least one phone number"], 404);
+                    return response()->json(["message" =>  "Please sign up with at least one phone number"], 404);
                 } else if (!isset($request->gender)) {
-                    return response()->json(["message", "Please enter your gender"], 404);
+                    return response()->json(["message" =>  "Please enter your gender"], 404);
                 }
 
                 $member = Member::where("id", $request->member_id)->first();
@@ -155,7 +166,7 @@ class UserController extends Controller
                 ]);
             }
         } else {
-            return response()->json(["message", "An error occurred while confirming member profile"], 404);
+            return response()->json(["message" =>  "An error occurred while confirming member profile"], 404);
         }
 
         $token = $user->createToken($request->device_name)->plainTextToken;
@@ -183,18 +194,18 @@ class UserController extends Controller
 
         if (is_object($user)) {
             if (!Hash::check($request->password, $user->password)) {
-                return response()->json(["message", "Incorrect password"], 400);
+                return response()->json(["message" =>  "Incorrect password"], 400);
                 //                    throw ValidationException::withMessages([
                 //                        'email' => ['The provided credentials are incorrect.'],
                 //                    ]);
             }
         } else {
             if (!isset($request->name)) {
-                return response()->json(["message", "Please sign up with profile name"], 404);
+                return response()->json(["message" =>  "Please sign up with profile name"], 404);
             } else if ((!isset($request->phone_number_airtel) && !isset($request->phone_number_tnm) && !isset($request->phone_number_international))) {
-                return response()->json(["message", "Please sign up with at least one phone number"], 404);
+                return response()->json(["message" =>  "Please sign up with at least one phone number"], 404);
             } else if (!isset($request->gender)) {
-                return response()->json(["message", "Please enter your gender"], 404);
+                return response()->json(["message" =>  "Please enter your gender"], 404);
             }
 
             $splitNames = explode(" ", $request->name);

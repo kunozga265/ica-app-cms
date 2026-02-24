@@ -16,13 +16,13 @@ class RegisterResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "id"            => intval($this->id),
-            "code"            => $this->code,
-            "name"            => $this->name,
-            "ministry"         => $this->ministry,
-            "date"            => intval($this->date),
+            "id"                => intval($this->id),
+            "code"              => $this->code,
+            "name"              => $this->name,
+            "ministry"          => $this->ministry,
+            "date"              => intval($this->date),
             "active"            => Carbon::createFromTimestamp($this->date)->isToday(),
-            // "attendees"         => MemberResource::collection($this->members),
+            "attendees"         => MemberResource::collection($this->members),
         ];
     }
 }

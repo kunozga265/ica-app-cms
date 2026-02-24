@@ -12,10 +12,17 @@ use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
+    // $paginate = 100
     public function index()
     {
         $registers = Register::orderBy('date', 'desc')->paginate((new AppController())->paginate);
-        return response()->json(RegisterResource::collection($registers));
+
+        $members = Member::orderBy('last_name', 'asc')->get();
+
+        return response()->json([
+            'registers' => RegisterResource::collection($registers),
+            'members' => MemberResource::collection($members)
+        ]);
     }
 
     public function attendance(Request $request, $code)
