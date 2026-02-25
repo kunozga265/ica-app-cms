@@ -282,7 +282,7 @@ Route::group(["prefix"=>"1.4"],function (){
         Route::post('/', [API\V1_3\RegisterController::class, 'store']);
         Route::get('/{code}/attendance', [API\V1_3\RegisterController::class, 'attendance']);
         Route::post('/attendance', [API\V1_3\RegisterController::class, 'recordAttendance']);
-        Route::post('/{code}/attendance/self-registration', [API\V1_3\RegisterController::class, 'selfRegistration']);
+        Route::post('/attendance/self-registration/{code}', [API\V1_3\RegisterController::class, 'selfRegistration']);
     });
 
 //    Route::post('/notification',[\App\Http\Controllers\Web\NotificationController::class, 'pushNotification']);
