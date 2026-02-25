@@ -57,11 +57,11 @@ class RegisterController extends Controller
 
         foreach ($request->attendees as $attendee) {
 
-            $register = Register::where('code', $attendee['register_code'])->first();
-            $member = Member::where('code', $attendee['member_code'])->first();
+            $register = Register::where('id', $attendee['register_id'])->first();
+            $member = Member::where('id', $attendee['member_id'])->first();
 
 
-            if ($attendee["checked"] || $attendee == '1' || $attendee == 1) {
+            if ($attendee["checked"] || $attendee["checked"] == '1' || $attendee["checked"] == 1) {
                 $register?->members()->attach($member);
             } else {
                 $register->members()->detach($member);
