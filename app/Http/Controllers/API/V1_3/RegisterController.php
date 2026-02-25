@@ -62,7 +62,9 @@ class RegisterController extends Controller
 
 
             if ($attendee["checked"] || $attendee["checked"] == '1' || $attendee["checked"] == 1) {
-                $register?->members()->attach($member);
+                if (!$register?->members()->where('member_id', $member->id)->exists()) {
+                    $register?->members()->attach($member);
+                }
             } else {
                 $register->members()->detach($member);
             }
