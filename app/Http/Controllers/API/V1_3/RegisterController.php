@@ -4,11 +4,14 @@ namespace App\Http\Controllers\API\V1_3;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MemberResource;
+use App\Http\Resources\RegisterLiteResource;
 use App\Http\Resources\RegisterResource;
 use App\Models\Member;
 use App\Models\Register;
+use App\Models\User;
 use Google\Service\AlertCenter\RequestInfo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -71,5 +74,38 @@ class RegisterController extends Controller
         }
 
         return response()->json();
+    }
+    public function selfRegistration(Request $request, $code)
+    {
+
+        $request->validate([
+            "checked" => "required",
+        ]);
+
+        $user = User::find(Auth::id());
+
+        $register = Register::where('code', $code)->first();
+
+        if (!is_object($register)) {
+            return response()->json([
+                "message" => "Register not found"
+            ], 400);
+        }
+
+        if ($user->member == null) {
+            return response()->json([
+                "message" => "Member not found"
+            ], 404);
+        }
+
+        if ($request->checked) {
+            if (!$register?->members()->where('member_id', $user->member->id)->exists()) {
+                $register?->members()->attach($user->member);
+            }
+        } else {
+            $register->members()->detach($user->member);
+        }
+
+        return response()->json(new RegisterLiteResource($register));
     }
 }
