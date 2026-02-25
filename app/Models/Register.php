@@ -25,7 +25,7 @@ class Register extends Model
     {
         $user = User::find(Auth::id());
         if (is_object($user) && $user?->member != null) {
-            return $this->members()->where('id', $user->member?->id)->exists();
+            return $this->members()->where('member_id', $user->member?->id)->exists();
         } else {
             return false;
         }

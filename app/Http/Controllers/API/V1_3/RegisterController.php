@@ -106,6 +106,6 @@ class RegisterController extends Controller
             $register->members()->detach($user->member);
         }
 
-        return response()->json(new RegisterLiteResource($register));
+        return response()->json();
     }
 }
