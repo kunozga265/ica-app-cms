@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\API\V1_3;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Web\AppController as WebAppController;
 use App\Http\Resources\HighlightResource;
+use App\Http\Resources\UserResource;
 use App\Http\Resources\V1_3\BookmarkResource;
 use App\Http\Resources\NoteResource;
+use App\Http\Resources\RegisterResource;
 use App\Models\Author;
 use App\Models\Bookmark;
 use App\Models\Cell;
@@ -15,6 +18,7 @@ use App\Models\Note;
 use App\Models\Page;
 use App\Models\Prayer;
 use App\Models\Series;
+use App\Models\Register;
 use App\Models\Sermon;
 use App\Models\User;
 use Carbon\Carbon;
@@ -44,6 +48,16 @@ class AppController extends Controller
                 $next_meeting_date = $cell->nextMeetingDate();
             }
         }
+
+        //update user
+        $user = (new WebAppController())->getAuthUser($request);
+        if (is_object($user)) {
+            if ($user->updated_at->getTimestamp() <= $timestamp) {
+                $user = null;
+            }
+        }
+
+
 
         //get prayer points
         //        $now=Carbon::now()->getTimestamp(collection);
@@ -78,6 +92,8 @@ class AppController extends Controller
             $sermons_collection = Resources\V1_2\SermonResource::collection($sermons);
         }
 
+        $registers = Register::where('date', '>=', Carbon::today()->getTimestamp())->orderBy('date', 'asc')->paginate((new AppController())->paginate);
+
         //get new user profile information
 
         return response()->json([
@@ -89,6 +105,8 @@ class AppController extends Controller
             'announcements'    => new Resources\PageResource($announcements),
             'fundraising'    => new Resources\PageResource($fundraising),
             'next_meeting_date'    => $next_meeting_date,
+            'user' => new UserResource($user),
+            'registers' => RegisterResource::collection($registers)
 
         ]);
     }
