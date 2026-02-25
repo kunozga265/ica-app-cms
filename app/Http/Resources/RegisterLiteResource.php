@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RegisterResource extends JsonResource
+class RegisterLiteResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,7 +22,7 @@ class RegisterResource extends JsonResource
             "ministry"          => $this->ministry,
             "date"              => intval($this->date),
             "active"            => Carbon::createFromTimestamp($this->date)->isToday(),
-            "attendees"         => MemberResource::collection($this->members()->orderBy('last_name', 'asc')->get()),
+            "attendees"         => [],
             "checked"           => $this->isAuthRegistered()
         ];
     }

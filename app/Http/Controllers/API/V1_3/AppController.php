@@ -24,7 +24,9 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Resources;
+use App\Http\Resources\RegisterLiteResource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AppController extends Controller
 {
@@ -105,8 +107,8 @@ class AppController extends Controller
             'announcements'    => new Resources\PageResource($announcements),
             'fundraising'    => new Resources\PageResource($fundraising),
             'next_meeting_date'    => $next_meeting_date,
-            'user' => new UserResource($user),
-            'registers' => RegisterResource::collection($registers)
+          'user' => $user != null ? new UserResource($user) : null,
+            'registers' => RegisterLiteResource::collection($registers)
 
         ]);
     }
@@ -148,13 +150,13 @@ class AppController extends Controller
         //bookmarks
         foreach ($request->bookmarks as $bookmark) {
 
-            $bookmark = Bookmark::where("sermon_id", $bookmark["sermonId"])
+            $existingBookmark = Bookmark::where("sermon_id", $bookmark["sermonId"])
                 ->where("user_id", Auth::id())
                 ->where("caption_id", $bookmark["captionId"])
                 ->first();
 
-            if (is_object($bookmark)) {
-                $bookmark->update([
+            if (is_object($existingBookmark)) {
+                $existingBookmark->update([
                     "sermon_id" => $bookmark["sermonId"],
                     "caption" => $bookmark["caption"],
                     "caption_id" => $bookmark["captionId"],
