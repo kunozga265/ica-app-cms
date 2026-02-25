@@ -98,6 +98,22 @@ class AppController extends Controller
 
         //get new user profile information
 
+        $data = [];
+        foreach ($registers as $register) {
+            $data[] = [
+                "id"                => intval($register->id),
+                "code"              => $register->code,
+                "name"              => $register->name,
+                "ministry"          => $register->ministry,
+                "date"              => intval($register->date),
+                "active"            => Carbon::createFromTimestamp($register->date)->isToday(),
+                "attendees"         => [],
+                "checked"           => $register->isAuthRegistered(Auth::id())
+            ];
+        }
+
+        Log::info($data);
+
         return response()->json([
             'sermons'   => $sermons_collection,
             'series'    => Resources\SeriesResource::collection($series),
@@ -107,7 +123,7 @@ class AppController extends Controller
             'announcements'    => new Resources\PageResource($announcements),
             'fundraising'    => new Resources\PageResource($fundraising),
             'next_meeting_date'    => $next_meeting_date,
-          'user' => $user != null ? new UserResource($user) : null,
+            'user' => $user != null ? new UserResource($user) : null,
             'registers' => RegisterLiteResource::collection($registers)
 
         ]);
