@@ -4,9 +4,11 @@ namespace App\Http\Controllers\API\V1_3;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MemberResource;
+use App\Http\Resources\MinistryResource;
 use App\Http\Resources\RegisterLiteResource;
 use App\Http\Resources\RegisterResource;
 use App\Models\Member;
+use App\Models\Ministry;
 use App\Models\Register;
 use App\Models\User;
 use Google\Service\AlertCenter\RequestInfo;
@@ -21,10 +23,12 @@ class RegisterController extends Controller
         $registers = Register::orderBy('date', 'desc')->paginate((new AppController())->paginate);
 
         $members = Member::orderBy('last_name', 'asc')->get();
+        $ministries = Ministry::orderBy('name', 'asc')->get();
 
         return response()->json([
             'registers' => RegisterResource::collection($registers),
-            'members' => MemberResource::collection($members)
+            'members' => MemberResource::collection($members),
+            'ministries' => MinistryResource::collection($ministries),
         ]);
     }
 

@@ -108,7 +108,7 @@ class AppController extends Controller
                 "date"              => intval($register->date),
                 "active"            => Carbon::createFromTimestamp($register->date)->isToday(),
                 "attendees"         => [],
-                "checked"           => $register->isAuthRegistered(Auth::id())
+                "checked"           =>  $register->members()->where('member_id', $user?->member?->id)->exists()
             ];
         }
 
