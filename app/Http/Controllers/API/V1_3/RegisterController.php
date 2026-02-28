@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1_3;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Web\AppController as WebController;
 use App\Http\Resources\MemberResource;
 use App\Http\Resources\MinistryResource;
 use App\Http\Resources\RegisterLiteResource;
@@ -47,7 +48,7 @@ class RegisterController extends Controller
         ]);
 
         Register::create([
-            "code" => (new AppController())->generateUniqueCode(),
+            "code" => (new WebController())->generateUniqueCode(),
             "name" => $request->name,
             "ministry_id" => $request->ministry_id,
             "date" => $request->date,
