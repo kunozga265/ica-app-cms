@@ -43,13 +43,14 @@ class RegisterController extends Controller
         $request->validate([
             "ministry_id" => "required",
             "date" => "required",
+            "name" => "required",
         ]);
 
         Register::create([
             "code" => (new AppController())->generateUniqueCode(),
             "name" => $request->name,
             "ministry_id" => $request->ministry_id,
-            "date" => (new AppController())->getTimestamp($request->date),
+            "date" => $request->date,
         ]);
 
         return response()->json(["message" => "Successfully create service"]);
