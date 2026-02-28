@@ -124,7 +124,7 @@ class AppController extends Controller
             'fundraising'    => new Resources\PageResource($fundraising),
             'next_meeting_date'    => $next_meeting_date,
             'user' => $user != null ? new UserResource($user) : null,
-            'registers' => RegisterLiteResource::collection($registers)
+            'registers' => $data
 
         ]);
     }
