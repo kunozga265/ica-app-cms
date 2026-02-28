@@ -112,8 +112,6 @@ class AppController extends Controller
             ];
         }
 
-        Log::info($data);
-
         return response()->json([
             'sermons'   => $sermons_collection,
             'series'    => Resources\SeriesResource::collection($series),
