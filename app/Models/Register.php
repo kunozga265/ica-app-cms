@@ -21,7 +21,7 @@ class Register extends Model
     }
 
 
-    public function isAuthRegistered($id)
+    public function isAuthRegistered($id = Auth::id())
     {
         $user = User::find($id);
         if (is_object($user) && $user?->member != null) {
