@@ -21,9 +21,9 @@ class Register extends Model
     }
 
 
-    public function isAuthRegistered($id = Auth::id())
+    public function isAuthRegistered()
     {
-        $user = User::find($id);
+        $user = User::find(Auth::id());
         if (is_object($user) && $user?->member != null) {
             return $this->members()->where('member_id', $user->member?->id)->exists();
         } else {
