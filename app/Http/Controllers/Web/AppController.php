@@ -226,7 +226,7 @@ class AppController extends Controller
 
             if ($requestToken) {
                 $token = PersonalAccessToken::findToken($requestToken);
-                return $token->tokenable;
+                return $token?->tokenable;
             } else
                 return null;
         } else {
