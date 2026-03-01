@@ -93,7 +93,7 @@ class UserController extends Controller
                 //     "member_id" => $member->id
                 // ]);
             } else {
-                Member::create([
+                $member = Member::create([
                     "code" => (new \App\Http\Controllers\Web\AppController())->generateUniqueCode(),
                     'avatar' => $request->avatar ?? "images/avatar.png",
                     'first_name' => $splitNames[0],
@@ -104,6 +104,10 @@ class UserController extends Controller
                     'phone_number_tnm' => $request->phone_number_tnm,
                     'phone_number_international' => $request->phone_number_international,
                     'email' => $request->email,
+                ]);
+
+                $user->update([
+                    "member_id" => $member->id
                 ]);
             }
         }
