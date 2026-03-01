@@ -95,7 +95,7 @@ class UserController extends Controller
             } else {
                 Member::create([
                     "code" => (new \App\Http\Controllers\Web\AppController())->generateUniqueCode(),
-                    'avatar' => $request->avatar ?? env('APP_URL') . "images/avatar.png",
+                    'avatar' => $request->avatar ?? "images/avatar.png",
                     'first_name' => $splitNames[0],
                     'last_name' => $first_name != $last_name ? $last_name : null,
                     'gender' => $request->gender,
