@@ -115,7 +115,7 @@ class AppController extends Controller
                 "date"              => intval($register->date),
                 "active"            => Carbon::createFromTimestamp($register->date)->isToday(),
                 "attendees"         => [],
-                "checked"           =>  Attendance::where('reigster_id', $register->id)->where('member_id', $user?->member?->id)->exists()
+                "checked"           =>  Attendance::where('register_id', $register->id)->where('member_id', $user?->member?->id)->exists()
             ];
         }
 
