@@ -117,7 +117,7 @@ class AppController extends Controller
         }
 
         //attach usage record
-        (new UsageController())->record();
+        (new UsageController())->record($request);
 
 
         return response()->json([
