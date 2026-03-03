@@ -11,10 +11,12 @@ use App\Http\Resources\RegisterResource;
 use App\Models\Member;
 use App\Models\Ministry;
 use App\Models\Register;
+use App\Models\Attendance;
 use App\Models\User;
 use Google\Service\AlertCenter\RequestInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -71,11 +73,26 @@ class RegisterController extends Controller
 
 
             if ($attendee["checked"] || $attendee["checked"] == '1' || $attendee["checked"] == 1) {
-                if (!$register?->members()->where('member_id', $member->id)->exists()) {
-                    $register?->members()->attach($member);
+                // if (!$register?->members()->where('member_id', $member->id)->exists()) {
+                //     $register?->members()->attach($member);
+                // }
+
+                if (!Attendance::where('member_id', $member->id)->where("register_id", $register->id)->exists()) {
+                    Attendance::create([
+                        "member_id" => $member->d,
+                        "register_id" => $register->id,
+                        "zone_id" => $member->cell->zone->id,
+                        "date" => $attendee['date'],
+                        "meta" => json_encode([
+                            "coordinates" => null
+                        ])
+                    ]);
                 }
             } else {
-                $register->members()->detach($member);
+                // $register->members()->detach($member);
+                if (Attendance::where('member_id', $member->id)->where("register_id", $register->id)->exists()) {
+                    Attendance::where('member_id', $member->id)->where("register_id", $register->id)->delete();
+                }
             }
         }
 
@@ -105,11 +122,30 @@ class RegisterController extends Controller
         }
 
         if ($request->checked) {
-            if (!$register?->members()->where('member_id', $user->member->id)->exists()) {
-                $register?->members()->attach($user->member);
+            // if (!$register?->members()->where('member_id', $user->member->id)->exists()) {
+            //     $register?->members()->attach($user->member);
+            // }
+
+            if (!Attendance::where('member_id', $user->member->id)->where("register_id", $register->id)->exists()) {
+                Attendance::create([
+                    "member_id" => $user->member->d,
+                    "register_id" => $register->id,
+                    "zone_id" => $user->member->cell->zone->id,
+                    "date" => Carbon::now()->getTimestamp(),
+                    "meta" => json_encode([
+                        "coordinates" => [
+                            "latitude" => $request->latitude,
+                            "longitude" => $request->longitude,
+                        ]
+                    ])
+                ]);
             }
         } else {
-            $register->members()->detach($user->member);
+            // $register->members()->detach($user->member);
+
+            if (Attendance::where('member_id', $user->member->id)->where("register_id", $register->id)->exists()) {
+                Attendance::where('member_id', $user->member->id)->where("register_id", $register->id)->delete();
+            }
         }
 
         return response()->json();

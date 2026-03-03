@@ -19,9 +19,12 @@ class Attendance extends Model
         return $this->belongsTo(Meeting::class);
     }
 
-    protected $fillable=[
+    protected $fillable = [
         "member_id",
         "meeting_id",
-        "zone_id"
+        "zone_id",
+        "register_id",
+        "date",
+        "meta",
     ];
 }

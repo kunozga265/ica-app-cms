@@ -12,8 +12,15 @@ class Register extends Model
 
     public function members()
     {
-        return $this->belongsToMany(Member::class, 'member_register', 'register_id', 'member_id');
+        // return $this->belongsToMany(Member::class, 'member_register', 'register_id', 'member_id');
+
+        $id = $this->id;
+        return Member::whereHas('attendances', function ($query) use ($id) {
+            $query->where('register_id',  $id);
+        })->get();
     }
+
+
 
     public function ministry()
     {
@@ -38,5 +45,6 @@ class Register extends Model
         "name",
         "ministry_id",
         "date",
+
     ];
 }

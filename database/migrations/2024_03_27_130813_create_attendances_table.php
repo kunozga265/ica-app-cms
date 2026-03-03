@@ -15,9 +15,9 @@ class CreateAttendancesTable extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->string("member_id")->nullable();
-            $table->string("meeting_id")->nullable();
-            $table->string("zone_id")->nullable();
+            $table->integer("member_id")->nullable();
+            $table->integer("meeting_id")->nullable();
+            $table->integer("zone_id")->nullable();
             $table->timestamps();
         });
     }
