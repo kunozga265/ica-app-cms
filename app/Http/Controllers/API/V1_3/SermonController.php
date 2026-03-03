@@ -15,7 +15,7 @@ class SermonController extends Controller
 
         $sermon = Sermon::where('slug', $slug)->first();
 
-        $view = View::where('sermon', $sermon->id)->where('user_id', Auth::id())->first();
+        $view = View::where('sermon_id', $sermon->id)->where('user_id', Auth::id())->first();
 
         if (is_object($view)) {
             $view->update([
