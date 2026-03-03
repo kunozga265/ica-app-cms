@@ -32,7 +32,7 @@ class Register extends Model
     {
         $user = User::find(Auth::id());
         if (is_object($user) && $user?->member != null) {
-            return $this->members()->where('member_id', $user->member?->id)->exists();
+            return Attendance::where('register_id', $this->id)->where('member_id', $user?->member?->id)->exists();
         } else {
             return false;
         }
