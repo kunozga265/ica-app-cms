@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1_3;
 
+use App\Http\Controllers\Web\AppController as WebAppController;
 use App\Http\Controllers\Controller;
 use App\Models\View;
 use App\Models\Sermon;
@@ -14,8 +15,9 @@ class SermonController extends Controller
     {
 
         $sermon = Sermon::where('slug', $slug)->first();
+        $user = (new WebAppController())->getAuthUser($request);
 
-        $view = View::where('sermon_id', $sermon->id)->where('user_id', Auth::id())->first();
+        $view = View::where('sermon_id', $sermon->id)->where('user_id', $user?->id)->first();
 
         if (is_object($view)) {
             $view->update([
