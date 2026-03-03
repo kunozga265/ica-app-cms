@@ -10,6 +10,7 @@ use App\Models\Sermon;
 use App\Models\View;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
@@ -75,7 +76,7 @@ class PageController extends Controller
             return Redirect::back()->with('error', 'Sermon not found');
         else {
             //update view
-            $view = View::where("sermon_id", $sermon->id)->first();
+            $view = View::where("sermon_id", $sermon->id)->where('user_id', Auth::id())->first();
             $view->update([
                 "count" => ($view->count) + 1
             ]);
