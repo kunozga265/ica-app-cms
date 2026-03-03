@@ -18,6 +18,7 @@ use App\Models\Highlight;
 use App\Models\Note;
 use App\Models\Page;
 use App\Models\Prayer;
+use App\Models\Attendance;
 use App\Models\Series;
 use App\Models\Register;
 use App\Models\Sermon;
@@ -114,7 +115,7 @@ class AppController extends Controller
                 "date"              => intval($register->date),
                 "active"            => Carbon::createFromTimestamp($register->date)->isToday(),
                 "attendees"         => [],
-                "checked"           =>  $register->members()->where('member_id', $user?->member?->id)->exists()
+                "checked"           =>  Attendance::where('reigster_id', $register->id)->where('member_id', $user?->member?->id)->exists()
             ];
         }
 
