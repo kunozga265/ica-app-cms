@@ -79,7 +79,7 @@ class RegisterController extends Controller
 
                 if (!Attendance::where('member_id', $member->id)->where("register_id", $register->id)->exists()) {
                     Attendance::create([
-                        "member_id" => $member->d,
+                        "member_id" => $member->id,
                         "register_id" => $register->id,
                         "zone_id" => $member->cell?->zone?->id,
                         "date" => $attendee['date'],
@@ -128,7 +128,7 @@ class RegisterController extends Controller
 
             if (!Attendance::where('member_id', $user->member->id)->where("register_id", $register->id)->exists()) {
                 Attendance::create([
-                    "member_id" => $user->member->d,
+                    "member_id" => $user->member->id,
                     "register_id" => $register->id,
                     "zone_id" => $user->member?->cell?->zone?->id,
                     "date" => Carbon::now()->getTimestamp(),
