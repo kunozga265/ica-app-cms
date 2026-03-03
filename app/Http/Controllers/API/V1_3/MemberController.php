@@ -14,6 +14,13 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class MemberController extends Controller
 {
+
+    public function index()
+    {
+        $members = Member::orderBy('last_name', 'asc')->get();
+        return response()->json(MemberResource::collection($members),);
+    }
+
     public function store(Request $request)
     {
 

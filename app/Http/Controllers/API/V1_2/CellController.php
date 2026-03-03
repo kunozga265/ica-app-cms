@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1_2;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CellResource;
 use App\Models\Cell;
+use App\Models\Member;
 use Illuminate\Http\Request;
 
 class CellController extends Controller
@@ -22,10 +23,34 @@ class CellController extends Controller
             ], 404);
         }
     }
+    public function attachMembers(Request $request, $code)
+    {
+        $request->validate([
+            'members' => 'required'
+        ]);
+
+
+        $cell = Cell::where("code", $code)->first();
+        if (is_object($cell)) {
+
+            foreach ($request->members as $member) {
+                Member::find($member['id'])->update([
+                    'cell_id' => $cell?->id,
+                ]);
+            }
+
+
+            return response()->json(['message' => 'Successfully added members']);
+        } else {
+            return response()->json([
+                'message' => "Cell not found",
+            ], 404);
+        }
+    }
 
     public function unverified(Request $request)
     {
-        $cells = Cell::where("verified",0)->get();
+        $cells = Cell::where("verified", 0)->get();
         return response()->json(CellResource::collection($cells));
     }
 }

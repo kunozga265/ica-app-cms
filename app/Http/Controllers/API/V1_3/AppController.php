@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1_3;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\UsageController;
 use App\Http\Controllers\Web\AppController as WebAppController;
 use App\Http\Resources\HighlightResource;
 use App\Http\Resources\UserResource;
@@ -53,9 +54,12 @@ class AppController extends Controller
 
         //update user
         $user = (new WebAppController())->getAuthUser($request);
+        $updatedUser = null;
         if (is_object($user)) {
             if ($user->updated_at->getTimestamp() <= $timestamp) {
-                $user = null;
+                $updatedUser = null;
+            }else{
+                $updatedUser = $user;
             }
         }
 
@@ -112,6 +116,10 @@ class AppController extends Controller
             ];
         }
 
+        //attach usage record
+        (new UsageController())->record();
+
+
         return response()->json([
             'sermons'   => $sermons_collection,
             'series'    => Resources\SeriesResource::collection($series),
@@ -121,7 +129,7 @@ class AppController extends Controller
             'announcements'    => new Resources\PageResource($announcements),
             'fundraising'    => new Resources\PageResource($fundraising),
             'next_meeting_date'    => $next_meeting_date,
-            'user' => $user != null ? new UserResource($user) : null,
+            'user' => $updatedUser != null ? new UserResource($updatedUser) : null,
             'registers' => $data
 
         ]);

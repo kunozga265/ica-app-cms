@@ -217,7 +217,7 @@ Route::group(["prefix"=>"1.3"],function (){
 
 });
 
-Route::group(["prefix"=>"1.4"],function (){
+Route::group(["prefix"=>"1.3.5"],function (){
 
     /* Home Page */
     Route::get('/initiate',[API\V1_1\AppController::class, 'initiate']);
@@ -229,6 +229,7 @@ Route::group(["prefix"=>"1.4"],function (){
         Route::get('/', [API\V1_2\SermonController::class, 'index']);
         Route::get('/get/{timestamp}', [API\V1_2\SermonController::class, 'getSermons']);
         Route::get('/view/{slug}', [API\V1_2\SermonController::class, 'show']);
+        Route::get('/register-view/{slug}', [API\V1_3\SermonController::class, 'registerView']);
         Route::get('/series/{slug}', [API\V1_2\SermonController::class, 'bySeries']);
         Route::get('/authors/{slug}', [API\V1_2\SermonController::class, 'getSermonsByAuthor']);
     });
@@ -242,6 +243,7 @@ Route::group(["prefix"=>"1.4"],function (){
         Route::post('/', [\App\Http\Controllers\Web\CellController::class, 'store']);
         Route::post('/verify', [\App\Http\Controllers\Web\CellController::class, 'verify']);
         Route::post('/meetings', [\App\Http\Controllers\Web\MeetingController::class, 'store']);
+        Route::post('/attach-members', [API\V1_2\CellController::class, 'attachMembers']);
     });
 
     Route::group(["prefix"=>"meetings", "middleware"=>"auth:sanctum"], function (){
@@ -255,6 +257,7 @@ Route::group(["prefix"=>"1.4"],function (){
     });
 
     Route::group(["prefix"=>"members", "middleware"=>"auth:sanctum"], function (){
+        Route::get('/', [API\V1_3\MemberController::class, 'index']);
         Route::post('/', [API\V1_3\MemberController::class, 'store']);
     });
 
