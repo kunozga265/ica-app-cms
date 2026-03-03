@@ -24,6 +24,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'role' => $this->roles()->first(),
             'cell_code' => $this->cell != null ? $this->cell->code : null,
+            'member_cell_code' => $this->member?->cell?->code
         ];
     }
 }

@@ -45,17 +45,19 @@ class AppController extends Controller
         }
 
         $next_meeting_date = null;
-        if ($request->query("code") !== null) {
-            $cell = Cell::where("code", $request->query("code"))->first();
-            if (is_object($cell)) {
-                $next_meeting_date = $cell->nextMeetingDate();
-            }
-        }
+        // if ($request->query("code") !== null) {
+        //     $cell = Cell::where("code", $request->query("code"))->first();
+        //     if (is_object($cell)) {
+        //         $next_meeting_date = $cell->nextMeetingDate();
+        //     }
+        // }
 
         //update user
         $user = (new WebAppController())->getAuthUser($request);
         $updatedUser = null;
         if (is_object($user)) {
+             $next_meeting_date = $user->cell?->nextMeetingDate();
+
             if ($user->updated_at->getTimestamp() <= $timestamp) {
                 $updatedUser = null;
             }else{
