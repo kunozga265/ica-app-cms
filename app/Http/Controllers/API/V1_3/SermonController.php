@@ -26,7 +26,7 @@ class SermonController extends Controller
         } else {
             $view = View::create([
                 'user_id' => Auth::id(),
-                'sermon_id' => $sermon->id,
+                'sermon_id' => $user?->id,
                 'count' => 1
             ]);
         }
