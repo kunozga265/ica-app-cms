@@ -81,7 +81,7 @@ class RegisterController extends Controller
                     Attendance::create([
                         "member_id" => $member->d,
                         "register_id" => $register->id,
-                        "zone_id" => $member->cell->zone->id,
+                        "zone_id" => $member->cell?->zone?->id,
                         "date" => $attendee['date'],
                         "meta" => json_encode([
                             "coordinates" => null
@@ -130,7 +130,7 @@ class RegisterController extends Controller
                 Attendance::create([
                     "member_id" => $user->member->d,
                     "register_id" => $register->id,
-                    "zone_id" => $user->member->cell->zone->id,
+                    "zone_id" => $user->member?->cell?->zone?->id,
                     "date" => Carbon::now()->getTimestamp(),
                     "meta" => json_encode([
                         "coordinates" => [
