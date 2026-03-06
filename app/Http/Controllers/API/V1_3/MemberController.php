@@ -126,7 +126,7 @@ class MemberController extends Controller
                 'other_name' => $member["other_name"],
                 'last_name' => $member["last_name"],
                 'gender' => $member["gender"],
-                'cell_id' => null,
+                'cell_id' => $member["cell_id"],
                 'phone_number_airtel' => $member["phone_number_airtel"],
                 'phone_number_tnm' => $member["phone_number_tnm"],
                 'phone_number_international' => $member["phone_number_international"],
