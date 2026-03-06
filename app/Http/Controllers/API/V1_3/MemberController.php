@@ -102,4 +102,39 @@ class MemberController extends Controller
 
         return response()->json(["message" => "Member added!"]);
     }
+
+    public function batchAdd(Request $request)
+    {
+
+        $request->validate([
+            "members" => "required",
+        ]);
+
+
+        $avatar = "images/avatar.png";
+
+        foreach ($request->members as $member) {
+
+
+            $member = Member::updateOrCreate([
+                'email' => $member["email"],
+            ], [
+                "code" => (new \App\Http\Controllers\Web\AppController())->generateUniqueCode(),
+                "avatar" => $avatar,
+                'first_name' => $member["first_name"],
+                'middle_name' => $member["middle_name"],
+                'other_name' => $member["other_name"],
+                'last_name' => $member["last_name"],
+                'gender' => $member["gender"],
+                'cell_id' => null,
+                'phone_number_airtel' => $member["phone_number_airtel"],
+                'phone_number_tnm' => $member["phone_number_tnm"],
+                'phone_number_international' => $member["phone_number_international"],
+                "date_of_birth" => $member["date_of_birth"]
+            ]);
+        }
+
+
+        return response()->json(["message" => "Members added!"]);
+    }
 }
