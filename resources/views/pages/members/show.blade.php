@@ -243,12 +243,13 @@
 
                             <div class="col-12 col-sm-6 mb-8">
                                 <div class="text-base text-mute">User Profile Link</div>
-                                @if(isset($member->user))
+                                @foreach($member->users as $user)
                                     <a class="link-primary flex align-items-center"
-                                       href="{{route("cells.show", ["code"=>$member->user->fullName()])}}"><i
+                                       href="{{route("cells.show", ["code"=>$user->fullName()])}}"><i
                                                 class="ri-eye-fill"></i>
-                                        <div class="spacer w-5"></div> {{$member->user->fullName()}}  </a>
-                                @else
+                                        <div class="spacer w-5"></div> {{$user->fullName()}}  </a>
+                                        @endforeach
+                                {{-- @else --}}
                                     <button class="btn-text link-primary flex align-items-center"
                                          data-bs-toggle="modal"
                                          data-bs-target="#assignUser"><i
@@ -289,7 +290,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                @endif
+                                {{-- @endif --}}
 
                                 {{--                                <div class=""></div>--}}
                             </div>

@@ -29,11 +29,12 @@ class DatabaseSeeder extends Seeder
 //            ThemeTableSeeder::class,
 //            CategoryTableSeeder::class,
 //            PageTableSeeder::class,
-            MinistryTableSeeder::class,
+            // MinistryTableSeeder::class,
 //            ZoneTableSeeder::class,
 //            UserTableSeeder::class,
 //            PrayersTableSeeder::class,
 //            RoleTableSeeder::class,
+           CellsRefactorySeeder::class,
 
         ]);
 

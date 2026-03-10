@@ -54,6 +54,11 @@ class CellController extends Controller
 //            'leader_id' => $request->leader_id != "None" && $request->leader_id != "0" ? $request->leader_id : null,
         ]);
 
+        $user = \App\Models\User::find($request->user_id);
+        $user?->member?->update([
+            'leader_cell_id' => $cell->id
+        ]);
+
         if ((new AppController())->isApi($request)) {
             return response()->json([
                 "code" => $cell->code

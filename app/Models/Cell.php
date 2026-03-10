@@ -18,6 +18,10 @@ class Cell extends Model
     {
         return $this->hasOne(Member::class, "id", "leader_id");
     }
+    public function leaders()
+    {
+        return $this->hasMany(Member::class, "leader_cell_id", "id");
+    }
 
     public function zone()
     {

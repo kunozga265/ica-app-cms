@@ -36,7 +36,7 @@ class MinistryTableSeeder extends Seeder
         ]);
 
         Ministry::create([
-            "name" => "Youth and Young Adults Ministry",
+            "name" => "Contemporary Church",
             "slug" => Str::slug("Youth and Young Adults Ministry"),
         ]);
 
