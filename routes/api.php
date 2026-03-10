@@ -262,7 +262,7 @@ Route::group(["prefix"=>"1.3.5"],function (){
         Route::get('/', [API\V1_3\MemberController::class, 'index']);
         Route::post('/', [API\V1_3\MemberController::class, 'store']);
         Route::post('/batch-add', [API\V1_3\MemberController::class, 'batchAdd']);
-         Route::post('/update/{code}', [API\V1_2\CellController::class, 'update']);
+         Route::post('/update/{code}', [API\V1_3\MemberController::class, 'update']);
     });
 
     Route::group(["prefix"=>"transactions", "middleware"=>"auth:sanctum"], function (){
