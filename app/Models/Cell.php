@@ -77,15 +77,15 @@ class Cell extends Model
     {
         switch ($this->type) {
             case 1:
-                return "Pastoral Cell";
+                return "Pastoral";
             case 2:
-                return "Zonal Cell";
+                return "Zonal";
             case 3:
-                return "114 Community Cell";
-            case 4:
-                return "Extended Cell";
+                return "114 Community";
             default:
-                return "Cell";
+                return "Extended";
+            // default:
+            //     return "Default";
         }
     }
 
