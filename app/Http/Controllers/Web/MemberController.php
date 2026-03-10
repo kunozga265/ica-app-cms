@@ -87,7 +87,7 @@ class MemberController extends Controller
 
             foreach ($member->attendances()->get() as $attendance){
                 $chartData["data"][] = 1;
-                $chartData["labels"][] = date("m/d/Y", Carbon::createFromTimestamp($attendance->meeting->date)->getTimestamp());
+                $chartData["labels"][] = date("m/d/Y", Carbon::createFromTimestamp($attendance->meeting?->date ?? $attendance->register->date)->getTimestamp());
             }
 
 //            dd($chartData);

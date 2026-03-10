@@ -18,6 +18,10 @@ class Attendance extends Model
     {
         return $this->belongsTo(Meeting::class);
     }
+    public function register()
+    {
+        return $this->belongsTo(Register::class);
+    }
 
     protected $fillable = [
         "member_id",
