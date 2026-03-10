@@ -23,6 +23,27 @@ class Cell extends Model
         return $this->hasMany(Member::class, "leader_cell_id", "id");
     }
 
+    public function listOfLeaders()
+    {
+        $list = "";
+
+        // $products = json_decode($this->information);
+        $leaders = $this->leaders;
+        for ($i = 1; $i <= $leaders->count(); $i++) {
+            if ($i < $leaders->count()) {
+                if ($i == ($leaders->count() - 1)) {
+                    $list .= $leaders[$i]->name . " & ";
+                } else {
+                    $list .= $leaders[$i]->name . ", ";
+                }
+            } else {
+                $list .= $leaders[$i]->name;
+            }
+        }
+
+        return $list;
+    }
+
     public function zone()
     {
         return $this->belongsTo(Zone::class);
@@ -46,13 +67,13 @@ class Cell extends Model
     public function nextMeetingDate()
     {
         $now = Carbon::now();
-        $meeting = $this->meetings()->where("date",">=", $now->getTimestamp())->first();
+        $meeting = $this->meetings()->where("date", ">=", $now->getTimestamp())->first();
         return (is_object($meeting)) ? intval($meeting->date) : null;
     }
 
     public function getType()
     {
-        switch ($this->type){
+        switch ($this->type) {
             case 1:
                 return "Pastoral Cell";
             case 2:
@@ -68,31 +89,31 @@ class Cell extends Model
 
     public function getParticipants()
     {
-        if($this->members()->count() == 1){
-            return $this->members()->count() ." Participant";
-        }else{
-            return $this->members()->count() ." Participants";
+        if ($this->members()->count() == 1) {
+            return $this->members()->count() . " Participant";
+        } else {
+            return $this->members()->count() . " Participants";
         }
     }
 
     public function meetingsCount()
     {
-        if($this->meetings()->count() == 1){
-            return $this->meetings()->count() ." Record";
-        }else{
-            return $this->meetings()->count() ." Records";
+        if ($this->meetings()->count() == 1) {
+            return $this->meetings()->count() . " Record";
+        } else {
+            return $this->meetings()->count() . " Records";
         }
     }
 
-    protected $fillable=[
-      "code",
-      "name",
-      "details",
-      "location",
-      "zone_id",
-      "type",
-      "user_id",
-      "balance",
-      "verified",
+    protected $fillable = [
+        "code",
+        "name",
+        "details",
+        "location",
+        "zone_id",
+        "type",
+        "user_id",
+        "balance",
+        "verified",
     ];
 }
