@@ -7,6 +7,7 @@ use App\Http\Resources\CellResource;
 use App\Models\Cell;
 use App\Models\Member;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CellController extends Controller
 {
@@ -52,5 +53,27 @@ class CellController extends Controller
     {
         $cells = Cell::where("verified", 0)->get();
         return response()->json(CellResource::collection($cells));
+    }
+
+    public function update(Request $request, $code)
+    {
+
+        Validator::make($request->all(), [
+            "name" => "required",
+            "zone_id" => "required",
+            "balance" => "required",
+            "type" => "required",
+        ])->validate();
+
+        Cell::where('code', $code)->first()?->update([
+            'name' => $request->name,
+            'zone_id' => $request->zone_id,
+            'balance' => $request->balance,
+            'type' => $request->type,
+        ]);
+
+        return response()->json([
+            "message" => "Cell successfully updated!"
+        ]);
     }
 }
