@@ -25,7 +25,7 @@ class RegisterController extends Controller
     {
         $registers = Register::orderBy('date', 'desc')->paginate((new AppController())->paginate);
 
-        $members = Member::orderBy('last_name', 'asc')->get();
+        $members = Member::orderBy('first_name', 'asc')->get();
         $ministries = Ministry::orderBy('name', 'asc')->get();
 
         return response()->json([

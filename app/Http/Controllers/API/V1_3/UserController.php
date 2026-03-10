@@ -96,8 +96,8 @@ class UserController extends Controller
                 $member = Member::create([
                     "code" => (new \App\Http\Controllers\Web\AppController())->generateUniqueCode(),
                     'avatar' => $request->avatar ?? "images/avatar.png",
-                    'first_name' => $splitNames[0],
-                    'last_name' => $first_name != $last_name ? $last_name : null,
+                    'first_name' => ucwords($splitNames[0]),
+                    'last_name' => $first_name != $last_name ? ucwords($last_name) : null,
                     'gender' => $request->gender,
                     'date_of_birth' => $request->date_of_birth,
                     'phone_number_airtel' => $request->phone_number_airtel,
@@ -155,8 +155,8 @@ class UserController extends Controller
                 $new_member = Member::create([
                     "code" => (new \App\Http\Controllers\Web\AppController())->generateUniqueCode(),
                     'avatar' => $user->avatar,
-                    'first_name' => $user->first_name,
-                    'last_name' => $user->last_name,
+                    'first_name' => ucwords($user->first_name),
+                    'last_name' => ucwords($user->last_name),
                     'email' => $user->email,
                     'gender' => $request->gender,
                     'date_of_birth' => $request->date_of_birth,
@@ -244,8 +244,8 @@ class UserController extends Controller
                 Member::create([
                     "code" => (new \App\Http\Controllers\Web\AppController())->generateUniqueCode(),
                     'avatar' => $request->avatar ?? env('APP_URL') . "images/avatar.png",
-                    'first_name' => $splitNames[0],
-                    'last_name' => $first_name != $last_name ? $last_name : null,
+                    'first_name' => ucwords($splitNames[0]),
+                    'last_name' => $first_name != $last_name ? ucwords($last_name) : null,
                     'gender' => $request->gender,
                     'phone_number_airtel' => $request->phone_number_airtel,
                     'phone_number_tnm' => $request->phone_number_tnm,

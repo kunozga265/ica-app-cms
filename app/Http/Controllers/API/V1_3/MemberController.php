@@ -17,7 +17,7 @@ class MemberController extends Controller
 
     public function index()
     {
-        $members = Member::orderBy('last_name', 'asc')->get();
+        $members = Member::orderBy('first_name', 'asc')->get();
         return response()->json(MemberResource::collection($members),);
     }
 
@@ -86,10 +86,10 @@ class MemberController extends Controller
         $member = Member::create([
             "code" => (new \App\Http\Controllers\Web\AppController())->generateUniqueCode(),
             "avatar" => $avatar,
-            'first_name' => $request->first_name,
-            'middle_name' => $request->middle_name,
-            'other_name' => $request->other_name,
-            'last_name' => $request->last_name,
+              'first_name' => ucwords($request->first_name),
+            'middle_name' => ucwords($request->middle_name),
+            'other_name' => ucwords($request->other_name),
+            'last_name' => ucwords($request->last_name),
             'gender' => $request->gender,
             'cell_id' => $cell?->id,
             'phone_number_airtel' => $request->phone_number_airtel,
