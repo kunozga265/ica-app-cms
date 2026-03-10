@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Cell extends Model
 {
@@ -29,15 +30,16 @@ class Cell extends Model
 
         // $products = json_decode($this->information);
         $leaders = $this->leaders;
-        for ($i = 1; $i <= $leaders->count(); $i++) {
-            if ($i < $leaders->count()) {
-                if ($i == ($leaders->count() - 1)) {
-                    $list .= $leaders[$i]->name . " & ";
+
+        for ($i = 0; $i < $leaders->count(); $i++) {
+            if ($i < ($leaders->count() - 1)) {
+                if ($i == ($leaders->count() - 2)) {
+                    $list .= $leaders[$i]->fullName() . " & ";
                 } else {
-                    $list .= $leaders[$i]->name . ", ";
+                    $list .= $leaders[$i]->fullName() . ", ";
                 }
             } else {
-                $list .= $leaders[$i]->name;
+                $list .= $leaders[$i]->fullName();
             }
         }
 

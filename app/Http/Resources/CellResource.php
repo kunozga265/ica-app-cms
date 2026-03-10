@@ -15,8 +15,10 @@ class CellResource extends JsonResource
     public function toArray($request)
     {
         $members = $this->members;
-        $members->merge($this->leaders);
-        $members->sortBy('first_name');
+        $merged = $members->merge($this->leaders);
+        $all = $merged->sortBy('first_name');
+
+
 
         return [
             "id"                => intval($this->id),
@@ -29,7 +31,7 @@ class CellResource extends JsonResource
             // "leader"            => $this->user?->fullName() ?? "",
             "leader"            => $this->listOfLeaders(),
             "balance"           => floatval($this->balance),
-            "members"           => MemberResource::collection($members),
+            "members"           => MemberResource::collection($all),
             "meetings"          => $this->meetings != null ? MeetingResource::collection($this->meetings) : [],
             "transactions"      => $this->transactions != null ? TranscationResource::collection($this->transactions()->latest()->get()) : [],
             "next_meeting_date" => $this->nextMeetingDate(),

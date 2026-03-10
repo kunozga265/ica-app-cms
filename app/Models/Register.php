@@ -17,7 +17,7 @@ class Register extends Model
         $id = $this->id;
         return Member::whereHas('attendances', function ($query) use ($id) {
             $query->where('register_id',  $id);
-        })->orderBy('last_name', 'asc')->get();
+        })->orderBy('first_name', 'asc')->get();
     }
 
 
