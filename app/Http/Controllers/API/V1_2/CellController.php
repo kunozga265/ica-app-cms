@@ -39,9 +39,11 @@ class CellController extends Controller
                 $member?->update([
                     'cell_id' => $cell?->id,
                 ]);
-                $member?->user?->update([
-                    'member_id' => $member->id
-                ]);
+                foreach ($member->users as $user) {
+                    $user?->update([
+                        'member_id' => $member->id
+                    ]);
+                }
             }
 
 
