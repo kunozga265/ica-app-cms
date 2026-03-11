@@ -35,8 +35,12 @@ class CellController extends Controller
         if (is_object($cell)) {
 
             foreach ($request->members as $member) {
-                Member::find($member['id'])->update([
+                $member = Member::find($member['id']);
+                $member?->update([
                     'cell_id' => $cell?->id,
+                ]);
+                $member?->user?->update([
+                    'member_id' => $member->id
                 ]);
             }
 
