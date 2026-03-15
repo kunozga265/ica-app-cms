@@ -331,9 +331,7 @@
 
                                      <form method="post" action="{{route('members.sync', ['code'=>$member->code])}}">
                                         @csrf
-                                            <button type="button" class="p-btn"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#assignCell">Sync Profile
+                                            <button type="submit" class="p-btn">Sync Profile
                                             </button>
                                         </form>
 
