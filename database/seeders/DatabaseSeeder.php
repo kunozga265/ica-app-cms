@@ -34,15 +34,15 @@ class DatabaseSeeder extends Seeder
 //            UserTableSeeder::class,
 //            PrayersTableSeeder::class,
 //            RoleTableSeeder::class,
-           CellsRefactorySeeder::class,
+        //    CellsRefactorySeeder::class,
 
         ]);
 
-//        $users = User::all();
-//        foreach ($users as $user){
-//            $role = Role::where("name","super")->first();
-//            $user->roles()->attach($role);
-//        }
+        $users = User::all();
+        foreach ($users as $user){
+            $user->update(["id" => $user->id]);
+            $user->member?->update(['avatar'=>$user->avatar]);
+        }
 
     }
 }

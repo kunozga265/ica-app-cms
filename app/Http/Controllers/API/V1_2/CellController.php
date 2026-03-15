@@ -41,7 +41,7 @@ class CellController extends Controller
                 ]);
                 foreach ($member->users as $user) {
                     $user?->update([
-                        'member_id' => $member->id
+                        'trigger' =>  !boolval($user?->trigger)
                     ]);
                 }
             }

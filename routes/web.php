@@ -155,6 +155,7 @@ Route::group(['middleware'=>'auth',"prefix" => "/admin"],function (){
         Route::post('/assign-cell/{code}', [Web\MemberController::class,'assignCell'])->name('members.assign-cell');
         Route::post('/attach-ministries/{code}', [Web\MemberController::class,'attachMinistries'])->name('members.attach-ministries');
         Route::post('/link-user/{code}', [Web\MemberController::class,'linkUser'])->name('members.link-user');
+        Route::post('/sync/{code}', [Web\MemberController::class,'sync'])->name('members.sync');
     });
 
     Route::group(['prefix'=>'cells'],function(){

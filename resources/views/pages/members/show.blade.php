@@ -240,6 +240,16 @@
 
                                 {{--                                <div class=""></div>--}}
                             </div>
+                            <div class="col-12 col-sm-6 mb-8">
+                                <div class="text-base text-mute">Sync Profile</div>
+                               
+                                    <a class="link-primary flex align-items-center" href="{{route('members.sync', ['code'=>$member->code])}}"><i
+                                                class="ri-add-circle-fill"></i>
+                                        <div class="spacer w-5"></div>
+                                        Sync </a>
+
+                                {{--                                <div class=""></div>--}}
+                            </div>
 
                             <div class="col-12 col-sm-6 mb-8">
                                 <div class="text-base text-mute">User Profile Link</div>

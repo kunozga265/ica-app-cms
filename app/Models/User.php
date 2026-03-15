@@ -94,6 +94,7 @@ class User extends Authenticatable
         'phone_number_airtel',
         'phone_number_tnm',
         'phone_number_international',
+        'trigger',
     ];
 
     /**

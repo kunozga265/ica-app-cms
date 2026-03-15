@@ -72,6 +72,7 @@ class Member extends Model
         "phone_number_tnm",
         "phone_number_international",
         "email",
+        "associated",
     ];
 
 }

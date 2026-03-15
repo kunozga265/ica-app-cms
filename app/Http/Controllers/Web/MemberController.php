@@ -135,7 +135,7 @@ class MemberController extends Controller
 
             foreach ($member->users as $user) {
                 $user?->update([
-                    'member_id' => $member->id
+                    'trigger' =>  !boolval($user?->trigger)
                 ]);
             }
 
@@ -150,8 +150,9 @@ class MemberController extends Controller
             return Redirect::back()->with('error', 'Member not found');
         else {
             $member->delete();
+
             $member->user?->update([
-                'member_id' => null
+                'trigger' =>  !boolval($member->user?->trigger)
             ]);
             return Redirect::route('members.index')->with('success', 'Member deleted!');
         }
@@ -178,7 +179,7 @@ class MemberController extends Controller
             ]);
             foreach ($member->users as $user) {
                 $user?->update([
-                    'member_id' => $member->id
+                    'trigger' =>  !boolval($user?->trigger)
                 ]);
             }
             return Redirect::route("cells.show", ["code" => $cell->code])->with('success', 'Member successfully added!');
@@ -202,7 +203,7 @@ class MemberController extends Controller
             ]);
             foreach ($member->users as $user) {
                 $user?->update([
-                    'member_id' => $member->id
+                    'trigger' =>  !boolval($user?->trigger)
                 ]);
             }
             return Redirect::route("cells.show", ["code" => $cell->code])->with('success', 'Member successfully removed!');
@@ -230,7 +231,7 @@ class MemberController extends Controller
             ]);
             foreach ($member->users as $user) {
                 $user?->update([
-                    'member_id' => $member->id
+                    'trigger' =>  !boolval($user?->trigger)
                 ]);
             }
             return Redirect::back()->with('success', 'Member successfully transferred!');
@@ -259,10 +260,26 @@ class MemberController extends Controller
             ]);
             foreach ($member->users as $user) {
                 $user?->update([
-                    'member_id' => $member->id
+                    'trigger' =>  !boolval($user?->trigger)
                 ]);
             }
             return Redirect::back()->with('success', 'Member successfully assigned!');
+        }
+    }
+    public function sync(Request $request, $code)
+    {
+
+        $member = Member::where("code", $code)->first();
+
+        if (!is_object($member))
+            return Redirect::back()->with('error', 'Member not found');
+        else {
+            foreach ($member->users as $user) {
+                $user?->update([
+                    'trigger' =>  !boolval($user?->trigger)
+                ]);
+            }
+            return Redirect::back()->with('success', 'Member successfully synced!');
         }
     }
     public function attachMinistries(Request $request, $code)
@@ -299,9 +316,11 @@ class MemberController extends Controller
         } else if (!is_object($member))
             return Redirect::back()->with('error', 'Member not found');
         else {
-            $user->update([
-                "member_id" => $member->id
+
+            $user?->update([
+                'trigger' =>  !boolval($user?->trigger)
             ]);
+
             return Redirect::back()->with('success', 'Member successfully linked to user profile!');
         }
     }
