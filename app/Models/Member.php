@@ -34,6 +34,16 @@ class Member extends Model
         return $this->belongsTo(Cell::class);
     }
 
+    public function isAdmin()
+    {
+        foreach($this->users as $user){
+            if($user->hasRole('super')){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function leadershipCell()
     {
         return $this->hasOne(Cell::class,"id","leader_cell_id");

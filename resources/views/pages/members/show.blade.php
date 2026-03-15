@@ -335,6 +335,18 @@
                                             </button>
                                         </form>
 
+                                    @if($member->isAdmin())
+                                    <form method="post" action="{{route('members.revoke-admin', ['code'=>$member->code])}}">
+                                            @csrf
+                                        <button type="submit" class="p-btn">Revoke Admin</button>
+                                    </form>
+                                    @else
+                                        <form method="post" action="{{route('members.make-admin', ['code'=>$member->code])}}">
+                                            @csrf
+                                            <button type="submit" class="p-btn">Make Admin</button>
+                                        </form>
+                                    @endif
+
                                 </div>
                             </div>
 

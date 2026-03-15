@@ -7,6 +7,7 @@ use App\Models\Cell;
 use App\Models\Member;
 use App\Models\Ministry;
 use App\Models\User;
+use App\Models\Role;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -300,6 +301,45 @@ class MemberController extends Controller
             return Redirect::back()->with('success', 'Ministries successfully updated!');
         }
     }
+    public function makeAdmin(Request $request, $code)
+    {
+
+        $member = Member::where("code", $code)->first();
+
+        if (!is_object($member))
+            return Redirect::back()->with('error', 'Member not found');
+        else {
+            $role = Role::where("name", "super")->first();
+            
+            foreach($member->users as $user){
+                $user->roles()->detach();
+                $user->roles()->attach($role);
+
+            }
+
+            return Redirect::back()->with('success', 'Member successfully made admin!');
+        }
+    }
+    
+    public function revokeAdmin(Request $request, $code)
+    {
+        $member = Member::where("code", $code)->first();
+
+        if (!is_object($member))
+            return Redirect::back()->with('error', 'Member not found');
+        else {
+            $role = Role::where("name", "normal")->first();
+            
+            foreach($member->users as $user){
+                $user->roles()->detach();
+                $user->roles()->attach($role);
+
+            }
+
+            return Redirect::back()->with('success', 'Member successfully revoked as admin!');
+        }
+    }
+
     public function linkUser(Request $request, $code)
     {
         Validator::make($request->all(), [

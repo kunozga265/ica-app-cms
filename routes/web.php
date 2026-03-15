@@ -156,6 +156,8 @@ Route::group(['middleware'=>'auth',"prefix" => "/admin"],function (){
         Route::post('/attach-ministries/{code}', [Web\MemberController::class,'attachMinistries'])->name('members.attach-ministries');
         Route::post('/link-user/{code}', [Web\MemberController::class,'linkUser'])->name('members.link-user');
         Route::post('/sync/{code}', [Web\MemberController::class,'sync'])->name('members.sync');
+        Route::post('/make-admin/{code}', [Web\MemberController::class,'makeAdmin'])->name('make-admin');
+        Route::post('/revoke-admin/{code}', [Web\MemberController::class,'revokeAdmin'])->name('members.revoke-admin');
     });
 
     Route::group(['prefix'=>'cells'],function(){
