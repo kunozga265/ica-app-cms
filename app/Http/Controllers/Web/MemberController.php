@@ -124,14 +124,31 @@ class MemberController extends Controller
                 "gender" => "required",
             ])->validate();
 
+            $slug = Str::slug($request->first_name . "-" . $request->last_name) . date("-Y-m-d");
+            $avatar = "images/avatar.png";
+
+            if (isset($request->avatar)) {
+                $filename = $slug . uniqid() . "." . $request->avatar->extension();
+                try {
+                    $request->avatar->move(public_path('images/members'), $filename);
+                    $avatar = "images/members/$filename";
+                } catch (FileException $exception) {
+                    //catch file exception
+                }
+            }
+
             $member->update([
-                'first_name' => $request->first_name,
-                'middle_name' => $request->middle_name,
-                'other_name' => $request->other_name,
-                'last_name' => $request->last_name,
+                "avatar"        =>  $avatar,
+                'first_name' => ucwords($request->first_name),
+                'middle_name' => ucwords($request->middle_name),
+                'other_name' => ucwords($request->other_name),
+                'last_name' => ucwords($request->last_name),
                 'gender' => $request->gender,
-                //            'cell_id' => $request->cell_id,
-                //                'ministry_id' => $request->ministry_id,
+                'phone_number_airtel' => $request->phone_number_airtel,
+                'phone_number_tnm' => $request->phone_number_tnm,
+                'phone_number_international' => $request->phone_number_international,
+                'email' => $request->email,
+                "date_of_birth"  =>  isset($request->date_of_birth) ? (new AppController())->getTimestamp($request->date_of_birth) : null
             ]);
 
             foreach ($member->users as $user) {
@@ -310,17 +327,20 @@ class MemberController extends Controller
             return Redirect::back()->with('error', 'Member not found');
         else {
             $role = Role::where("name", "super")->first();
-            
-            foreach($member->users as $user){
+
+            foreach ($member->users as $user) {
                 $user->roles()->detach();
                 $user->roles()->attach($role);
 
+                $user?->update([
+                    'trigger' =>  !boolval($user?->trigger)
+                ]);
             }
 
             return Redirect::back()->with('success', 'Member successfully made admin!');
         }
     }
-    
+
     public function revokeAdmin(Request $request, $code)
     {
         $member = Member::where("code", $code)->first();
@@ -329,11 +349,14 @@ class MemberController extends Controller
             return Redirect::back()->with('error', 'Member not found');
         else {
             $role = Role::where("name", "normal")->first();
-            
-            foreach($member->users as $user){
+
+            foreach ($member->users as $user) {
                 $user->roles()->detach();
                 $user->roles()->attach($role);
 
+                $user?->update([
+                    'trigger' =>  !boolval($user?->trigger)
+                ]);
             }
 
             return Redirect::back()->with('success', 'Member successfully revoked as admin!');

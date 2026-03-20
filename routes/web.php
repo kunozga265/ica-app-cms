@@ -146,9 +146,9 @@ Route::group(['middleware'=>'auth',"prefix" => "/admin"],function (){
         Route::get('/{code}/view', [Web\MemberController::class,'show'])->name('members.show');
         Route::get('/create', [Web\MemberController::class,'create'])->name('members.create');
         Route::post('/store', [Web\MemberController::class,'store'])->name('members.store');
-        Route::get('/{slug}/edit', [Web\MemberController::class,'edit'])->name('members.edit');
-        Route::post('/{slug}/update', [Web\MemberController::class,'update'])->name('members.update');
-        Route::post('/{slug}/delete', [Web\MemberController::class,'trash'])->name('members.trash');
+        Route::get('/{code}/edit', [Web\MemberController::class,'edit'])->name('members.edit');
+        Route::post('/{code}/update', [Web\MemberController::class,'update'])->name('members.update');
+        Route::post('/{code}/delete', [Web\MemberController::class,'trash'])->name('members.trash');
         Route::post('/add-to-cell/{code}', [Web\MemberController::class,'addToCell'])->name('members.add-to-cell');
         Route::post('/remove-from-cell/{code}', [Web\MemberController::class,'removeFromCell'])->name('members.remove-from-cell');
         Route::post('/transfer/{code}', [Web\MemberController::class,'transferFromCell'])->name('members.transfer');
@@ -156,7 +156,7 @@ Route::group(['middleware'=>'auth',"prefix" => "/admin"],function (){
         Route::post('/attach-ministries/{code}', [Web\MemberController::class,'attachMinistries'])->name('members.attach-ministries');
         Route::post('/link-user/{code}', [Web\MemberController::class,'linkUser'])->name('members.link-user');
         Route::post('/sync/{code}', [Web\MemberController::class,'sync'])->name('members.sync');
-        Route::post('/make-admin/{code}', [Web\MemberController::class,'makeAdmin'])->name('make-admin');
+        Route::post('/make-admin/{code}', [Web\MemberController::class,'makeAdmin'])->name('members.make-admin');
         Route::post('/revoke-admin/{code}', [Web\MemberController::class,'revokeAdmin'])->name('members.revoke-admin');
     });
 

@@ -145,20 +145,23 @@
     </x-slot>
 
     <x-slot name="action">
-        {{--        <div class="mb-16">--}}
-        {{--            <form action="{{route('series.trash',$series->slug)}}" method="post">--}}
-        {{--                @csrf--}}
-        {{--                <div class="flex justify-between">--}}
-        {{--                    <div>--}}
-        {{--                        <a href="{{route('series.edit',$series->slug)}}" class="p-btn">Edit</a>--}}
-        {{--                        <button type="submit" class="p-btn">Delete</button>--}}
-        {{--                    </div>--}}
-        {{--                    <div>--}}
-        {{--                        <a href="{{route('sermons.create')}}" class="p-btn">+ New Sermon</a>--}}
-        {{--                    </div>--}}
-        {{--                </div>--}}
-        {{--            </form>--}}
-        {{--        </div>--}}
+               {{-- <div class="mb-16">
+                   <form action="{{route('series.trash',$series->slug)}}" method="post">
+                       @csrf
+                       <div class="flex justify-between">
+                           <div>
+                               <a href="{{route('series.edit',$series->slug)}}" class="p-btn">Edit</a>
+                               <button type="submit" class="p-btn">Delete</button>
+                           </div>
+                           <div>
+                               <a href="{{route('sermons.create')}}" class="p-btn">+ New Sermon</a>
+                           </div>
+                       </div>
+                   </form>
+               </div> --}}
+            <div class="mb-16">
+                   <a href="{{route('members.edit',["code" => $member->code])}}" class="btn-icon success sm"><i class="ri-pencil-line"></i></a>
+            </div>
     </x-slot>
 
     <x-slot name="heading">
