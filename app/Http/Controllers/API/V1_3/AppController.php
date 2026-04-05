@@ -57,11 +57,24 @@ class AppController extends Controller
         $user = (new WebAppController())->getAuthUser($request);
         $updatedUser = null;
         if (is_object($user)) {
-             $next_meeting_date = $user->cell?->nextMeetingDate();
+            $member_cell_date = $user->member->cell?->nextMeetingDate();
+            $leadership_cell_date = $user->member->leadershipCell?->nextMeetingDate();
+
+            if ($member_cell_date != null && $leadership_cell_date == null) {
+                $next_meeting_date = $member_cell_date;
+            } else if ($member_cell_date == null && $leadership_cell_date != null) {
+                $next_meeting_date = $leadership_cell_date;
+            }else{
+                if($member_cell_date < $leadership_cell_date){
+                    $next_meeting_date = $member_cell_date;
+                }else{
+                    $next_meeting_date = $leadership_cell_date;
+                }
+            }
 
             if ($user->updated_at->getTimestamp() <= $timestamp) {
                 $updatedUser = null;
-            }else{
+            } else {
                 $updatedUser = $user;
             }
         }

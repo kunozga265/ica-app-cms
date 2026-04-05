@@ -117,20 +117,22 @@ class MemberController extends Controller
 
 
             $member = Member::updateOrCreate([
-                'email' => $member["email"],
+                'first_name' => $member["first_name"],
+                'last_name' => $member["last_name"],
+                "date_of_birth" => $member["date_of_birth"]
             ], [
                 "code" => (new \App\Http\Controllers\Web\AppController())->generateUniqueCode(),
                 "avatar" => $avatar,
-                'first_name' => $member["first_name"],
+                'email' => $member["email"],
                 'middle_name' => $member["middle_name"],
                 'other_name' => $member["other_name"],
-                'last_name' => $member["last_name"],
+
                 'gender' => $member["gender"],
                 'cell_id' => $member["cell_id"],
                 'phone_number_airtel' => $member["phone_number_airtel"],
                 'phone_number_tnm' => $member["phone_number_tnm"],
                 'phone_number_international' => $member["phone_number_international"],
-                "date_of_birth" => $member["date_of_birth"]
+
             ]);
         }
 
@@ -164,7 +166,7 @@ class MemberController extends Controller
                 "date_of_birth" => $request->date_of_birth
             ]);
 
-             return response()->json(["message" => "Members updated!"]);
+            return response()->json(["message" => "Members updated!"]);
         }
     }
 }
