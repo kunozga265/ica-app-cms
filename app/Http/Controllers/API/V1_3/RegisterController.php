@@ -87,6 +87,12 @@ class RegisterController extends Controller
                             "coordinates" => null
                         ])
                     ]);
+
+
+                    //affiliate to ministry 
+                    if (!$member->ministries()->where('ministry_id', $register->ministry->id)->exists()) {
+                        $member->ministries()->attach($register->ministry);
+                    }
                 }
             } else {
                 // $register->members()->detach($member);
