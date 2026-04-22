@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\API\V1_3;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MemberResource;
 use App\Http\Resources\MinistryResource;
 use App\Models\Ministry;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class MinistryController extends Controller
 {

@@ -22,27 +22,27 @@ class DatabaseSeeder extends Seeder
 //        Member::factory(50)->create();
 
         $this->call([
-//            UserTableSeeder::class,
+           UserTableSeeder::class,
 //            AuthorTableSeeder::class,
 //            SeriesTableSeeder::class,
 //            SermonTableSeeder::class,
 //            ThemeTableSeeder::class,
-//            CategoryTableSeeder::class,
+           CategoryTableSeeder::class,
 //            PageTableSeeder::class,
-            // MinistryTableSeeder::class,
-//            ZoneTableSeeder::class,
+            MinistryTableSeeder::class,
+           ZoneTableSeeder::class,
 //            UserTableSeeder::class,
 //            PrayersTableSeeder::class,
-//            RoleTableSeeder::class,
+           RoleTableSeeder::class,
         //    CellsRefactorySeeder::class,
 
         ]);
 
-        $users = User::all();
-        foreach ($users as $user){
-            $user->update(["id" => $user->id]);
-            $user->member?->update(['avatar'=>$user->avatar]);
-        }
+        // $users = User::all();
+        // foreach ($users as $user){
+        //     $user->update(["id" => $user->id]);
+        //     $user->member?->update(['avatar'=>$user->avatar]);
+        // }
 
     }
 }
